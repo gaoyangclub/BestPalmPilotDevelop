@@ -36,6 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let drawerController = RootDrawerController.getInstance()
         drawerController.centerViewController = main
+        drawerController.rightDrawerViewController = AViewController()
         
         drawerController.showsShadow = true
         drawerController.maximumRightDrawerWidth = 200

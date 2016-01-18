@@ -10,6 +10,12 @@ import UIKit
 
 class UserDefaultCache: AnyObject {
     
+    static func getUsercode()->String?{
+        return getUserDataByKey("usercode") as? String
+    }
+    static func setUsercode(value:String?){
+        setUserDataByKey("usercode",value: value)
+    }
     static func getUsername()->String?{
         return getUserDataByKey("username") as? String
     }
@@ -30,6 +36,7 @@ class UserDefaultCache: AnyObject {
     }
     /** 清除用户缓存 */
     static func clearUser(){
+        setUsercode(nil)
         setUsername(nil)
         setPassword(nil)
         setToken(nil)
@@ -40,7 +47,7 @@ class UserDefaultCache: AnyObject {
     }
     
     static func hasUser()->Bool{
-        return getUsername() != nil && getPassword() != nil && getToken() != nil
+        return getUsercode() != nil && getPassword() != nil && getToken() != nil
     }
     
     private static func getUserDataByKey(key:String)->AnyObject?{

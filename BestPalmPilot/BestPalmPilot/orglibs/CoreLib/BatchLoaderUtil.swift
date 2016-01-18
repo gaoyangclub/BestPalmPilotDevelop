@@ -134,7 +134,7 @@ private class LoaderBean{
         //        //当前线程循环跑动
         //        conn.start() //开始加载
         
-        NSURLConnection.sendAsynchronousRequest(req, queue: NSOperationQueue()) { (response:NSURLResponse?, data:NSData?, error:NSError?) -> Void in
+        NSURLConnection.sendAsynchronousRequest(req, queue: NSOperationQueue()) { [unowned self](response:NSURLResponse?, data:NSData?, error:NSError?) -> Void in
             self.image = UIImage(data: data!)
             //            self.image?.size.
             //            println(self.image)

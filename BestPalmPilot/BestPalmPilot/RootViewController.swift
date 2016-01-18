@@ -23,7 +23,7 @@ class RootViewController: TabViewController,LoginViewDelegate {
                 let loginController = LoginViewController()
                 loginController.delegate = self
                 self.presentViewController(loginController, animated: true, completion: { () -> Void in
-                    print("登陆界面弹出完毕")
+//                    print("登陆界面弹出完毕")
                 })
             })
         }else{
@@ -54,7 +54,7 @@ class RootViewController: TabViewController,LoginViewDelegate {
 //            TabData(data: TabRendererVo(title:"盘古",iconUrl:"icon_05"),controller: AViewController())
         ]
         itemClass = MyTabItemRenderer.self
-        tabBarHeight = 40
+//        tabBarHeight = 40
     }
     
     override func didReceiveMemoryWarning() {

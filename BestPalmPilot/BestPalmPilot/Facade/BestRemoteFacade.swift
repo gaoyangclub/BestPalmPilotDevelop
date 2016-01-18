@@ -17,21 +17,38 @@ class BestRemoteFacade: AnyObject {
     private static let headers:Dictionary<String,String> = ["X-Route-User":"TEST","X-Route-Token":"TEST"]
     
     static func login(username:String,password:String,appid:String,mobileInfo:String,callBack:ResponseCompletionHandler?){
-        request(remoteUrl + "login",parameters:modifyParameters(["username":username,"password":password,"appid":appid,"mobileInfo":mobileInfo]),callBack:callBack)
+        request(remoteUrl + "login",parameters:["username":username.getMarks(),"password":password.getMarks(),"appid":appid.getMarks(),"mobileInfo":mobileInfo.getMarks()],callBack:callBack)
     }
     
     static func getApproveMenu(username:String,callBack:ResponseCompletionHandler?){
-        request(remoteUrl + "getAppMenu",parameters:modifyParameters(["username":username]),callBack:callBack)
+        request(remoteUrl + "getAppMenu",parameters:["username":username.getMarks()],callBack:callBack)
     }
     
-    private static func modifyParameters(var parameters:Dictionary<String,AnyObject>)->Dictionary<String,AnyObject>{
-        for (key,value) in parameters{
-            if value is String{
-                parameters.updateValue("\"" + (value as! String) + "\"", forKey: key)
-            }
+    static func getListFormInfos(so:FormListSO,groupkey:String,callBack:ResponseCompletionHandler?){
+        do{
+            let nsdata = try NSJSONSerialization.dataWithJSONObject(so.mj_keyValues(), options: NSJSONWritingOptions.PrettyPrinted)
+            let jsonString:NSString = NSString(data: nsdata, encoding: NSUTF8StringEncoding)!
+            print(jsonString)
+            request(remoteUrl + "getListFormInfos",parameters:["so":jsonString,"groupkey":groupkey.getMarks()],callBack:callBack)
+        }catch{
+            
         }
-        return parameters
     }
+    
+//    private static func modifyParameters(var parameters:Dictionary<String,AnyObject>)->Dictionary<String,AnyObject>{
+//        for (key,value) in parameters{
+////            if value is NSString{ //不做处理
+////                print("value不需要加引号")
+////            }else
+//                if value is String{
+//                parameters.updateValue("\"" + (value as! String) + "\"", forKey: key)
+//            }
+////            else if value is JSON {
+////                modifyParameters()
+////            }
+//        }
+//        return parameters
+//    }
     
     private static func request(url:String,parameters:Dictionary<String,AnyObject>,method: Alamofire.Method = .POST,callBack:ResponseCompletionHandler? = nil){
         Alamofire.request(method, url , parameters: parameters, headers: headers).responseJSON { (response) -> Void in
@@ -47,7 +64,7 @@ class BestRemoteFacade: AnyObject {
                 if callBack != nil{
                     callBack!(json: nil,isSuccess:false,error:response.result.error)
                 }
-//                print("数据接收失败:" + response.result.error!.description)
+                print("数据接收失败:" + response.result.error!.description)
             }
         }
     }

@@ -262,7 +262,7 @@ public class CASectionPageMenu: UIView, UIScrollViewDelegate, UIGestureRecognize
          self.addSubview(menuScrollView)
         
         // Set up menu scroll view
-        menuScrollView.snp_makeConstraints { (make) -> Void in
+        menuScrollView.snp_makeConstraints { [unowned self](make) -> Void in
             make.left.top.right.equalTo(self)
 //            make.height.equalTo(menuHeight)
             make.bottom.equalTo(self)
@@ -276,7 +276,7 @@ public class CASectionPageMenu: UIView, UIScrollViewDelegate, UIGestureRecognize
             
             
             self.addSubview(menuBottomHairline)
-            menuBottomHairline.snp_makeConstraints(closure: { (make) -> Void in
+            menuBottomHairline.snp_makeConstraints(closure: { [unowned self](make) -> Void in
                 make.left.right.equalTo(self)
                 make.bottom.equalTo(self)
                 make.height.equalTo(0.5)

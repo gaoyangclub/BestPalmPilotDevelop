@@ -57,7 +57,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
         tabItem.normalColor = UIColor.grayColor()
 //        tabItem.selectColor = UICreaterUtils.colorRise
         
-        BatchLoaderUtil.loadFile("usericon", callBack: { (image, params) -> Void in
+        BatchLoaderUtil.loadFile("userIcon", callBack: { (image, params) -> Void in
             tabItem.image = image
         })
         return tabItem
@@ -131,7 +131,15 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
             if isSuccess{
                 if json != nil && json!["issuccess"].boolValue {
                     print("登陆成功token:\(json!["token"].stringValue)")
-                    UserDefaultCache.setUsername(self.userText.text!)
+                    
+                    if !json!["usercode"].stringValue.isEmpty{
+                        UserDefaultCache.setUsercode(json!["usercode"].stringValue)
+                    }else{
+                        UserDefaultCache.setUsercode(self.userText.text!) //只能记录输入的文字
+                    }
+                    if !json!["username"].stringValue.isEmpty{
+                        UserDefaultCache.setUsername(json!["username"].stringValue)
+                    }
                     UserDefaultCache.setPassword(self.passwordText.text!)
                     UserDefaultCache.setToken(json!["token"].stringValue)
                     self.delegate?.loginViewWillDismiss?(self)

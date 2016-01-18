@@ -134,7 +134,7 @@ class MyTabItemRenderer: BaseItemRenderer {
 //    private var selectImage:UIImage!
     
     private static var normalColor:UIColor = FlatUIColors.concreteColor()
-    private static var selectColor:UIColor = FlatUIColors.belizeHoleColor()//UIColor(red: 232 / 255, green: 50 / 255, blue: 85 / 255, alpha: 1) //FlatUIColors.alizarinColor(alpha: 1)
+    private static var selectColor:UIColor = BestUtils.themeColor///FlatUIColors.belizeHoleColor()//UIColor(red: 232 / 255, green: 50 / 255, blue: 85 / 255, alpha: 1) //FlatUIColors.alizarinColor(alpha: 1)
     
     private var themeColor:UIColor!
     override func layoutSubviews(){

@@ -37,7 +37,7 @@ class RefreshTableViewController: UIViewController,UITableViewDelegate,UITableVi
 //        refreshContaner.backgroundColor = UIColor.brownColor()
         self.view.addSubview(refreshContaner)
         refreshContaner.scrollerView = tableView
-        refreshContaner.snp_makeConstraints { (make) -> Void in
+        refreshContaner.snp_makeConstraints { [unowned self](make) -> Void in
             self.refreshContanerMake(make)
         }
     }

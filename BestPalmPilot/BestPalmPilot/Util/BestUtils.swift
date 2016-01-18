@@ -10,7 +10,7 @@ import UIKit
 
 public class BestUtils:AnyObject {
 
-    public static let themeColor = FlatUIColors.peterRiverColor()//UIColor(red: 81/255, green: 121/255, blue: 178/255, alpha: 1)
+    public static let themeColor = FlatUIColors.dodgerBlueColor()//UIColor(red: 81/255, green: 121/255, blue: 178/255, alpha: 1)
     
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -29,5 +29,17 @@ public class BestUtils:AnyObject {
         }
         return obj
     }
+//    public static func generateDicByObj(obj:NSObject){
+//        for (key,value) in obj {
+//            
+//        }
+//    }
+    
+    
 
+}
+extension String{
+    func getMarks()->String{
+        return "\"" + self + "\""
+    }
 }

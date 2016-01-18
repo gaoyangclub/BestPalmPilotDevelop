@@ -39,10 +39,10 @@ class ApprovePageHomeController: BaseTableViewController {
         tabItem2.sizeType = .FillWidth
         tabItem2.normalColor = UIColor.whiteColor()
         //        tabItem.selectColor = UICreaterUtils.colorRise
-        BatchLoaderUtil.loadFile("campaign", callBack: { (image, params) -> Void in
+        BatchLoaderUtil.loadFile("campaign", callBack: { (image, params) -> Void in //[unowned self]
             tabItem2.image = image
         })
-//        tabItem2.addTarget(self, action: "setupClick", forControlEvents: UIControlEvents.TouchDown)
+        tabItem2.addTarget(self, action: "setupClick", forControlEvents: UIControlEvents.TouchDown)
         let rightItem =
         UIBarButtonItem(title: "嘿嘿", style: UIBarButtonItemStyle.Done, target: self, action: "setupClick")
         rightItem.customView = tabItem2
@@ -51,6 +51,14 @@ class ApprovePageHomeController: BaseTableViewController {
         self.tabBarController?.navigationItem.rightBarButtonItem = rightItem
         self.tabBarController?.navigationItem.titleView = searchBar
     }
+    
+    //拉开抽屉设置(登入登出等)
+    func setupClick(){
+        self.drawerController.toggleDrawerSide(MMDrawerSide.Right, animated: true, completion: { _ -> Void in
+            
+        })
+    }
+
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -96,8 +104,10 @@ class ApprovePageHomeController: BaseTableViewController {
     
     private func generateApproveMenuList(jsonList:[JSON])->[ApproveMenuVo]{
         var menuList:[ApproveMenuVo] = []
+        var index:Int = 1
         for json in jsonList{
             let avo = BestUtils.generateObjByJson(json,classType: ApproveMenuVo.self) as! ApproveMenuVo
+            avo.iconUrl = "fundTag0\(index++)"
             menuList.append(avo)
         }
         return menuList
@@ -106,6 +116,8 @@ class ApprovePageHomeController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        initTitleArea()
+        
         self.view.backgroundColor = UIColor(red: 251/255, green: 251/255, blue: 251/255, alpha: 1)
         
         self.setupRefresh()
@@ -113,6 +125,19 @@ class ApprovePageHomeController: BaseTableViewController {
         // Do any additional setup after loading the view.
     }
 
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let section = indexPath.section
+        let source = dataSource[section] as! SoueceVo
+        let cell:CellVo = source.data![indexPath.row] as! CellVo
+        if cell.cellData is ApproveMenuVo{
+            //点击hot内容跳转
+            let avo = cell.cellData as! ApproveMenuVo //点击到Fund详细页
+            let pageKindController = ApprovePageListController()
+            pageKindController.approveMenuVo = avo
+            self.navigationController?.pushViewController(pageKindController, animated: true)
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -157,8 +182,13 @@ private class ApprovePageHomeInfoCell: BaseTableViewCell {
     }()
     
     
+    private lazy var tagLabel:UILabel = {
+        let label = UICreaterUtils.createLabel(26, FlatUIColors.ebonyClayColor(), "", true, self.contentView)
+        return label
+    }()
+    
     private lazy var titleLabel:UILabel = {
-        let label = UICreaterUtils.createLabel(18, UICreaterUtils.colorBlack, "", true, self.contentView)
+        let label = UICreaterUtils.createLabel(18, UICreaterUtils.colorFlat, "", true, self.contentView)
         return label
     }()
     
@@ -180,7 +210,7 @@ private class ApprovePageHomeInfoCell: BaseTableViewCell {
         arrow.direction = .RIGHT
         self.contentView.addSubview(arrow)
         ////        customView.isClosed = true
-        arrow.lineColor = UICreaterUtils.colorBlack
+        arrow.lineColor = UICreaterUtils.normalLineColor
         arrow.lineThinkness = 2
         return arrow
     }()
@@ -190,33 +220,50 @@ private class ApprovePageHomeInfoCell: BaseTableViewCell {
         self.contentView.addSubview(tabItem)
         tabItem.userInteractionEnabled = false
         tabItem.sizeType = .FillWidth
-        tabItem.normalColor = UICreaterUtils.colorRise
+        tabItem.normalColor = FlatUIColors.peterRiverColor()//BestUtils.themeColor//UICreaterUtils.colorRise
         return tabItem
+    }()
+    
+    private lazy var badgeView:CustomBadge = {
+        let badge = CustomBadge(string: "1",withScale: 1.2)
+        badge.badgeStyle.badgeInsetColor = FlatUIColors.alizarinColor()
+        self.contentView.addSubview(badge)
+        return badge
     }()
     
     private func initCell(){
         let avo:ApproveMenuVo = data as! ApproveMenuVo
         
-        self.bottomLine.snp_makeConstraints { [unowned self](make) -> Void in
+        bottomLine.snp_makeConstraints { [unowned self](make) -> Void in
             make.left.right.bottom.equalTo(self.contentView)
             make.height.equalTo(UICreaterUtils.normalLineWidth)
         }
         
-        self.iconView.snp_makeConstraints { [unowned self](make) -> Void in
+        iconView.snp_makeConstraints { [unowned self](make) -> Void in
             make.left.equalTo(self.contentView).offset(2)
             //            make.size.equalTo(CGSize(width: 40, height: 24))
             make.width.equalTo(40)
             make.height.equalTo(24)
-            make.centerY.equalTo(self.titleLabel)
+            make.centerY.equalTo(self.tagLabel)
         }
         BatchLoaderUtil.loadFile(avo.iconUrl, callBack: { [unowned self](image, params) -> Void in
             self.iconView.image = image
         })
         
-        self.titleLabel.snp_makeConstraints { [unowned self](make) -> Void in
-            make.left.equalTo(self.iconView.snp_right)
-            make.centerY.equalTo(self.contentView)
+        tagLabel.snp_makeConstraints { [unowned self](make) -> Void in
+            make.left.equalTo(self.iconView.snp_right).offset(10)
+            make.bottom.equalTo(self.contentView.snp_centerY)
         }
+        
+        tagLabel.text = avo.groupkey
+        tagLabel.sizeToFit()
+        
+        titleLabel.snp_makeConstraints { [unowned self](make) -> Void in
+            make.left.equalTo(self.tagLabel)
+            make.top.equalTo(self.contentView.snp_centerY).offset(6)
+        }
+        self.titleLabel.text = avo.groupname
+        self.titleLabel.sizeToFit()
         
         arrowView.snp_makeConstraints { [unowned self](make) -> Void in
             make.width.equalTo(10)
@@ -224,9 +271,21 @@ private class ApprovePageHomeInfoCell: BaseTableViewCell {
             make.centerY.equalTo(self.contentView)
             make.right.equalTo(self.contentView).offset(-30)
         }
+//        avo.count = 88
+        if avo.count > 0{
+            badgeView.hidden = false
+            badgeView.badgeText = "\(avo.count)"
+            
+            badgeView.snp_makeConstraints { [unowned self](make) -> Void in
+                make.right.equalTo(self.arrowView.snp_left).offset(-16)
+                make.centerY.equalTo(self.contentView)
+                make.width.equalTo(34)
+                make.height.equalTo(34)
+            }
+        }else{
+            badgeView.hidden = true
+        }
         
-        self.titleLabel.text = avo.groupname
-        self.titleLabel.sizeToFit()
     }
     
 }

@@ -13,10 +13,10 @@ class ApprovePageHomeHotCell: BaseTableViewCell {
     static let cellHeight:CGFloat = 108
     
     private let hotList:[ApproveHotVo] = [
-        ApproveHotVo(icon: "fundhot02", title: "使用说明1", link: "http://www.qq.com"),
-        ApproveHotVo(icon: "fundhot08", title: "使用说明2", link: "http://www.qq.com"),
-        ApproveHotVo(icon: "fundhot09", title: "使用说明3", link: "http://www.qq.com"),
-        ApproveHotVo(icon: "fundhot11", title: "使用说明4", link: "http://www.qq.com")
+        ApproveHotVo(icon: "fundHot02", title: "使用说明1", link: "http://www.qq.com"),
+        ApproveHotVo(icon: "fundHot08", title: "使用说明2", link: "http://www.qq.com"),
+        ApproveHotVo(icon: "fundHot09", title: "使用说明3", link: "http://www.qq.com"),
+        ApproveHotVo(icon: "fundHot11", title: "使用说明4", link: "http://www.qq.com")
     ]
     
     //    private var iconContainer:UIView!

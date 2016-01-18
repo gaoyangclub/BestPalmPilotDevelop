@@ -45,7 +45,7 @@ class MyTabItemRenderer: BaseItemRenderer {
             labelView.textAlignment = NSTextAlignment.Center
             addSubview(labelView)
             
-            labelView.snp_makeConstraints { (make) -> Void in
+            labelView.snp_makeConstraints { [unowned self](make) -> Void in
                 make.centerX.equalTo(self)
                 make.left.equalTo(self)
                 make.right.equalTo(self)
@@ -68,7 +68,7 @@ class MyTabItemRenderer: BaseItemRenderer {
             imageContainer.userInteractionEnabled = false//无法交互
             addSubview(imageContainer)
             
-            imageContainer.snp_makeConstraints { (make) -> Void in
+            imageContainer.snp_makeConstraints { [unowned self](make) -> Void in
                 make.left.equalTo(self)
                 make.right.equalTo(self)
                 make.bottom.equalTo(self.labelView.snp_top)
@@ -82,10 +82,10 @@ class MyTabItemRenderer: BaseItemRenderer {
             tabItem.normalColor = MyTabItemRenderer.normalColor
             tabItem.selectColor = MyTabItemRenderer.selectColor
             
-            tabItem.snp_makeConstraints(closure: { (make) -> Void in
+            tabItem.snp_makeConstraints(closure: { [unowned self](make) -> Void in
                 make.height.equalTo(20)
-                make.left.right.equalTo(imageContainer)
-                make.center.equalTo(imageContainer)
+                make.left.right.equalTo(self.imageContainer)
+                make.center.equalTo(self.imageContainer)
             })
 //            imageView = UIImageView()
 //            tempUI.addSubview(imageView)
@@ -97,7 +97,7 @@ class MyTabItemRenderer: BaseItemRenderer {
         }
         
         let vo = data as! TabRendererVo
-        BatchLoaderUtil.loadFile(vo.iconUrl, callBack: { (image, params) -> Void in
+        BatchLoaderUtil.loadFile(vo.iconUrl, callBack: { [unowned self](image, params) -> Void in
             self.tabItem.image = image
 //            var ciColor1 = CIColor(color:MyTabItemRenderer.normalColor)
 //            

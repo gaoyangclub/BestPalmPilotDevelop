@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.backgroundColor = UIColor.whiteColor()
         self.window!.makeKeyAndVisible()
         let main:RootNavigationControl = RootNavigationControl.getInstance()
-        main.navigationColor = FlatUIColors.cloudsColor()//UIColor(red: 90 / 255, green: 115 / 255, blue: 169 / 255, alpha: 0.5) //
+        main.navigationColor = BestUtils.themeColor//FlatUIColors.cloudsColor()//UIColor(red: 90 / 255, green: 115 / 255, blue: 169 / 255, alpha: 0.5) //
         main.setViewControllers([RootViewController()], animated: false)
         //        let main = RootNavigationControl(rootViewController:RootViewController())
         

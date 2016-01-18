@@ -11,7 +11,7 @@ import UIKit
 
 typealias LoadCompletionHandler = (image:UIImage,params:[AnyObject])->Void
 
-private class LoaderVo {
+private class LoaderVo:NSObject {
     var url:String
     var callBack:LoadCompletionHandler?
     var argArray:[AnyObject]
@@ -22,7 +22,7 @@ private class LoaderVo {
         self.argArray = argArray
     }
 }
-class BatchLoaderUtil: AnyObject {
+class BatchLoaderUtil: NSObject {
     
     private static var imageCache:Dictionary<String,UIImage> = Dictionary<String,UIImage>()
     //坑!!! 一定要用var 不然无法存数据进去

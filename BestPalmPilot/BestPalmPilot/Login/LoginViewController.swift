@@ -102,7 +102,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
     lazy var submitButton:UIButton = {
         let btn = UIButton(type: UIButtonType.System)
         btn.layer.cornerRadius = 2
-        let normalColor:UIColor = UIColor(red: 81/255, green: 121/255, blue: 178/255, alpha: 1)
+        let normalColor:UIColor = BestUtils.themeColor
         btn.backgroundColor = normalColor
         let title:NSString = "登  陆"
         btn.setTitle(title as String, forState: UIControlState.Normal)

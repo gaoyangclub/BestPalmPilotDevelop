@@ -12,7 +12,7 @@ class RootViewController: TabViewController,LoginViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "主页"
+//        self.title = "主页"
 //        UserDefaultCache.clearUser()
         if !UserDefaultCache.hasUser(){//用户不存在
             let delayInSeconds:Int64 =  100000000  * 2
@@ -48,10 +48,10 @@ class RootViewController: TabViewController,LoginViewDelegate {
     
     private func initData(){
         dataProvider = [
-            TabData(data: TabRendererVo(title:"F1",iconUrl:"icon_08"),controller: AViewController()),
-            TabData(data: TabRendererVo(title:"OA",iconUrl:"icon_02"),controller: AViewController()),
-            TabData(data: TabRendererVo(title:"AMS",iconUrl:"icon_06"),controller: AViewController()),
-            TabData(data: TabRendererVo(title:"盘古",iconUrl:"icon_05"),controller: AViewController())
+            TabData(data: TabRendererVo(title:"等待审批",iconUrl:"icon_02"),controller: ApprovePageHomeController()),
+            TabData(data: TabRendererVo(title:"最新动态",iconUrl:"icon_06"),controller: AViewController()),
+            TabData(data: TabRendererVo(title:"版本信息",iconUrl:"icon_04"),controller: AViewController())
+//            TabData(data: TabRendererVo(title:"盘古",iconUrl:"icon_05"),controller: AViewController())
         ]
         itemClass = MyTabItemRenderer.self
         tabBarHeight = 40

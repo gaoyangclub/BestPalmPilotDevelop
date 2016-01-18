@@ -20,6 +20,10 @@ class BestRemoteFacade: AnyObject {
         request(remoteUrl + "login",parameters:modifyParameters(["username":username,"password":password,"appid":appid,"mobileInfo":mobileInfo]),callBack:callBack)
     }
     
+    static func getApproveMenu(username:String,callBack:ResponseCompletionHandler?){
+        request(remoteUrl + "getAppMenu",parameters:modifyParameters(["username":username]),callBack:callBack)
+    }
+    
     private static func modifyParameters(var parameters:Dictionary<String,AnyObject>)->Dictionary<String,AnyObject>{
         for (key,value) in parameters{
             if value is String{

@@ -87,6 +87,16 @@ class RefreshContainer: UIView {
             headerView.beginRefreshing()
         }
         
+//        if footerBeginRest {
+//            footerBeginRest = false
+//            footerView?.reset()
+//        }
+        
+        if headerBeginRest{ //再刷一次
+            headerBeginRest = false
+            headerView.reset()
+        }
+        
 //        if headerRestDo {
 //            var addHeight = self.scrollerView.contentOffset.y + self.scrollerView.frame.height / 4
 //            UIView.animateWithDuration(RefreshSlowAnimationDuration, animations: {
@@ -124,12 +134,12 @@ class RefreshContainer: UIView {
 //        headerView.beginRefreshing()
     }
     
-//    private var headerRestDo:Bool = false
+    private var headerBeginRest:Bool = false
     func headerReset()
     {
         footerReset()
-//        headerRestDo = false
-        headerView.reset();
+        headerView.reset()
+        headerBeginRest = true
     }
     
     func footerBeginRefreshing()
@@ -137,9 +147,14 @@ class RefreshContainer: UIView {
         footerView?.beginRefreshing()
     }
     
+//    private var footerBeginRest:Bool = false
     func footerReset(){
-//        headerRestDo = true;
+//        footerBeginRest = true
         footerView?.reset()
+    }
+    
+    func footerStraight(){
+        footerView?.adjustStateWithContentOffset(true)
     }
     
     func footerNodata(){

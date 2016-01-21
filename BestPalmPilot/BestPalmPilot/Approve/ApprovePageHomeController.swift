@@ -47,6 +47,8 @@ class ApprovePageHomeController: BaseTableViewController {
         UIBarButtonItem(title: "嘿嘿", style: UIBarButtonItemStyle.Done, target: self, action: "setupClick")
         rightItem.customView = tabItem2
         
+        self.view.backgroundColor = BestUtils.backgroundColor//UIColor(red: 251/255, green: 251/255, blue: 251/255, alpha: 1)
+        
         self.tabBarController?.navigationItem.leftBarButtonItem = nil
         self.tabBarController?.navigationItem.rightBarButtonItem = rightItem
         self.tabBarController?.navigationItem.titleView = searchBar
@@ -73,20 +75,24 @@ class ApprovePageHomeController: BaseTableViewController {
     func setupRefresh(){
         self.refreshContaner.addHeaderWithCallback(RefreshHeaderView.header(),callback: {
 
-            BestRemoteFacade.getApproveMenu(UserDefaultCache.getUsername()!, callBack: { [unowned self](json, isSuccess, error) -> Void in
+            BestRemoteFacade.getApproveMenu(UserDefaultCache.getUsername()!, callBack: { [weak self](json, isSuccess, error) -> Void in
+                if self == nil{
+                    print("ApprovePageHomeController对象已经销毁")
+                    return
+                }
                 if isSuccess{
                     
-                    let menuList:[ApproveMenuVo] = self.generateApproveMenuList(json!.arrayValue)
+                    let menuList:[ApproveMenuVo] = self!.generateApproveMenuList(json!.arrayValue)
                     
-                    self.hasSetUp = true
+                    self?.hasSetUp = true
                     
-                    self.dataSource.removeAllObjects()
-                    let approvePageSource = self.getApprovePageSource(menuList)
+                    self?.dataSource.removeAllObjects()
+                    let approvePageSource = self!.getApprovePageSource(menuList)
                     for i in 0..<approvePageSource.count{
-                        self.dataSource.addObject(approvePageSource[i])
+                        self?.dataSource.addObject(approvePageSource[i])
                     }
-                    self.tableView.reloadData()
-                    self.refreshContaner.headerReset()
+                    self?.tableView.reloadData()
+                    self?.refreshContaner.headerReset()
                 }
             })
         })
@@ -106,8 +112,8 @@ class ApprovePageHomeController: BaseTableViewController {
         var menuList:[ApproveMenuVo] = []
         var index:Int = 1
         for json in jsonList{
-            let avo = BestUtils.generateObjByJson(json,classType: ApproveMenuVo.self) as! ApproveMenuVo
-            avo.iconUrl = "fundTag0\(index++)"
+            let avo = BestUtils.generateObjByJson(json,typeList: [ApproveMenuVo.self]) as! ApproveMenuVo
+            avo.iconurl = "fundTag0\(index++)"
             menuList.append(avo)
         }
         return menuList
@@ -117,8 +123,6 @@ class ApprovePageHomeController: BaseTableViewController {
         super.viewDidLoad()
         
         initTitleArea()
-        
-        self.view.backgroundColor = UIColor(red: 251/255, green: 251/255, blue: 251/255, alpha: 1)
         
         self.setupRefresh()
         self.refreshContaner.headerBeginRefreshing()
@@ -220,7 +224,7 @@ private class ApprovePageHomeInfoCell: BaseTableViewCell {
         self.contentView.addSubview(tabItem)
         tabItem.userInteractionEnabled = false
         tabItem.sizeType = .FillWidth
-        tabItem.normalColor = FlatUIColors.peterRiverColor()//BestUtils.themeColor//UICreaterUtils.colorRise
+        tabItem.normalColor = BestUtils.deputyColor//UICreaterUtils.colorRise
         return tabItem
     }()
     
@@ -246,7 +250,7 @@ private class ApprovePageHomeInfoCell: BaseTableViewCell {
             make.height.equalTo(24)
             make.centerY.equalTo(self.tagLabel)
         }
-        BatchLoaderUtil.loadFile(avo.iconUrl, callBack: { [unowned self](image, params) -> Void in
+        BatchLoaderUtil.loadFile(avo.iconurl, callBack: { [unowned self](image, params) -> Void in
             self.iconView.image = image
         })
         
@@ -290,7 +294,7 @@ private class ApprovePageHomeInfoCell: BaseTableViewCell {
     
 }
 public class ApproveMenuVo:NSObject{
-    var iconUrl:String = ""
+    var iconurl:String = ""
     var code:String = ""
     var sortindex:Int = 0 //排序
     var groupkey:String = "" //系统类型

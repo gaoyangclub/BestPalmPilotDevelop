@@ -10,15 +10,33 @@ import UIKit
 
 class ApprovePageListController: PageListTableViewController {
 
+    var approveMenuVo:ApproveMenuVo!
+    
     override func createPageSO() -> PageListSO {
         return FormListSO()
     }
     
-    override func headerRequest(pageSO: PageListSO, callback: (() -> Void)!) {
+    override func headerRequest(pageSO: PageListSO, callback: ((hasData: Bool) -> Void)!) {
         let fso = generateFormListSO(pageSO)
-        BestRemoteFacade.getListFormInfos(fso,groupkey: approveMenuVo.groupkey){[unowned self] (json,var isSuccess,_) -> Void in
+        BestRemoteFacade.getListFormInfos(fso,groupkey: approveMenuVo.groupkey){[weak self] (json,isSuccess,_) -> Void in
+            if self == nil || self!.isDispose  { //self!.isDispose
+                print("ApprovePageListController对象已经销毁")
+                return
+            }
             if isSuccess {
-                print(json)
+//                print(json)
+                var hasData = true
+                if json!.arrayValue.count > 0{
+                    let fromInfoList:[FormInfoVo] = self!.generateFormInfoList(json!.arrayValue)
+                    self!.dataSource.removeAllObjects()
+                    let formInfoPageSource = self!.getFormInfoPageSource(fromInfoList)
+                    for i in 0..<formInfoPageSource.count{
+                        self!.dataSource.addObject(formInfoPageSource[i])
+                    }
+                }else{
+                    hasData = false
+                }
+                callback(hasData:hasData)
             }
         }
     }
@@ -27,16 +45,61 @@ class ApprovePageListController: PageListTableViewController {
         let fso = pageSO as! FormListSO
         fso.code = approveMenuVo.code
         fso.token = UserDefaultCache.getToken()!
-        fso.userName = UserDefaultCache.getUsercode()!
+        fso.username = UserDefaultCache.getUsercode()!
         return fso
     }
     
     override func footerRequest(pageSO: PageListSO, callback: ((hasData: Bool) -> Void)!) {
         let fso = generateFormListSO(pageSO)
-        
+        BestRemoteFacade.getListFormInfos(fso,groupkey: approveMenuVo.groupkey){[weak self] (json,isSuccess,_) -> Void in
+            if self == nil || self!.isDispose  { //self!.isDispose
+                print("ApprovePageListController对象已经销毁")
+                return
+            }
+            if isSuccess {
+                
+                var hasData = true
+                if json!.arrayValue.isEmpty {
+                    hasData = false
+                }else{
+                    let fromInfoList:[FormInfoVo] = self!.generateFormInfoList(json!.arrayValue)
+                    self!.updateFormInfoPageSource(fromInfoList) //直接新增
+                }
+                callback(hasData:hasData)
+            }
+        }
     }
     
-    var approveMenuVo:ApproveMenuVo!
+    private func generateFormInfoList(jsonList:[JSON])->[FormInfoVo]{
+        var formList:[FormInfoVo] = []
+        for json in jsonList{
+            let avo = BestUtils.generateObjByJson(json,typeList: [FormInfoVo.self]) as! FormInfoVo
+            formList.append(avo)
+        }
+        return formList
+    }
+    
+    private func getFormInfoPageSource(infoList:[FormInfoVo])->NSMutableArray{
+        let  svo = SoueceVo(data: []) //添加新的
+        for avo in infoList{
+            svo.data?.addObject(CellVo(cellHeight: FormInfoPageCell.cellHeight, cellClass: FormInfoPageCell.self,cellData:avo))
+        }
+        return [svo]
+    }
+    
+    private func updateFormInfoPageSource(infoList:[FormInfoVo]){
+        if infoList.count == 0{
+            return
+        }
+        if dataSource.count == 0{
+            print("添加数据但是原始数据居长度然是0！！！")
+            return
+        }
+        let svo:SoueceVo? = self.dataSource.lastObject as? SoueceVo
+        for avo in infoList{
+            svo?.data?.addObject(CellVo(cellHeight: FormInfoPageCell.cellHeight, cellClass: FormInfoPageCell.self,cellData:avo))
+        }
+    }
     
     private func initTitleArea(){
         let leftItem = UIBarButtonItem(title: "嘿嘿", style: UIBarButtonItemStyle.Done, target: self, action: "cancelClick")
@@ -81,14 +144,14 @@ class ApprovePageListController: PageListTableViewController {
         
         self.title = title
         
-        self.view.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
+        self.view.backgroundColor = BestUtils.backgroundColor
         
         let titleView = UIView()
         let label:UILabel = UICreaterUtils.createLabel(20, UIColor.whiteColor(), title, true, titleView)
         label.font = UIFont.systemFontOfSize(20)//20号 ,weight:2
         
         titleView.addSubview(label)
-        label.snp_makeConstraints { (make) -> Void in
+        label.snp_makeConstraints { (make) -> Void in //[unowned self]
             make.center.equalTo(titleView)
         }
         
@@ -96,6 +159,8 @@ class ApprovePageListController: PageListTableViewController {
     }
     
     override func viewDidLoad() {
+        contentOffsetRest = false
+        
         initTitleArea()
         
         super.viewDidLoad()
@@ -117,12 +182,38 @@ class ApprovePageListController: PageListTableViewController {
         })
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func deleteRowsByFormInfoVo(formInfoVo:FormInfoVo){
+        for section in 0..<dataSource.count{
+            let svo = dataSource[section] as! SoueceVo
+            for row in 0..<svo.data!.count{
+                let cvo = svo.data![row] as! CellVo
+                if (cvo.cellData as! FormInfoVo) == formInfoVo {
+                    svo.data?.removeObject(cvo) //数据先移除
+                    
+                    tableView.beginUpdates()
+                    tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: row, inSection: section)], withRowAnimation:                     UITableViewRowAnimation.Bottom)
+                    tableView.endUpdates()
+                    
+                    refreshContaner.footerStraight() //底部检查刷新
+                    return//删除结束
+                }
+            }
+        }
     }
     
-
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let section = indexPath.section
+        let source = dataSource[section] as! SoueceVo
+        let cell:CellVo = source.data![indexPath.row] as! CellVo
+        if cell.cellData is FormInfoVo{
+            //点击hot内容跳转
+            let fvo = cell.cellData as! FormInfoVo //点击到Fund详细页
+            let pageKindController = DetailsPageHomeController()
+            pageKindController.approveMenuVo = self.approveMenuVo
+            pageKindController.formInfoVo = fvo
+            self.navigationController?.pushViewController(pageKindController, animated: true)
+        }
+    }
     /*
     // MARK: - Navigation
 
@@ -138,6 +229,155 @@ class FormListSO:PageListSO{
 
     var code:String = ""
     var token:String = ""
-    var userName:String = ""
+    var username:String = ""
     
 }
+public class FormInfoVo:NSObject{
+    var id:Float = 0
+    var code:String = ""
+    var remark:String? = ""//备注
+    var submittime:String = ""
+    var submitter:String = ""
+    var formtype:String = ""
+}
+
+class FormInfoPageCell:BaseTableViewCell{
+    
+    static let cellHeight:CGFloat  = 70
+    
+    private lazy var bottomLine:UIView = {
+        let view:UIView = UIView()
+        view.backgroundColor = UICreaterUtils.normalLineColor
+        self.contentView.addSubview(view)
+        view.snp_makeConstraints { [weak self](make) -> Void in
+            make.left.equalTo(self!.contentView).offset(10)
+            make.right.equalTo(self!.contentView).offset(-10)
+            make.bottom.equalTo(self!.contentView)
+            make.height.equalTo(UICreaterUtils.normalLineWidth)
+        }
+        return view
+    }()
+    
+    private lazy var titleLabel:UILabel = {
+        let label = UICreaterUtils.createLabel(14,UICreaterUtils.colorBlack,"",true,self.contentView)
+        label.snp_makeConstraints { [weak self](make) -> Void in
+            make.left.equalTo(self!.tagView.snp_right).offset(10)
+            //            make.left.equalTo(50)
+            make.bottom.equalTo(self!.contentView.snp_centerY).offset(-4)
+        }
+        return label
+    }()
+    
+    private lazy var submitterLabel:UILabel = {
+        let label = UICreaterUtils.createLabel(12,UICreaterUtils.colorFlat,"",true,self.contentView)
+        label.snp_makeConstraints { [weak self](make) -> Void in
+            make.right.equalTo(self!.bottomLine)
+            make.centerY.equalTo(self!.titleLabel)
+        }
+        return label
+    }()
+    
+    private lazy var codeLabel:UILabel = {
+        let label = UICreaterUtils.createLabel(12,UICreaterUtils.colorBlack,"",true,self.contentView)
+        label.snp_makeConstraints { [weak self](make) -> Void in
+            make.left.equalTo(self!.titleLabel)
+            make.top.equalTo(self!.contentView.snp_centerY).offset(6)
+        }
+        return label
+    }()
+    
+    private lazy var submitTimeLabel:UILabel = {
+        let label = UICreaterUtils.createLabel(12,UICreaterUtils.colorFlat,"",true,self.contentView)
+        label.snp_makeConstraints { [weak self](make) -> Void in
+            make.right.equalTo(self!.submitterLabel)
+            make.centerY.equalTo(self!.codeLabel)
+        }
+        return label
+    }()
+    
+//    private lazy var arrowView:UIArrowView = {
+//        let arrow = UIArrowView(frame:CGRectMake(0, 0, 10, 22))
+//        arrow.direction = .RIGHT
+//        self.contentView.addSubview(arrow)
+//        ////        customView.isClosed = true
+//        arrow.lineColor = UICreaterUtils.normalLineColor
+//        arrow.lineThinkness = 2
+//        return arrow
+//    }()
+    
+    override func showSubviews() {
+        let view:UIView? = self
+        if view == nil{
+            return
+        }
+        self.backgroundColor = UIColor.whiteColor()
+        initText()
+    }
+    
+    private lazy var tagView:RoundTagView = {
+        let roundTag = RoundTagView()
+        self.contentView.addSubview(roundTag)
+        
+        roundTag.snp_makeConstraints(closure: { [weak self](make) -> Void in
+            make.left.equalTo(self!.bottomLine)
+            make.centerY.equalTo(self!.contentView)
+        })
+        
+        return roundTag
+    }()
+    
+    private func initText(){
+        let fvo:FormInfoVo = data as! FormInfoVo
+        
+//        arrowView.snp_makeConstraints { [unowned self](make) -> Void in
+//            make.width.equalTo(10)
+//            make.height.equalTo(22)
+//            make.centerY.equalTo(self.contentView)
+//            make.right.equalTo(self.contentView).offset(-10)
+//        }
+        
+//        badgeArea.badgeText = "\(indexPath.row + 1)"
+//        badgeArea.hidden = true
+        
+        titleLabel.text = fvo.formtype
+        titleLabel.sizeToFit()
+        
+        codeLabel.text = fvo.code
+        codeLabel.sizeToFit()
+        
+        submitterLabel.text = fvo.submitter
+        submitterLabel.sizeToFit()
+        
+        submitTimeLabel.text = fvo.submittime
+        submitTimeLabel.sizeToFit()
+        
+        tagView.tagText = "\(indexPath.row + 1)"// + "  section:\(indexPath.section + 1)"
+        
+    }
+    
+//    private func createRoundTag(size:CGFloat,tagColor:UIColor,tag:String,parent:UIView)->UIView{
+//        let label:UILabel = UICreaterUtils.createLabel(size, tagColor, tag)
+//        label.sizeToFit()
+//        
+//        let subView:UIView = UIView()
+//        parent.addSubview(subView)
+//        
+//        subView.addSubview(label)
+//        label.snp_makeConstraints { (make) -> Void in
+//            make.center.equalTo(subView)
+//        }
+//        
+//        subView.layer.borderColor = tagColor.CGColor
+//        subView.layer.borderWidth = 0.6
+//        subView.layer.cornerRadius = 3
+//        subView.snp_makeConstraints { (make) -> Void in
+//            make.width.equalTo(label).offset(6)
+//            make.height.equalTo(label).offset(2)
+//        }
+//        
+//        return subView
+//    }
+    
+}
+
+

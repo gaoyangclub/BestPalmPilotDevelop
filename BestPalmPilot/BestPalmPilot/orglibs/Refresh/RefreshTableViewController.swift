@@ -12,6 +12,7 @@ class RefreshTableViewController: UIViewController,UITableViewDelegate,UITableVi
 
     var refreshContaner:RefreshContainer!
     var tableView:UITableView!
+    var isDispose:Bool = false
     
     override func viewWillAppear(animated: Bool){
         super.viewWillAppear(animated)
@@ -37,8 +38,8 @@ class RefreshTableViewController: UIViewController,UITableViewDelegate,UITableVi
 //        refreshContaner.backgroundColor = UIColor.brownColor()
         self.view.addSubview(refreshContaner)
         refreshContaner.scrollerView = tableView
-        refreshContaner.snp_makeConstraints { [unowned self](make) -> Void in
-            self.refreshContanerMake(make)
+        refreshContaner.snp_makeConstraints { [weak self](make) -> Void in //[unowned self]
+            self!.refreshContanerMake(make)
         }
     }
     
@@ -57,6 +58,7 @@ class RefreshTableViewController: UIViewController,UITableViewDelegate,UITableVi
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        isDispose = true //该对象已经销毁
     }
     
 

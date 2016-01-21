@@ -32,8 +32,20 @@ class ApprovePageHomeHotCell: BaseTableViewCell {
         return view
     }()
     
+    private lazy var topLine:UIView = {
+        let view:UIView = UIView()
+        view.backgroundColor = UICreaterUtils.normalLineColor
+        self.addSubview(view)
+        return view
+    }()
+    
     private func initCell(){
         self.contentView.removeAllSubViews() //先全部移除
+        
+        topLine.snp_makeConstraints { [unowned self](make) -> Void in
+            make.left.right.top.equalTo(self)
+            make.height.equalTo(UICreaterUtils.normalLineWidth)
+        }
         
         bottomLine.snp_makeConstraints { [unowned self](make) -> Void in
             make.left.right.bottom.equalTo(self)

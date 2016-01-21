@@ -22,6 +22,7 @@
 		840049F71C4CE79000D20B90 /* NSObject+MJKeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 840049EB1C4CE79000D20B90 /* NSObject+MJKeyValue.m */; };
 		840049F81C4CE79000D20B90 /* NSObject+MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 840049ED1C4CE79000D20B90 /* NSObject+MJProperty.m */; };
 		840049F91C4CE79000D20B90 /* NSString+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 840049EF1C4CE79000D20B90 /* NSString+MJExtension.m */; };
+		8402B5281C4F7F5200D79ABB /* DetailsPageInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8402B5271C4F7F5200D79ABB /* DetailsPageInfoController.swift */; };
 		8440A4651C48C383009E8ADD /* icon_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 8440A4551C48C383009E8ADD /* icon_01.png */; };
 		8440A4661C48C383009E8ADD /* icon_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8440A4561C48C383009E8ADD /* icon_01@2x.png */; };
 		8440A4671C48C383009E8ADD /* icon_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 8440A4571C48C383009E8ADD /* icon_02.png */; };
@@ -82,7 +83,6 @@
 		847ABCD51C47AF3E002C037E /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847ABC461C47AF3E002C037E /* UIViewExtension.swift */; };
 		847ABCDC1C47AF3E002C037E /* HSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847ABC4F1C47AF3E002C037E /* HSL.swift */; };
 		847ABCDD1C47AF3E002C037E /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847ABC501C47AF3E002C037E /* UIColor.swift */; };
-		847ABCDE1C47AF3E002C037E /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 847ABC531C47AF3E002C037E /* UINavigationController+FDFullscreenPopGesture.m */; };
 		847ABCEA1C47AF3E002C037E /* MMDrawerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 847ABC651C47AF3E002C037E /* MMDrawerBarButtonItem.m */; };
 		847ABCEB1C47AF3E002C037E /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847ABC681C47AF3E002C037E /* MMDrawerController.m */; };
 		847ABCEC1C47AF3E002C037E /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 847ABC6A1C47AF3E002C037E /* MMDrawerVisualState.m */; };
@@ -180,6 +180,8 @@
 		8486C0171C4C8EC90066E3F1 /* fundTag10.png in Resources */ = {isa = PBXBuildFile; fileRef = 8486C0001C4C8EC90066E3F1 /* fundTag10.png */; };
 		8486C0181C4C8EC90066E3F1 /* fundTag11.png in Resources */ = {isa = PBXBuildFile; fileRef = 8486C0011C4C8EC90066E3F1 /* fundTag11.png */; };
 		8486C01A1C4C92310066E3F1 /* FlatUIColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8486C0191C4C92310066E3F1 /* FlatUIColors.swift */; };
+		84F52B711C4E3A0600CF96FE /* RoundTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F52B701C4E3A0600CF96FE /* RoundTagView.swift */; };
+		84F52B7A1C4E3BC400CF96FE /* DetailsPageHomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F52B791C4E3BC400CF96FE /* DetailsPageHomeController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -298,6 +300,7 @@
 		840049ED1C4CE79000D20B90 /* NSObject+MJProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJProperty.m"; sourceTree = "<group>"; };
 		840049EE1C4CE79000D20B90 /* NSString+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MJExtension.h"; sourceTree = "<group>"; };
 		840049EF1C4CE79000D20B90 /* NSString+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MJExtension.m"; sourceTree = "<group>"; };
+		8402B5271C4F7F5200D79ABB /* DetailsPageInfoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsPageInfoController.swift; sourceTree = "<group>"; };
 		8440A4551C48C383009E8ADD /* icon_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_01.png; sourceTree = "<group>"; };
 		8440A4561C48C383009E8ADD /* icon_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_01@2x.png"; sourceTree = "<group>"; };
 		8440A4571C48C383009E8ADD /* icon_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_02.png; sourceTree = "<group>"; };
@@ -370,8 +373,6 @@
 		847ABC461C47AF3E002C037E /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		847ABC4F1C47AF3E002C037E /* HSL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSL.swift; sourceTree = "<group>"; };
 		847ABC501C47AF3E002C037E /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
-		847ABC521C47AF3E002C037E /* UINavigationController+FDFullscreenPopGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+FDFullscreenPopGesture.h"; sourceTree = "<group>"; };
-		847ABC531C47AF3E002C037E /* UINavigationController+FDFullscreenPopGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+FDFullscreenPopGesture.m"; sourceTree = "<group>"; };
 		847ABC641C47AF3E002C037E /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
 		847ABC651C47AF3E002C037E /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
 		847ABC661C47AF3E002C037E /* MMDrawerController+Subclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMDrawerController+Subclass.h"; sourceTree = "<group>"; };
@@ -501,6 +502,8 @@
 		8486C0001C4C8EC90066E3F1 /* fundTag10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fundTag10.png; sourceTree = "<group>"; };
 		8486C0011C4C8EC90066E3F1 /* fundTag11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fundTag11.png; sourceTree = "<group>"; };
 		8486C0191C4C92310066E3F1 /* FlatUIColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlatUIColors.swift; sourceTree = "<group>"; };
+		84F52B701C4E3A0600CF96FE /* RoundTagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundTagView.swift; sourceTree = "<group>"; };
+		84F52B791C4E3BC400CF96FE /* DetailsPageHomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsPageHomeController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -651,6 +654,7 @@
 			isa = PBXGroup;
 			children = (
 				8440A49B1C48D3A2009E8ADD /* Util */,
+				84F52B781C4E3B9900CF96FE /* Details */,
 				847ABBFD1C47AF3E002C037E /* Facade */,
 				847ABC241C47AF3E002C037E /* Login */,
 				8440A47B1C48C463009E8ADD /* Approve */,
@@ -736,7 +740,6 @@
 				847ABC281C47AF3E002C037E /* Control */,
 				847ABC341C47AF3E002C037E /* CoreLib */,
 				847ABC4D1C47AF3E002C037E /* DynamicColor */,
-				847ABC511C47AF3E002C037E /* FDFullscreenPopGesture */,
 				847ABC631C47AF3E002C037E /* MMDrawerController */,
 				847ABC6D1C47AF3E002C037E /* orglibs.h */,
 				847ABC6E1C47AF3E002C037E /* Refresh */,
@@ -788,6 +791,7 @@
 				847ABC451C47AF3E002C037E /* UIGroupLineChart.swift */,
 				847ABC461C47AF3E002C037E /* UIViewExtension.swift */,
 				840049D81C4CCF0E00D20B90 /* PageListTableViewController.swift */,
+				84F52B701C4E3A0600CF96FE /* RoundTagView.swift */,
 			);
 			path = CoreLib;
 			sourceTree = "<group>";
@@ -800,15 +804,6 @@
 				847ABC501C47AF3E002C037E /* UIColor.swift */,
 			);
 			path = DynamicColor;
-			sourceTree = "<group>";
-		};
-		847ABC511C47AF3E002C037E /* FDFullscreenPopGesture */ = {
-			isa = PBXGroup;
-			children = (
-				847ABC521C47AF3E002C037E /* UINavigationController+FDFullscreenPopGesture.h */,
-				847ABC531C47AF3E002C037E /* UINavigationController+FDFullscreenPopGesture.m */,
-			);
-			path = FDFullscreenPopGesture;
 			sourceTree = "<group>";
 		};
 		847ABC631C47AF3E002C037E /* MMDrawerController */ = {
@@ -1092,6 +1087,15 @@
 			path = Tag;
 			sourceTree = "<group>";
 		};
+		84F52B781C4E3B9900CF96FE /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				84F52B791C4E3BC400CF96FE /* DetailsPageHomeController.swift */,
+				8402B5271C4F7F5200D79ABB /* DetailsPageInfoController.swift */,
+			);
+			path = Details;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1370,6 +1374,7 @@
 				847ABCAB1C47AF3E002C037E /* AViewController.swift in Sources */,
 				847ABCFD1C47AF3E002C037E /* Constraint.swift in Sources */,
 				847ABBC91C47AED1002C037E /* AppDelegate.swift in Sources */,
+				8402B5281C4F7F5200D79ABB /* DetailsPageInfoController.swift in Sources */,
 				847ABD041C47AF3E002C037E /* EdgeInsets.swift in Sources */,
 				847ABD0B1C47AF3E002C037E /* LBXPermissions.swift in Sources */,
 				847ABCD31C47AF3E002C037E /* UIFlatImageTabItem.swift in Sources */,
@@ -1388,7 +1393,6 @@
 				847ABD171C47AF3E002C037E /* RootViewController.swift in Sources */,
 				8440A47D1C48C4D2009E8ADD /* ApprovePageHomeController.swift in Sources */,
 				847ABCF11C47AF3E002C037E /* RefreshContainer.swift in Sources */,
-				847ABCDE1C47AF3E002C037E /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				840049D21C4CBFD700D20B90 /* BadgeStyle.m in Sources */,
 				847ABCF61C47AF3E002C037E /* TAAbstractDotView.m in Sources */,
 				840049D51C4CC5B200D20B90 /* ApprovePageListController.swift in Sources */,
@@ -1435,9 +1439,11 @@
 				847ABD031C47AF3E002C037E /* Debugging.swift in Sources */,
 				8486C01A1C4C92310066E3F1 /* FlatUIColors.swift in Sources */,
 				847ABD931C47B490002C037E /* IQUIScrollView+Additions.m in Sources */,
+				84F52B711C4E3A0600CF96FE /* RoundTagView.swift in Sources */,
 				847ABCEA1C47AF3E002C037E /* MMDrawerBarButtonItem.m in Sources */,
 				847ABD9C1C47B490002C037E /* IQTitleBarButtonItem.m in Sources */,
 				847ABCCA1C47AF3E002C037E /* CASectionPageMenu.swift in Sources */,
+				84F52B7A1C4E3BC400CF96FE /* DetailsPageHomeController.swift in Sources */,
 				847ABD0F1C47AF3E002C037E /* LBXScanViewController.swift in Sources */,
 				847ABCD21C47AF3E002C037E /* UICreaterUtils.swift in Sources */,
 				847ABCEC1C47AF3E002C037E /* MMDrawerVisualState.m in Sources */,

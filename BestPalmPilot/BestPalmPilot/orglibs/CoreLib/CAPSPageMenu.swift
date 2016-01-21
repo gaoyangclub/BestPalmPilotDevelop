@@ -979,6 +979,13 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 
                 // Add page from which tap is initiated so it can be removed after tap is done
                 pagesAddedDictionary[lastPageIndex] = lastPageIndex
+                
+                // Set selected color for title label of selected menu item
+                if menuItems.count > 0 {
+                    if currentPageIndex >= 0 && menuItems[currentPageIndex].titleLabel != nil {
+                        menuItems[currentPageIndex].titleLabel!.textColor = selectedMenuItemLabelColor
+                    }
+                }
             }
             
             // Move controller scroll view when tapping menu item

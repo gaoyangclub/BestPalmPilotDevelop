@@ -126,7 +126,11 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
             JLToast.makeText("请输入密码!").show()
             return
         }
-        BestRemoteFacade.login(userText.text!, password: passwordText.text!, appid: "1", mobileInfo: "1") {[unowned self] (json,var isSuccess,_) -> Void in
+        BestRemoteFacade.login(userText.text!, password: passwordText.text!, appid: "1", mobileInfo: "1") {[weak self] (json,var isSuccess,_) -> Void in
+            if self == nil{
+                print("LoginViewController对象已经销毁")
+                return
+            }
             var failMsg:String?
             if isSuccess{
                 if json != nil && json!["issuccess"].boolValue {
@@ -135,18 +139,18 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
                     if !json!["usercode"].stringValue.isEmpty{
                         UserDefaultCache.setUsercode(json!["usercode"].stringValue)
                     }else{
-                        UserDefaultCache.setUsercode(self.userText.text!) //只能记录输入的文字
+                        UserDefaultCache.setUsercode(self?.userText.text!) //只能记录输入的文字
                     }
                     if !json!["username"].stringValue.isEmpty{
                         UserDefaultCache.setUsername(json!["username"].stringValue)
                     }
-                    UserDefaultCache.setPassword(self.passwordText.text!)
+                    UserDefaultCache.setPassword(self?.passwordText.text!)
                     UserDefaultCache.setToken(json!["token"].stringValue)
-                    self.delegate?.loginViewWillDismiss?(self)
+                    self?.delegate?.loginViewWillDismiss?(self!)
                     
-                    self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                    self?.dismissViewControllerAnimated(true, completion: { () -> Void in
                         //                print("登陆界面关闭")
-                        self.delegate?.loginViewDidDismiss?(self)
+                        self?.delegate?.loginViewDidDismiss?(self!)
                     })
                 }else{
                     failMsg = json!["failmsg"].stringValue
@@ -159,7 +163,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
                 let alertController = UIAlertController(title: "登陆失败", message: failMsg, preferredStyle: UIAlertControllerStyle.Alert)
                 let okAction = UIAlertAction(title: "好的", style: UIAlertActionStyle.Default, handler: nil)
                 alertController.addAction(okAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
+                self?.presentViewController(alertController, animated: true, completion: nil)
                 
 //                let delayInSeconds:Int64 =  100000000  * 2
 //                let popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW,delayInSeconds)
@@ -227,7 +231,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
         
         super.viewDidLoad()
 //        self.title = "登陆页面"
-        self.view.backgroundColor = UIColor(red: 241/255, green: 243/255, blue: 247/255, alpha: 1)
+        self.view.backgroundColor = BestUtils.backgroundColor//UIColor(red: 241/255, green: 243/255, blue: 247/255, alpha: 1)
 
         // Do any additional setup after loading the view.
     }

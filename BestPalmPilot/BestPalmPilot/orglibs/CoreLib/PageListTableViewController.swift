@@ -12,6 +12,8 @@ class PageListTableViewController: BaseTableViewController {
 
     var pageSO:PageListSO!// = self.createPageSO()
     var hasSetUp:Bool = false
+    var showFooter:Bool = true
+    var hasFirstRefreshed:Bool = false //第一次刷新界面
     
     override func loadView() {
         super.loadView()
@@ -23,7 +25,7 @@ class PageListTableViewController: BaseTableViewController {
     }
     
     /** 头部下拉全部刷新 */
-    func headerRequest(pageSO:PageListSO,callback:(() -> Void)!){
+    func headerRequest(pageSO:PageListSO,callback:((hasData:Bool) -> Void)!){
         
     }
     
@@ -35,35 +37,49 @@ class PageListTableViewController: BaseTableViewController {
     func setupRefresh(){
         self.hasSetUp = true
         
-        self.refreshContaner.addHeaderWithCallback(RefreshHeaderView.header(),callback: { [unowned self] ()-> Void in
-            self.pageSO.pageNumber = 0//重新清零
+        self.refreshContaner.addHeaderWithCallback(RefreshHeaderView.header(),callback: { [weak self] ()-> Void in
+            self?.pageSO?.pagenumber = 0//重新清零
            
-            self.headerRequest(self.pageSO){ [unowned self] ()-> Void in//获取数据完毕 刷新界面
-                self.tableView?.reloadData()
-                self.refreshContaner?.headerReset()
-            }
-        })
-        
-        self.refreshContaner.addFooterWithCallback(RefreshFooterView.footer(),callback: { [unowned self] ()-> Void in
-            let nowPage = self.pageSO.pageNumber
-            self.pageSO.pageNumber += 1//页数+1
-            
-            self.footerRequest(self.pageSO){ [unowned self] hasData in
+            self?.headerRequest((self!.pageSO)){ [weak self] hasData in//获取数据完毕 刷新界面
+                self?.hasFirstRefreshed = true
                 if hasData {
-                    self.tableView.reloadData()
-                    self.refreshContaner.footerReset()
+                    self?.tableView?.reloadData()
+                    self?.refreshContaner?.headerReset()
                 }else{
-                    self.refreshContaner.footerNodata()
-                    self.pageSO.pageNumber = nowPage //页数恢复
+                    self?.refreshContaner?.headerReset()
+                    self?.refreshContaner?.footerNodata()
+                    self?.pageSO?.pagenumber = 0 //清空页数
                 }
             }
         })
+        
+        if showFooter {
+            self.refreshContaner.addFooterWithCallback(RefreshFooterView.footer(),callback: { [weak self] ()-> Void in
+                let nowPage = self?.pageSO?.pagenumber
+                self?.pageSO?.pagenumber += 1//页数+1
+                
+                self?.footerRequest(self!.pageSO){ [weak self] hasData in
+                    if hasData {
+                        self?.tableView?.reloadData()
+                        self?.refreshContaner?.footerReset()
+                    }else{
+                        self?.refreshContaner?.footerNodata()
+                        self?.pageSO?.pagenumber = nowPage! //页数恢复
+                    }
+                }
+            })
+        }
     }
+    
+    /** 滚轮是否恢复位置 */
+    var contentOffsetRest:Bool = true
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         if hasSetUp {
-            self.refreshContaner.scrollerView.contentOffset.y = 0 //滚轮位置恢复
+            if contentOffsetRest{
+                self.refreshContaner.scrollerView.contentOffset.y = 0 //滚轮位置恢复
+            }
         }else{
             self.setupRefresh()
             self.refreshContaner.headerBeginRefreshing()
@@ -94,8 +110,8 @@ class PageListTableViewController: BaseTableViewController {
 }
 class PageListSO:NSObject{
     
-    var objectsPerPage:Int = 20 //每页显示20个
-    var pageNumber:Int = 0//当前页码
-    var lastUpdateTime:String = ""//年月日 时分秒
+    var objectsperpage:Int = 20 //每页显示20个
+    var pagenumber:Int = 0//当前页码
+    var lastupdatetime:String = ""//年月日 时分秒
     
 }

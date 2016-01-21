@@ -13,6 +13,7 @@ class BaseTableViewController: RefreshTableViewController {
     var refreshAll:Bool = true
     var dataSource:NSMutableArray=[]//二维数组 [section][index]
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -111,8 +112,10 @@ class BaseTableViewController: RefreshTableViewController {
         if source.data != nil{
             cell!.isLast = cellVo.cellTag == 2//row == source.data!.count - 1//索引在最后
         }
-        cell!.data = data
         cell!.indexPath = indexPath
+        cell!.tableView = tableView
+        cell!.data = data
+        cell!.cellVo = cellVo
         return cell!//tableView.cellForRowAtIndexPath(indexPath)!
     }
 

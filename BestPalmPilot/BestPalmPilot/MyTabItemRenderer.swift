@@ -13,7 +13,6 @@ struct TabRendererVo {
     var title:String!
     var iconUrl:String!
 }
-
 class MyTabItemRenderer: BaseItemRenderer {
     
     // Only override drawRect: if you perform custom drawing.
@@ -45,11 +44,11 @@ class MyTabItemRenderer: BaseItemRenderer {
             labelView.textAlignment = NSTextAlignment.Center
             addSubview(labelView)
             
-            labelView.snp_makeConstraints { [unowned self](make) -> Void in
-                make.centerX.equalTo(self)
-                make.left.equalTo(self)
-                make.right.equalTo(self)
-                make.bottom.equalTo(self).offset(-2)
+            labelView.snp_makeConstraints { [weak self](make) -> Void in
+                make.centerX.equalTo(self!)
+                make.left.equalTo(self!)
+                make.right.equalTo(self!)
+                make.bottom.equalTo(self!).offset(-2)
             }
         }
         let vo = data as! TabRendererVo
@@ -68,11 +67,11 @@ class MyTabItemRenderer: BaseItemRenderer {
             imageContainer.userInteractionEnabled = false//无法交互
             addSubview(imageContainer)
             
-            imageContainer.snp_makeConstraints { [unowned self](make) -> Void in
-                make.left.equalTo(self)
-                make.right.equalTo(self)
-                make.bottom.equalTo(self.labelView.snp_top)
-                make.top.equalTo(self).offset(5)
+            imageContainer.snp_makeConstraints { [weak self](make) -> Void in
+                make.left.equalTo(self!)
+                make.right.equalTo(self!)
+                make.bottom.equalTo(self!.labelView.snp_top)
+                make.top.equalTo(self!).offset(5)
             }
             
             tabItem = UIFlatImageTabItem()
@@ -82,10 +81,10 @@ class MyTabItemRenderer: BaseItemRenderer {
             tabItem.normalColor = MyTabItemRenderer.normalColor
             tabItem.selectColor = MyTabItemRenderer.selectColor
             
-            tabItem.snp_makeConstraints(closure: { [unowned self](make) -> Void in
+            tabItem.snp_makeConstraints(closure: { [weak self](make) -> Void in
                 make.height.equalTo(20)
-                make.left.right.equalTo(self.imageContainer)
-                make.center.equalTo(self.imageContainer)
+                make.left.right.equalTo(self!.imageContainer)
+                make.center.equalTo(self!.imageContainer)
             })
 //            imageView = UIImageView()
 //            tempUI.addSubview(imageView)
@@ -97,27 +96,8 @@ class MyTabItemRenderer: BaseItemRenderer {
         }
         
         let vo = data as! TabRendererVo
-        BatchLoaderUtil.loadFile(vo.iconUrl, callBack: { [unowned self](image, params) -> Void in
-            self.tabItem.image = image
-//            var ciColor1 = CIColor(color:MyTabItemRenderer.normalColor)
-//            
-//            // 1
-//            var filter = CIFilter(name: "CIColorMonochrome")
-//            filter.setValue(CIImage(image: image), forKey: kCIInputImageKey)
-//            filter.setValue(ciColor1, forKey: kCIInputColorKey)
-//            filter.setValue(1, forKey: kCIInputIntensityKey)
-//            let outputImage1 = filter.outputImage
-//            
-//            self.normalImage = UIImage(CIImage: outputImage1, scale: image.scale, orientation: UIImageOrientation.Up)
-//            
-//            var ciColor2 = CIColor(color:MyTabItemRenderer.selectColor)
-//            filter.setValue(ciColor2, forKey: kCIInputColorKey)
-//            let outputImage2 = filter.outputImage
-//            
-//            // 2
-//            self.selectImage =  UIImage(CIImage: outputImage2, scale: image.scale, orientation: UIImageOrientation.Up)
-            
-//            self.showImage()
+        BatchLoaderUtil.loadFile(vo.iconUrl, callBack: { [weak self](image, params) -> Void in
+            self!.tabItem.image = image
         })
         self.tabItem.select = selected
     }

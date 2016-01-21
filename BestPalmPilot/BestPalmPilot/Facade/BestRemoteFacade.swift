@@ -28,11 +28,20 @@ class BestRemoteFacade: AnyObject {
         do{
             let nsdata = try NSJSONSerialization.dataWithJSONObject(so.mj_keyValues(), options: NSJSONWritingOptions.PrettyPrinted)
             let jsonString:NSString = NSString(data: nsdata, encoding: NSUTF8StringEncoding)!
-            print(jsonString)
-            request(remoteUrl + "getListFormInfos",parameters:["so":jsonString,"groupkey":groupkey.getMarks()],callBack:callBack)
+//            print(jsonString)
+            request(remoteUrl + "getListFormInfos",parameters:["so":jsonString,"groupkey":groupkey.getMarks()],
+                callBack:callBack)
         }catch{
             
         }
+    }
+    
+    static func getFormDetailsVo(code:String,groupkey:String,callBack:ResponseCompletionHandler?){
+        request(remoteUrl + "getForm",parameters:["code":code.getMarks(),"groupkey":groupkey.getMarks()],callBack:callBack)
+    }
+    
+    static func audit(code:String,action:String,remark:String,username:String,userCode:String,groupkey:String,callBack:ResponseCompletionHandler?){
+        request(remoteUrl + "audit",parameters:["code":code.getMarks(),"action":action.getMarks(),"remark":remark.getMarks(),"staffname":username.getMarks(),"staffcode":userCode.getMarks(),"groupkey":groupkey.getMarks()],callBack:callBack)
     }
     
 //    private static func modifyParameters(var parameters:Dictionary<String,AnyObject>)->Dictionary<String,AnyObject>{

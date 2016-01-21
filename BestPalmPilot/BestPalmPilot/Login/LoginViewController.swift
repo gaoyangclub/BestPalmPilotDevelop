@@ -183,44 +183,44 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
     
     private func layoutSubViews(){
         
-        logoImage.snp_makeConstraints { [unowned self](make) -> Void in
-            make.left.right.equalTo(self.usernameBack)
-            make.bottom.equalTo(self.usernameBack.snp_top)
-            make.top.equalTo(self.view)
+        logoImage.snp_makeConstraints { [weak self](make) -> Void in
+            make.left.right.equalTo(self!.usernameBack)
+            make.bottom.equalTo(self!.usernameBack.snp_top)
+            make.top.equalTo(self!.view)
         }
-        usernameBack.snp_makeConstraints { [unowned self](make) -> Void in
-            make.left.equalTo(self.view).offset(30)
-            make.right.equalTo(self.view).offset(-30)
-            make.top.equalTo(self.view.snp_centerY)
+        usernameBack.snp_makeConstraints { [weak self](make) -> Void in
+            make.left.equalTo(self!.view).offset(30)
+            make.right.equalTo(self!.view).offset(-30)
+            make.top.equalTo(self!.view.snp_centerY)
             make.height.equalTo(40)
         }
-        userIcon.snp_makeConstraints { [unowned self](make) -> Void in
-            make.top.equalTo(self.usernameBack).offset(5)
-            make.bottom.equalTo(self.usernameBack).offset(-5)
-            make.left.equalTo(self.usernameBack)
+        userIcon.snp_makeConstraints { [weak self](make) -> Void in
+            make.top.equalTo(self!.usernameBack).offset(5)
+            make.bottom.equalTo(self!.usernameBack).offset(-5)
+            make.left.equalTo(self!.usernameBack)
             make.width.equalTo(46)
         }
-        userText.snp_makeConstraints { [unowned self](make) -> Void in
-            make.left.equalTo(self.userIcon.snp_right)
-            make.top.bottom.right.equalTo(self.usernameBack)
+        userText.snp_makeConstraints { [weak self](make) -> Void in
+            make.left.equalTo(self!.userIcon.snp_right)
+            make.top.bottom.right.equalTo(self!.usernameBack)
         }
-        passwordBack.snp_makeConstraints { [unowned self](make) -> Void in
-            make.left.right.height.equalTo(self.usernameBack)
-            make.top.equalTo(self.usernameBack.snp_bottom).offset(20)
+        passwordBack.snp_makeConstraints { [weak self](make) -> Void in
+            make.left.right.height.equalTo(self!.usernameBack)
+            make.top.equalTo(self!.usernameBack.snp_bottom).offset(20)
         }
-        passwordIcon.snp_makeConstraints { [unowned self](make) -> Void in
-            make.top.equalTo(self.passwordBack).offset(5)
-            make.bottom.equalTo(self.passwordBack).offset(-5)
-            make.left.equalTo(self.passwordBack)
+        passwordIcon.snp_makeConstraints { [weak self](make) -> Void in
+            make.top.equalTo(self!.passwordBack).offset(5)
+            make.bottom.equalTo(self!.passwordBack).offset(-5)
+            make.left.equalTo(self!.passwordBack)
             make.width.equalTo(46)
         }
-        passwordText.snp_makeConstraints { [unowned self](make) -> Void in
-            make.left.equalTo(self.userText)
-            make.top.bottom.right.equalTo(self.passwordBack)
+        passwordText.snp_makeConstraints { [weak self](make) -> Void in
+            make.left.equalTo(self!.userText)
+            make.top.bottom.right.equalTo(self!.passwordBack)
         }
-        submitButton.snp_makeConstraints { [unowned self](make) -> Void in
-            make.left.right.height.equalTo(self.usernameBack)
-            make.top.equalTo(self.passwordBack.snp_bottom).offset(20)
+        submitButton.snp_makeConstraints { [weak self](make) -> Void in
+            make.left.right.height.equalTo(self!.usernameBack)
+            make.top.equalTo(self!.passwordBack.snp_bottom).offset(20)
         }
     }
     

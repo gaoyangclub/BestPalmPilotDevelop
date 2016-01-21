@@ -39,7 +39,7 @@ class ApprovePageHomeController: BaseTableViewController {
         tabItem2.sizeType = .FillWidth
         tabItem2.normalColor = UIColor.whiteColor()
         //        tabItem.selectColor = UICreaterUtils.colorRise
-        BatchLoaderUtil.loadFile("campaign", callBack: { (image, params) -> Void in //[unowned self]
+        BatchLoaderUtil.loadFile("campaign", callBack: { (image, params) -> Void in //[weak self]
             tabItem2.image = image
         })
         tabItem2.addTarget(self, action: "setupClick", forControlEvents: UIControlEvents.TouchDown)
@@ -238,51 +238,51 @@ private class ApprovePageHomeInfoCell: BaseTableViewCell {
     private func initCell(){
         let avo:ApproveMenuVo = data as! ApproveMenuVo
         
-        bottomLine.snp_makeConstraints { [unowned self](make) -> Void in
-            make.left.right.bottom.equalTo(self.contentView)
+        bottomLine.snp_makeConstraints { [weak self](make) -> Void in
+            make.left.right.bottom.equalTo(self!.contentView)
             make.height.equalTo(UICreaterUtils.normalLineWidth)
         }
         
-        iconView.snp_makeConstraints { [unowned self](make) -> Void in
-            make.left.equalTo(self.contentView).offset(2)
+        iconView.snp_makeConstraints { [weak self](make) -> Void in
+            make.left.equalTo(self!.contentView).offset(2)
             //            make.size.equalTo(CGSize(width: 40, height: 24))
             make.width.equalTo(40)
             make.height.equalTo(24)
-            make.centerY.equalTo(self.tagLabel)
+            make.centerY.equalTo(self!.tagLabel)
         }
-        BatchLoaderUtil.loadFile(avo.iconurl, callBack: { [unowned self](image, params) -> Void in
-            self.iconView.image = image
+        BatchLoaderUtil.loadFile(avo.iconurl, callBack: { [weak self](image, params) -> Void in
+            self!.iconView.image = image
         })
         
-        tagLabel.snp_makeConstraints { [unowned self](make) -> Void in
-            make.left.equalTo(self.iconView.snp_right).offset(10)
-            make.bottom.equalTo(self.contentView.snp_centerY)
+        tagLabel.snp_makeConstraints { [weak self](make) -> Void in
+            make.left.equalTo(self!.iconView.snp_right).offset(10)
+            make.bottom.equalTo(self!.contentView.snp_centerY)
         }
         
         tagLabel.text = avo.groupkey
         tagLabel.sizeToFit()
         
-        titleLabel.snp_makeConstraints { [unowned self](make) -> Void in
-            make.left.equalTo(self.tagLabel)
-            make.top.equalTo(self.contentView.snp_centerY).offset(6)
+        titleLabel.snp_makeConstraints { [weak self](make) -> Void in
+            make.left.equalTo(self!.tagLabel)
+            make.top.equalTo(self!.contentView.snp_centerY).offset(6)
         }
         self.titleLabel.text = avo.groupname
         self.titleLabel.sizeToFit()
         
-        arrowView.snp_makeConstraints { [unowned self](make) -> Void in
+        arrowView.snp_makeConstraints { [weak self](make) -> Void in
             make.width.equalTo(10)
             make.height.equalTo(22)
-            make.centerY.equalTo(self.contentView)
-            make.right.equalTo(self.contentView).offset(-30)
+            make.centerY.equalTo(self!.contentView)
+            make.right.equalTo(self!.contentView).offset(-30)
         }
 //        avo.count = 88
         if avo.count > 0{
             badgeView.hidden = false
             badgeView.badgeText = "\(avo.count)"
             
-            badgeView.snp_makeConstraints { [unowned self](make) -> Void in
-                make.right.equalTo(self.arrowView.snp_left).offset(-16)
-                make.centerY.equalTo(self.contentView)
+            badgeView.snp_makeConstraints { [weak self](make) -> Void in
+                make.right.equalTo(self!.arrowView.snp_left).offset(-16)
+                make.centerY.equalTo(self!.contentView)
                 make.width.equalTo(34)
                 make.height.equalTo(34)
             }

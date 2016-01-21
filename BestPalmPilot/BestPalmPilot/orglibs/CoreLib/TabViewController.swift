@@ -58,10 +58,10 @@ class TabViewController: UITabBarController {
         
         self.view.addSubview(lineView)
         
-        lineView.snp_makeConstraints(){ [unowned self](make) -> Void in
+        lineView.snp_makeConstraints(){ [weak self](make) -> Void in
             make.height.equalTo(0.5)
-            make.width.equalTo(self.view)
-            make.bottom.equalTo(self.containerView.snp_top)
+            make.width.equalTo(self!.view)
+            make.bottom.equalTo(self!.containerView.snp_top)
         }
     }
     
@@ -83,11 +83,11 @@ class TabViewController: UITabBarController {
         if dataProvider == nil{
             return
         }
-        containerView.snp_makeConstraints(){ [unowned self](make) -> Void in
-            make.centerX.equalTo(self.view)
-            make.height.equalTo(self.tabBarHeight)
-            make.width.equalTo(self.view)
-            make.bottom.equalTo(self.view)
+        containerView.snp_makeConstraints(){ [weak self](make) -> Void in
+            make.centerX.equalTo(self!.view)
+            make.height.equalTo(self!.tabBarHeight)
+            make.width.equalTo(self!.view)
+            make.bottom.equalTo(self!.view)
         }
 //        
         let tw:UIView = self.view.subviews[0] //UITransitionView
@@ -110,11 +110,11 @@ class TabViewController: UITabBarController {
             
 //            subView.frame = CGRectMake(x, 0, subW, tabBarHeight)
             containerView.addSubview(subView)
-            subView.snp_makeConstraints(closure: { [unowned self](make) -> Void in
-                make.top.equalTo(self.containerView)
-                make.bottom.equalTo(self.containerView)
+            subView.snp_makeConstraints(closure: { [weak self](make) -> Void in
+                make.top.equalTo(self!.containerView)
+                make.bottom.equalTo(self!.containerView)
                 if preView == nil{
-                    make.left.equalTo(self.containerView)
+                    make.left.equalTo(self!.containerView)
                 }else{
                     make.left.equalTo(preView!.snp_right)
                 }

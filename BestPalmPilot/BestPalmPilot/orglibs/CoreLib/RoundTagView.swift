@@ -45,17 +45,17 @@ class RoundTagView:UIView{
             //            subView = UIView()
             //            addSubview(subView)
             
-            tagLabel.snp_makeConstraints { [unowned self](make) -> Void in
-                make.center.equalTo(self)
+            tagLabel.snp_makeConstraints { [weak self](make) -> Void in
+                make.center.equalTo(self!)
             }
             
             self.layer.borderColor = tagColor.CGColor
             self.layer.borderWidth = 0.6
             self.layer.cornerRadius = 3
-            self.snp_makeConstraints { [unowned self](make) -> Void in
+            self.snp_makeConstraints { [weak self](make) -> Void in
                 make.width.greaterThanOrEqualTo(20)
-                make.width.equalTo(self.tagLabel).offset(6)
-                make.height.equalTo(self.tagLabel).offset(2)
+                make.width.equalTo(self!.tagLabel).offset(6)
+                make.height.equalTo(self!.tagLabel).offset(2)
             }
         }
         tagLabel.text = tagText

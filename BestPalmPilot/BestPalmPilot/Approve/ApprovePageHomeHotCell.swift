@@ -42,13 +42,13 @@ class ApprovePageHomeHotCell: BaseTableViewCell {
     private func initCell(){
         self.contentView.removeAllSubViews() //先全部移除
         
-        topLine.snp_makeConstraints { [unowned self](make) -> Void in
-            make.left.right.top.equalTo(self)
+        topLine.snp_makeConstraints { [weak self](make) -> Void in
+            make.left.right.top.equalTo(self!)
             make.height.equalTo(UICreaterUtils.normalLineWidth)
         }
         
-        bottomLine.snp_makeConstraints { [unowned self](make) -> Void in
-            make.left.right.bottom.equalTo(self)
+        bottomLine.snp_makeConstraints { [weak self](make) -> Void in
+            make.left.right.bottom.equalTo(self!)
             make.height.equalTo(UICreaterUtils.normalLineWidth)
         }
         
@@ -58,9 +58,9 @@ class ApprovePageHomeHotCell: BaseTableViewCell {
             area.tag = i
             area.addTarget(self, action: "hotClickHandler:", forControlEvents: UIControlEvents.TouchUpInside)
             self.contentView.addSubview(area)
-            area.snp_makeConstraints(closure: { [unowned self](make) -> Void in
-                make.top.bottom.equalTo(self.contentView)
-                make.width.equalTo(self.contentView).dividedBy(self.hotList.count)
+            area.snp_makeConstraints(closure: { [weak self](make) -> Void in
+                make.top.bottom.equalTo(self!.contentView)
+                make.width.equalTo(self!.contentView).dividedBy(self!.hotList.count)
                 //                make.left.equalTo(self.contentView.snp_width).multipliedBy(Double(i) / Double(hotList.count))
                 if preItem != nil{
                     make.left.equalTo(preItem!.snp_right)
@@ -70,7 +70,7 @@ class ApprovePageHomeHotCell: BaseTableViewCell {
             })
             
             let titleLabel = UICreaterUtils.createLabel(12, UICreaterUtils.colorBlack, hotList[i].title, true, area)
-            titleLabel.snp_makeConstraints(closure: { (make) -> Void in //[unowned self]
+            titleLabel.snp_makeConstraints(closure: { (make) -> Void in //[weak self]
                 make.centerX.equalTo(area)
                 make.bottom.equalTo(-18)
             })
@@ -78,7 +78,7 @@ class ApprovePageHomeHotCell: BaseTableViewCell {
             let imageView = UIImageView()
             imageView.contentMode = UIViewContentMode.ScaleAspectFit //保持比例
             area.addSubview(imageView)
-            imageView.snp_makeConstraints(closure: { (make) -> Void in //[unowned self]
+            imageView.snp_makeConstraints(closure: { (make) -> Void in //[weak self]
                 make.height.equalTo(46)
                 make.centerX.equalTo(area)
                 make.top.equalTo(18)

@@ -60,7 +60,7 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
         label.font = UIFont.systemFontOfSize(20)//20号 ,weight:2
         
         titleView.addSubview(label)
-        label.snp_makeConstraints { (make) -> Void in //[unowned self]
+        label.snp_makeConstraints { (make) -> Void in //[weak self]
             make.center.equalTo(titleView)
         }
         

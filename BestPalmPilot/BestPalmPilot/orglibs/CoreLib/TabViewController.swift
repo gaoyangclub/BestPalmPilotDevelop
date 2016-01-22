@@ -33,7 +33,7 @@ class TabViewController: UITabBarController {
         }
     }
     
-    var tabBarHeight:CGFloat = 45{
+    var tabBarHeight:CGFloat = 50{
         didSet{
             self.view.setNeedsLayout()
         }

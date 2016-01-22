@@ -17,9 +17,21 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
     
     weak var delegate:LoginViewDelegate?
     
+    private lazy var loginBackView:UIView = {
+        let back = UIView()
+//                back.backgroundColor = UIColor.brownColor()
+        self.view.addSubview(back)
+        back.snp_makeConstraints(closure: { [weak self](make) -> Void in
+            make.left.right.equalTo(self!.view)
+            make.height.equalTo(self!.view).multipliedBy(0.8)
+            make.center.equalTo(self!.view)
+        })
+        return back
+    }()
+    
     private lazy var logoImage:UIImageView = {
        let imageView = UIImageView()
-        self.view.addSubview(imageView)
+        self.loginBackView.addSubview(imageView)
 //        imageView.layer.cornerRadius = 50
         imageView.contentMode = UIViewContentMode.ScaleAspectFit
         BatchLoaderUtil.loadFile("bestLogo.jpeg", callBack: { (image, params) -> Void in
@@ -34,7 +46,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
         view.layer.borderWidth = 1//UICreaterUtils.normalLineWidth
         view.layer.cornerRadius = 2
         view.backgroundColor = UIColor.whiteColor()
-        self.view.addSubview(view)
+        self.loginBackView.addSubview(view)
         return view
     }()
     
@@ -69,7 +81,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
         view.layer.borderWidth = 1//UICreaterUtils.normalLineWidth
         view.layer.cornerRadius = 2
         view.backgroundColor = UIColor.whiteColor()
-        self.view.addSubview(view)
+        self.loginBackView.addSubview(view)
         return view
     }()
     
@@ -107,7 +119,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
         let title:NSString = "登  陆"
         btn.setTitle(title as String, forState: UIControlState.Normal)
         btn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        self.view.addSubview(btn)
+        self.loginBackView.addSubview(btn)
         
 //        var attstr:NSMutableAttributedString = NSMutableAttributedString(string: title as String)
 //        attstr.addAttribute(NSUnderlineStyleAttributeName, value: 1, range: NSMakeRange(0, title.length))
@@ -126,6 +138,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
             JLToast.makeText("请输入密码!").show()
             return
         }
+        EZLoadingActivity.show("账号登陆中", disableUI: true)
         BestRemoteFacade.login(userText.text!, password: passwordText.text!, appid: "1", mobileInfo: "1") {[weak self] (json,var isSuccess,_) -> Void in
             if self == nil{
                 print("LoginViewController对象已经销毁")
@@ -160,6 +173,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
                 failMsg = "网络连接错误,请检查您手机的网络状态或者稍后登陆"
             }
             if(!isSuccess){ //登陆失败
+                EZLoadingActivity.hide()
                 let alertController = UIAlertController(title: "登陆失败", message: failMsg, preferredStyle: UIAlertControllerStyle.Alert)
                 let okAction = UIAlertAction(title: "好的", style: UIAlertActionStyle.Default, handler: nil)
                 alertController.addAction(okAction)
@@ -171,6 +185,8 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
 //                _ = UIAlertController(title: "登陆失败", message: json["failmsg"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
 //                    self.presentViewController(alertController, animated: true, completion: nil)
 //                })
+            }else{
+                EZLoadingActivity.hide(success: true, animated: true)
             }
         }
     }
@@ -183,30 +199,15 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
     
     private func layoutSubViews(){
         
-        logoImage.snp_makeConstraints { [weak self](make) -> Void in
-            make.left.right.equalTo(self!.usernameBack)
-            make.bottom.equalTo(self!.usernameBack.snp_top)
-            make.top.equalTo(self!.view)
-        }
-        usernameBack.snp_makeConstraints { [weak self](make) -> Void in
-            make.left.equalTo(self!.view).offset(30)
-            make.right.equalTo(self!.view).offset(-30)
-            make.top.equalTo(self!.view.snp_centerY)
+        submitButton.snp_makeConstraints { [weak self](make) -> Void in
+            make.left.equalTo(self!.loginBackView).offset(30)
+            make.right.equalTo(self!.loginBackView).offset(-30)
+            make.bottom.equalTo(self!.loginBackView)
             make.height.equalTo(40)
         }
-        userIcon.snp_makeConstraints { [weak self](make) -> Void in
-            make.top.equalTo(self!.usernameBack).offset(5)
-            make.bottom.equalTo(self!.usernameBack).offset(-5)
-            make.left.equalTo(self!.usernameBack)
-            make.width.equalTo(46)
-        }
-        userText.snp_makeConstraints { [weak self](make) -> Void in
-            make.left.equalTo(self!.userIcon.snp_right)
-            make.top.bottom.right.equalTo(self!.usernameBack)
-        }
         passwordBack.snp_makeConstraints { [weak self](make) -> Void in
-            make.left.right.height.equalTo(self!.usernameBack)
-            make.top.equalTo(self!.usernameBack.snp_bottom).offset(20)
+            make.left.right.height.equalTo(self!.submitButton)
+            make.bottom.equalTo(self!.submitButton.snp_top).offset(-20)
         }
         passwordIcon.snp_makeConstraints { [weak self](make) -> Void in
             make.top.equalTo(self!.passwordBack).offset(5)
@@ -218,9 +219,24 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
             make.left.equalTo(self!.userText)
             make.top.bottom.right.equalTo(self!.passwordBack)
         }
-        submitButton.snp_makeConstraints { [weak self](make) -> Void in
-            make.left.right.height.equalTo(self!.usernameBack)
-            make.top.equalTo(self!.passwordBack.snp_bottom).offset(20)
+        usernameBack.snp_makeConstraints { [weak self](make) -> Void in
+            make.left.right.height.equalTo(self!.submitButton)
+            make.bottom.equalTo(self!.passwordBack.snp_top).offset(-20)
+        }
+        userIcon.snp_makeConstraints { [weak self](make) -> Void in
+            make.top.equalTo(self!.usernameBack).offset(5)
+            make.bottom.equalTo(self!.usernameBack).offset(-5)
+            make.left.equalTo(self!.usernameBack)
+            make.width.equalTo(46)
+        }
+        userText.snp_makeConstraints { [weak self](make) -> Void in
+            make.left.equalTo(self!.userIcon.snp_right)
+            make.top.bottom.right.equalTo(self!.usernameBack)
+        }
+        logoImage.snp_makeConstraints { [weak self](make) -> Void in
+            make.top.equalTo(self!.loginBackView)
+            make.left.right.equalTo(self!.usernameBack)
+            make.bottom.equalTo(self!.usernameBack.snp_top)
         }
     }
     

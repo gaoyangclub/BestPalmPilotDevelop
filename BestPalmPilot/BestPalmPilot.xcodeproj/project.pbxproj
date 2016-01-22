@@ -44,6 +44,7 @@
 		8440A49A1C48D2BC009E8ADD /* ApprovePageHomeHotCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8440A4991C48D2BC009E8ADD /* ApprovePageHomeHotCell.swift */; };
 		8440A49D1C48D3BC009E8ADD /* BestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8440A49C1C48D3BC009E8ADD /* BestUtils.swift */; };
 		8440A49F1C48D942009E8ADD /* campaign.png in Resources */ = {isa = PBXBuildFile; fileRef = 8440A49E1C48D942009E8ADD /* campaign.png */; };
+		8450E3241C51D19200615BAE /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8450E3231C51D19200615BAE /* SearchViewController.swift */; };
 		847ABBC91C47AED1002C037E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847ABBC81C47AED1002C037E /* AppDelegate.swift */; };
 		847ABBD01C47AED2002C037E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 847ABBCF1C47AED2002C037E /* Assets.xcassets */; };
 		847ABBD31C47AED2002C037E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 847ABBD11C47AED2002C037E /* LaunchScreen.storyboard */; };
@@ -182,6 +183,8 @@
 		8486C01A1C4C92310066E3F1 /* FlatUIColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8486C0191C4C92310066E3F1 /* FlatUIColors.swift */; };
 		84F52B711C4E3A0600CF96FE /* RoundTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F52B701C4E3A0600CF96FE /* RoundTagView.swift */; };
 		84F52B7A1C4E3BC400CF96FE /* DetailsPageHomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F52B791C4E3BC400CF96FE /* DetailsPageHomeController.swift */; };
+		84F7B3641C51F85200F32756 /* searchOut.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84F7B3631C51F85200F32756 /* searchOut.jpg */; };
+		84F7B3671C52194C00F32756 /* EZLoadingActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F7B3661C52194C00F32756 /* EZLoadingActivity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -322,6 +325,7 @@
 		8440A4991C48D2BC009E8ADD /* ApprovePageHomeHotCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApprovePageHomeHotCell.swift; sourceTree = "<group>"; };
 		8440A49C1C48D3BC009E8ADD /* BestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BestUtils.swift; sourceTree = "<group>"; };
 		8440A49E1C48D942009E8ADD /* campaign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = campaign.png; sourceTree = "<group>"; };
+		8450E3231C51D19200615BAE /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		847ABBC51C47AED1002C037E /* BestPalmPilot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BestPalmPilot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		847ABBC81C47AED1002C037E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		847ABBCF1C47AED2002C037E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -504,6 +508,8 @@
 		8486C0191C4C92310066E3F1 /* FlatUIColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlatUIColors.swift; sourceTree = "<group>"; };
 		84F52B701C4E3A0600CF96FE /* RoundTagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundTagView.swift; sourceTree = "<group>"; };
 		84F52B791C4E3BC400CF96FE /* DetailsPageHomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsPageHomeController.swift; sourceTree = "<group>"; };
+		84F7B3631C51F85200F32756 /* searchOut.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = searchOut.jpg; sourceTree = "<group>"; };
+		84F7B3661C52194C00F32756 /* EZLoadingActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EZLoadingActivity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -629,6 +635,14 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
+		8450E31C1C51D15700615BAE /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				8450E3231C51D19200615BAE /* SearchViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		847ABBBC1C47AED1002C037E = {
 			isa = PBXGroup;
 			children = (
@@ -653,9 +667,10 @@
 		847ABBC71C47AED1002C037E /* BestPalmPilot */ = {
 			isa = PBXGroup;
 			children = (
-				8440A49B1C48D3A2009E8ADD /* Util */,
-				84F52B781C4E3B9900CF96FE /* Details */,
 				847ABBFD1C47AF3E002C037E /* Facade */,
+				8440A49B1C48D3A2009E8ADD /* Util */,
+				8450E31C1C51D15700615BAE /* Search */,
+				84F52B781C4E3B9900CF96FE /* Details */,
 				847ABC241C47AF3E002C037E /* Login */,
 				8440A47B1C48C463009E8ADD /* Approve */,
 				847ABC271C47AF3E002C037E /* orglibs */,
@@ -696,6 +711,7 @@
 				8440A49E1C48D942009E8ADD /* campaign.png */,
 				840049D61C4CC80B00D20B90 /* magnifie@2x.png */,
 				8440A47E1C48CCA8009E8ADD /* empty.png */,
+				84F7B35C1C51F82B00F32756 /* Search */,
 				8440A4801C48D02C009E8ADD /* Approve */,
 				8440A4541C48C383009E8ADD /* Tabbar */,
 				847ABBF81C47AF3E002C037E /* Login */,
@@ -933,6 +949,7 @@
 		847ABD531C47B490002C037E /* Alert */ = {
 			isa = PBXGroup;
 			children = (
+				84F7B3651C52194C00F32756 /* EZLoading */,
 				847ABD541C47B490002C037E /* GoogleWearAlertView */,
 				847ABD5C1C47B490002C037E /* JLToast */,
 			);
@@ -1094,6 +1111,22 @@
 				8402B5271C4F7F5200D79ABB /* DetailsPageInfoController.swift */,
 			);
 			path = Details;
+			sourceTree = "<group>";
+		};
+		84F7B35C1C51F82B00F32756 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				84F7B3631C51F85200F32756 /* searchOut.jpg */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		84F7B3651C52194C00F32756 /* EZLoading */ = {
+			isa = PBXGroup;
+			children = (
+				84F7B3661C52194C00F32756 /* EZLoadingActivity.swift */,
+			);
+			path = EZLoading;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1282,6 +1315,7 @@
 				8440A49F1C48D942009E8ADD /* campaign.png in Resources */,
 				8486C0051C4C8EC90066E3F1 /* fundHot04.png in Resources */,
 				8486C0181C4C8EC90066E3F1 /* fundTag11.png in Resources */,
+				84F7B3641C51F85200F32756 /* searchOut.jpg in Resources */,
 				847ABCAA1C47AF3E002C037E /* userIcon.png in Resources */,
 				847ABD8A1C47B490002C037E /* messageIcon@2x.png in Resources */,
 				8440A4691C48C383009E8ADD /* icon_03.png in Resources */,
@@ -1446,11 +1480,13 @@
 				84F52B7A1C4E3BC400CF96FE /* DetailsPageHomeController.swift in Sources */,
 				847ABD0F1C47AF3E002C037E /* LBXScanViewController.swift in Sources */,
 				847ABCD21C47AF3E002C037E /* UICreaterUtils.swift in Sources */,
+				84F7B3671C52194C00F32756 /* EZLoadingActivity.swift in Sources */,
 				847ABCEC1C47AF3E002C037E /* MMDrawerVisualState.m in Sources */,
 				847ABD9B1C47B490002C037E /* IQBarButtonItem.m in Sources */,
 				847ABCCD1C47AF3E002C037E /* RootNavigationControl.swift in Sources */,
 				847ABD021C47AF3E002C037E /* ConstraintRelation.swift in Sources */,
 				847ABD0D1C47AF3E002C037E /* LBXScanNetAnimation.swift in Sources */,
+				8450E3241C51D19200615BAE /* SearchViewController.swift in Sources */,
 				840049F01C4CE79000D20B90 /* MJExtensionConst.m in Sources */,
 				840049F91C4CE79000D20B90 /* NSString+MJExtension.m in Sources */,
 				847ABCC21C47AF3E002C037E /* UIAwesomeButton.m in Sources */,
@@ -1595,11 +1631,14 @@
 		847ABBEE1C47AED2002C037E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APP_DISPLAY_NAME = "审批管家测试版";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = BestPalmPilot/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				New_Setting = "";
+				New_Setting1 = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.best.BestPalmPilot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1609,11 +1648,14 @@
 		847ABBEF1C47AED2002C037E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APP_DISPLAY_NAME = "审批管家";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = BestPalmPilot/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				New_Setting = "";
+				New_Setting1 = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.best.BestPalmPilot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;

@@ -15,7 +15,8 @@ import UIKit
 }
 public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,DetailsPageDelegate {
 
-    var approveMenuVo:ApproveMenuVo!
+//    var approveMenuVo:ApproveMenuVo!
+    var groupkey:String!
     var formInfoVo:FormInfoVo!
     
     var formWholeVo:FormWholeVo? //该界面所有列表的数据源
@@ -230,7 +231,7 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
     public func getFormDetails(refresh:Bool,formKey: String, callback: (([FormDetailVo]) -> Void)!) {
         if refresh || self.formWholeVo == nil{
             pageMenu.view.userInteractionEnabled = false //暂时屏蔽交互
-            BestRemoteFacade.getFormDetailsVo(formInfoVo.code, groupkey: approveMenuVo.groupkey, callBack: { [weak self](json, isSuccess, error) -> Void in
+            BestRemoteFacade.getFormDetailsVo(formInfoVo.code, groupkey: self.groupkey, callBack: { [weak self](json, isSuccess, error) -> Void in
                 if self == nil{
                     print("DetailsPageHomeController对象已经销毁")
                     return
@@ -263,20 +264,24 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
             return
         }
         showAlert("确定退回该AP吗？"){ [weak self] _ -> Void in
-            self!.checkPrevPageListController()
+            EZLoadingActivity.show("AP退回中", disableUI: true)
             self!.submitAction(BestUtils.AUDIT_APPROVE){ [weak self] json in
                 //必须回传后页面可以交互
                 print(json)
+                self!.checkPrevPageListController()
+                EZLoadingActivity.hide()
             }
         }
     }
     
     func agreeClick(sender:UIButton){
         showAlert("确定同意该AP吗？"){ [weak self] _ -> Void in
-            self!.checkPrevPageListController()
+            EZLoadingActivity.show("AP审批中", disableUI: true)
             self!.submitAction(BestUtils.AUDIT_REJECT){ [weak self] json in
                 //必须回传后页面可以交互
                 print(json)
+                self!.checkPrevPageListController()
+                EZLoadingActivity.hide()
             }
         }
     }
@@ -292,8 +297,18 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
         }
     }
     
+    override public func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        let searchIndex = self.rootNavigationController.viewControllers.count - 2
+        //        var viewControllers:[AnyObject] = self.navigationController!.viewControllers
+        if (self.rootNavigationController.viewControllers[searchIndex] as? SearchViewController != nil){//上一层是SearchViewController就要移除掉
+            self.rootNavigationController.viewControllers.removeAtIndex(searchIndex)
+        }
+    }
+    
     private func submitAction(action:String,callBack:ResponseCompletionHandler? = nil){
-        BestRemoteFacade.audit(formInfoVo.code, action: action, remark: opinionText.text!, username: UserDefaultCache.getUsername()!, userCode: UserDefaultCache.getUsercode()!, groupkey: approveMenuVo.groupkey, callBack: callBack)
+        //username: UserDefaultCache.getUsername()!
+        BestRemoteFacade.audit(formInfoVo.code, action: action, remark: opinionText.text!, userCode: UserDefaultCache.getUsercode()!, groupkey: self.groupkey, callBack: callBack)
     }
 
     private func showAlert(failMsg:String,okHandler:((UIAlertAction) -> Void)?){

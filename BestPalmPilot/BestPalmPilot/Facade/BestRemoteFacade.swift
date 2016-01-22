@@ -40,8 +40,9 @@ class BestRemoteFacade: AnyObject {
         request(remoteUrl + "getForm",parameters:["code":code.getMarks(),"groupkey":groupkey.getMarks()],callBack:callBack)
     }
     
-    static func audit(code:String,action:String,remark:String,username:String,userCode:String,groupkey:String,callBack:ResponseCompletionHandler?){
-        request(remoteUrl + "audit",parameters:["code":code.getMarks(),"action":action.getMarks(),"remark":remark.getMarks(),"staffname":username.getMarks(),"staffcode":userCode.getMarks(),"groupkey":groupkey.getMarks()],callBack:callBack)
+    //username:String,
+    static func audit(code:String,action:String,remark:String,userCode:String,groupkey:String,callBack:ResponseCompletionHandler?){
+        request(remoteUrl + "audit",parameters:["code":code.getMarks(),"action":action.getMarks(),"remark":remark.getMarks(),"staffcode":userCode.getMarks(),"groupkey":groupkey.getMarks()],callBack:callBack)//"staffname":username.getMarks(),
     }
     
 //    private static func modifyParameters(var parameters:Dictionary<String,AnyObject>)->Dictionary<String,AnyObject>{

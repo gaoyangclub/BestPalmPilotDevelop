@@ -29,7 +29,7 @@ class ApprovePageHomeController: BaseTableViewController {
     }()
     
     func searchBarTap(target:AnyObject){
-//        self.navigationController?.pushViewController(SearchViewController(), animated: true)
+        self.navigationController?.pushViewController(SearchViewController(), animated: true)
         //跳转到搜索页面
     }
     
@@ -51,7 +51,20 @@ class ApprovePageHomeController: BaseTableViewController {
         
         self.tabBarController?.navigationItem.leftBarButtonItem = nil
         self.tabBarController?.navigationItem.rightBarButtonItem = rightItem
-        self.tabBarController?.navigationItem.titleView = searchBar
+//        self.tabBarController?.navigationItem.titleView = searchBar
+        
+        let title = "审批管家"
+        self.tabBarController?.title = title
+        let titleView = UIView()
+        let label:UILabel = UICreaterUtils.createLabel(20, UIColor.whiteColor(), title, true, titleView)
+        label.font = UIFont.systemFontOfSize(20)//20号 ,weight:2
+        
+        titleView.addSubview(label)
+        label.snp_makeConstraints { (make) -> Void in //[weak self]
+            make.center.equalTo(titleView)
+        }
+        
+        self.tabBarController?.navigationItem.titleView = titleView
     }
     
     //拉开抽屉设置(登入登出等)
@@ -130,6 +143,8 @@ class ApprovePageHomeController: BaseTableViewController {
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        
         let section = indexPath.section
         let source = dataSource[section] as! SoueceVo
         let cell:CellVo = source.data![indexPath.row] as! CellVo
@@ -174,6 +189,7 @@ private class ApprovePageHomeInfoCell: BaseTableViewCell {
     static let cellHeight:CGFloat = 80
     
     override func showSubviews(){
+        self.selectionStyle = UITableViewCellSelectionStyle.Gray
         self.contentView.backgroundColor = UIColor.whiteColor()
         initCell()
     }

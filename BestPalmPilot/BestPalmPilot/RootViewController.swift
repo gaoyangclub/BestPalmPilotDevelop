@@ -10,6 +10,11 @@ import UIKit
 
 class RootViewController: TabViewController,LoginViewDelegate {
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 //        self.title = "主页"

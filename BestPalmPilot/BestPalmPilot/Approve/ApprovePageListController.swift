@@ -173,7 +173,9 @@ class ApprovePageListController: PageListTableViewController {
     }
     
     func searchClick(){
-//        self.navigationController?.pushViewController(SearchViewController(), animated: true)
+        let svc = SearchViewController()
+        svc.groupkey = self.approveMenuVo.groupkey
+        self.navigationController?.pushViewController(svc, animated: true)
     }
     
     func setupClick(){
@@ -202,6 +204,8 @@ class ApprovePageListController: PageListTableViewController {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: false) //反选
+        
         let section = indexPath.section
         let source = dataSource[section] as! SoueceVo
         let cell:CellVo = source.data![indexPath.row] as! CellVo
@@ -209,7 +213,7 @@ class ApprovePageListController: PageListTableViewController {
             //点击hot内容跳转
             let fvo = cell.cellData as! FormInfoVo //点击到Fund详细页
             let pageKindController = DetailsPageHomeController()
-            pageKindController.approveMenuVo = self.approveMenuVo
+            pageKindController.groupkey = approveMenuVo.groupkey
             pageKindController.formInfoVo = fvo
             self.navigationController?.pushViewController(pageKindController, animated: true)
         }
@@ -310,7 +314,12 @@ class FormInfoPageCell:BaseTableViewCell{
         if view == nil{
             return
         }
+        self.selectionStyle = UITableViewCellSelectionStyle.Blue
         self.backgroundColor = UIColor.whiteColor()
+        
+//        if indexPath.row == 5{
+//            print("row5更新")
+//        }
         initText()
     }
     

@@ -97,13 +97,6 @@ class RefreshContainer: UIView {
             headerView.reset()
         }
         
-//        if headerRestDo {
-//            var addHeight = self.scrollerView.contentOffset.y + self.scrollerView.frame.height / 4
-//            UIView.animateWithDuration(RefreshSlowAnimationDuration, animations: {
-//                self.scrollerView.contentOffset.y = addHeight
-//            })
-//        }
-        
     }
     
     private func removeHeader()

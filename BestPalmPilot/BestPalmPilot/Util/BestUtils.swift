@@ -62,11 +62,43 @@ public class BestUtils:AnyObject {
 //        }
 //    }
     
+    public static func showAlert(title:String = "提示",message:String,oklabel:String = "确定",cancellabel:String = "取消",parentController:UIViewController,okHandler:((UIAlertAction) -> Void)?){
+        let alertController = UIAlertController(title:title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let okAction = UIAlertAction(title: oklabel, style: UIAlertActionStyle.Default, handler: okHandler)
+        alertController.addAction(okAction)
+        let cancelAction = UIAlertAction(title: cancellabel, style: UIAlertActionStyle.Default, handler: nil)
+        alertController.addAction(cancelAction)
+        parentController.presentViewController(alertController, animated: true, completion: nil)
+    }
     
-
+    private static var _badgeCount:Int = 0
+    public static var badgeCount:Int{
+        get{
+            return _badgeCount
+        }
+        set(newValue){
+            if newValue < 0 {
+                _badgeCount = 0
+            }else{
+                _badgeCount = newValue
+            }
+            UIApplication.sharedApplication().applicationIconBadgeNumber = _badgeCount
+        }
+    }
 }
 extension String{
     func getMarks()->String{
         return "\"" + self + "\""
+    }
+}
+extension NSObject{
+    func getJsonString()->String{
+        do{
+            let nsdata = try NSJSONSerialization.dataWithJSONObject(self.mj_keyValues(), options: NSJSONWritingOptions.PrettyPrinted)
+            return NSString(data: nsdata, encoding: NSUTF8StringEncoding) as! String
+        }catch{
+            
+        }
+        return ""
     }
 }

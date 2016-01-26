@@ -23,6 +23,13 @@
 		840049F81C4CE79000D20B90 /* NSObject+MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 840049ED1C4CE79000D20B90 /* NSObject+MJProperty.m */; };
 		840049F91C4CE79000D20B90 /* NSString+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 840049EF1C4CE79000D20B90 /* NSString+MJExtension.m */; };
 		8402B5281C4F7F5200D79ABB /* DetailsPageInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8402B5271C4F7F5200D79ABB /* DetailsPageInfoController.swift */; };
+		840D67A61C57424F00D175EB /* icon58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = 840D67A01C57424F00D175EB /* icon58x58.png */; };
+		840D67A71C57424F00D175EB /* icon80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = 840D67A11C57424F00D175EB /* icon80x80.png */; };
+		840D67A81C57424F00D175EB /* icon87x87.png in Resources */ = {isa = PBXBuildFile; fileRef = 840D67A21C57424F00D175EB /* icon87x87.png */; };
+		840D67A91C57424F00D175EB /* icon120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 840D67A31C57424F00D175EB /* icon120x120.png */; };
+		840D67AA1C57424F00D175EB /* icon180x180.png in Resources */ = {isa = PBXBuildFile; fileRef = 840D67A41C57424F00D175EB /* icon180x180.png */; };
+		840D67AB1C57424F00D175EB /* icon512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 840D67A51C57424F00D175EB /* icon512x512.png */; };
+		840D67AD1C5763D900D175EB /* WebPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D67AC1C5763D900D175EB /* WebPageController.swift */; };
 		8440A4651C48C383009E8ADD /* icon_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 8440A4551C48C383009E8ADD /* icon_01.png */; };
 		8440A4661C48C383009E8ADD /* icon_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8440A4561C48C383009E8ADD /* icon_01@2x.png */; };
 		8440A4671C48C383009E8ADD /* icon_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 8440A4571C48C383009E8ADD /* icon_02.png */; };
@@ -185,6 +192,9 @@
 		84F52B7A1C4E3BC400CF96FE /* DetailsPageHomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F52B791C4E3BC400CF96FE /* DetailsPageHomeController.swift */; };
 		84F7B3641C51F85200F32756 /* searchOut.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84F7B3631C51F85200F32756 /* searchOut.jpg */; };
 		84F7B3671C52194C00F32756 /* EZLoadingActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F7B3661C52194C00F32756 /* EZLoadingActivity.swift */; };
+		84FBD1A71C55EF9300B0969D /* AccountSideHomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FBD1A61C55EF9300B0969D /* AccountSideHomeController.swift */; };
+		84FBD1AA1C5621B200B0969D /* HelpListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FBD1A91C5621B200B0969D /* HelpListViewController.swift */; };
+		84FBD1AD1C56378D00B0969D /* phone.png in Resources */ = {isa = PBXBuildFile; fileRef = 84FBD1AC1C56378D00B0969D /* phone.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -304,6 +314,13 @@
 		840049EE1C4CE79000D20B90 /* NSString+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MJExtension.h"; sourceTree = "<group>"; };
 		840049EF1C4CE79000D20B90 /* NSString+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MJExtension.m"; sourceTree = "<group>"; };
 		8402B5271C4F7F5200D79ABB /* DetailsPageInfoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsPageInfoController.swift; sourceTree = "<group>"; };
+		840D67A01C57424F00D175EB /* icon58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon58x58.png; sourceTree = "<group>"; };
+		840D67A11C57424F00D175EB /* icon80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon80x80.png; sourceTree = "<group>"; };
+		840D67A21C57424F00D175EB /* icon87x87.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon87x87.png; sourceTree = "<group>"; };
+		840D67A31C57424F00D175EB /* icon120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon120x120.png; sourceTree = "<group>"; };
+		840D67A41C57424F00D175EB /* icon180x180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon180x180.png; sourceTree = "<group>"; };
+		840D67A51C57424F00D175EB /* icon512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon512x512.png; sourceTree = "<group>"; };
+		840D67AC1C5763D900D175EB /* WebPageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebPageController.swift; sourceTree = "<group>"; };
 		8440A4551C48C383009E8ADD /* icon_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_01.png; sourceTree = "<group>"; };
 		8440A4561C48C383009E8ADD /* icon_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_01@2x.png"; sourceTree = "<group>"; };
 		8440A4571C48C383009E8ADD /* icon_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_02.png; sourceTree = "<group>"; };
@@ -510,6 +527,9 @@
 		84F52B791C4E3BC400CF96FE /* DetailsPageHomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsPageHomeController.swift; sourceTree = "<group>"; };
 		84F7B3631C51F85200F32756 /* searchOut.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = searchOut.jpg; sourceTree = "<group>"; };
 		84F7B3661C52194C00F32756 /* EZLoadingActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EZLoadingActivity.swift; sourceTree = "<group>"; };
+		84FBD1A61C55EF9300B0969D /* AccountSideHomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountSideHomeController.swift; sourceTree = "<group>"; };
+		84FBD1A91C5621B200B0969D /* HelpListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpListViewController.swift; sourceTree = "<group>"; };
+		84FBD1AC1C56378D00B0969D /* phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = phone.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -643,6 +663,19 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
+		846388971C572ADF0079A07A /* APPIcon */ = {
+			isa = PBXGroup;
+			children = (
+				840D67A01C57424F00D175EB /* icon58x58.png */,
+				840D67A11C57424F00D175EB /* icon80x80.png */,
+				840D67A21C57424F00D175EB /* icon87x87.png */,
+				840D67A31C57424F00D175EB /* icon120x120.png */,
+				840D67A41C57424F00D175EB /* icon180x180.png */,
+				840D67A51C57424F00D175EB /* icon512x512.png */,
+			);
+			path = APPIcon;
+			sourceTree = "<group>";
+		};
 		847ABBBC1C47AED1002C037E = {
 			isa = PBXGroup;
 			children = (
@@ -667,12 +700,14 @@
 		847ABBC71C47AED1002C037E /* BestPalmPilot */ = {
 			isa = PBXGroup;
 			children = (
+				84FBD19F1C55EF4900B0969D /* Account */,
 				847ABBFD1C47AF3E002C037E /* Facade */,
 				8440A49B1C48D3A2009E8ADD /* Util */,
 				8450E31C1C51D15700615BAE /* Search */,
 				84F52B781C4E3B9900CF96FE /* Details */,
 				847ABC241C47AF3E002C037E /* Login */,
 				8440A47B1C48C463009E8ADD /* Approve */,
+				84FBD1A81C56217900B0969D /* Hot */,
 				847ABC271C47AF3E002C037E /* orglibs */,
 				847ABBF71C47AF3E002C037E /* assets */,
 				847ABCA71C47AF3E002C037E /* RootViewController.swift */,
@@ -708,9 +743,11 @@
 		847ABBF71C47AF3E002C037E /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				846388971C572ADF0079A07A /* APPIcon */,
 				8440A49E1C48D942009E8ADD /* campaign.png */,
 				840049D61C4CC80B00D20B90 /* magnifie@2x.png */,
 				8440A47E1C48CCA8009E8ADD /* empty.png */,
+				84FBD1AB1C56377600B0969D /* Hot */,
 				84F7B35C1C51F82B00F32756 /* Search */,
 				8440A4801C48D02C009E8ADD /* Approve */,
 				8440A4541C48C383009E8ADD /* Tabbar */,
@@ -1129,6 +1166,31 @@
 			path = EZLoading;
 			sourceTree = "<group>";
 		};
+		84FBD19F1C55EF4900B0969D /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				84FBD1A61C55EF9300B0969D /* AccountSideHomeController.swift */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		84FBD1A81C56217900B0969D /* Hot */ = {
+			isa = PBXGroup;
+			children = (
+				84FBD1A91C5621B200B0969D /* HelpListViewController.swift */,
+				840D67AC1C5763D900D175EB /* WebPageController.swift */,
+			);
+			path = Hot;
+			sourceTree = "<group>";
+		};
+		84FBD1AB1C56377600B0969D /* Hot */ = {
+			isa = PBXGroup;
+			children = (
+				84FBD1AC1C56378D00B0969D /* phone.png */,
+			);
+			path = Hot;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1294,6 +1356,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				840D67A61C57424F00D175EB /* icon58x58.png in Resources */,
 				847ABD9F1C47B490002C037E /* IQKeyboardManager.bundle in Resources */,
 				847ABCA81C47AF3E002C037E /* bestLogo.jpeg in Resources */,
 				847ABBD31C47AED2002C037E /* LaunchScreen.storyboard in Resources */,
@@ -1327,6 +1390,7 @@
 				8486C0151C4C8EC90066E3F1 /* fundTag08.png in Resources */,
 				8440A4661C48C383009E8ADD /* icon_01@2x.png in Resources */,
 				8486C0111C4C8EC90066E3F1 /* fundTag04.png in Resources */,
+				840D67AA1C57424F00D175EB /* icon180x180.png in Resources */,
 				847ABD8D1C47B490002C037E /* Info.plist in Resources */,
 				847ABCEE1C47AF3E002C037E /* arrow@2x.png in Resources */,
 				8440A46A1C48C383009E8ADD /* icon_03@2x.png in Resources */,
@@ -1342,14 +1406,19 @@
 				8486C0041C4C8EC90066E3F1 /* fundHot03.png in Resources */,
 				847ABD121C47AF3E002C037E /* Info-iOS.plist in Resources */,
 				8440A4701C48C383009E8ADD /* icon_06@2x.png in Resources */,
+				840D67A71C57424F00D175EB /* icon80x80.png in Resources */,
 				847ABCBE1C47AF3E002C037E /* fontawesome-webfont.ttf in Resources */,
 				8486C0121C4C8EC90066E3F1 /* fundTag05.png in Resources */,
 				8486C0091C4C8EC90066E3F1 /* fundHot08.png in Resources */,
 				8486C00A1C4C8EC90066E3F1 /* fundHot09.png in Resources */,
+				840D67AB1C57424F00D175EB /* icon512x512.png in Resources */,
+				84FBD1AD1C56378D00B0969D /* phone.png in Resources */,
 				8440A4721C48C383009E8ADD /* icon_07@2x.png in Resources */,
 				8440A46D1C48C383009E8ADD /* icon_05.png in Resources */,
 				8486C00F1C4C8EC90066E3F1 /* fundTag02.png in Resources */,
 				8440A46B1C48C383009E8ADD /* icon_04.png in Resources */,
+				840D67A91C57424F00D175EB /* icon120x120.png in Resources */,
+				840D67A81C57424F00D175EB /* icon87x87.png in Resources */,
 				8486C00D1C4C8EC90066E3F1 /* fundHot12.png in Resources */,
 				847ABBD01C47AED2002C037E /* Assets.xcassets in Resources */,
 				8440A47F1C48CCA8009E8ADD /* empty.png in Resources */,
@@ -1392,6 +1461,7 @@
 				847ABD081C47AF3E002C037E /* SourceLocation.swift in Sources */,
 				847ABCCF1C47AF3E002C037E /* Tempo.swift in Sources */,
 				847ABD071C47AF3E002C037E /* SnapKit.swift in Sources */,
+				84FBD1A71C55EF9300B0969D /* AccountSideHomeController.swift in Sources */,
 				847ABD8F1C47B490002C037E /* JLToastCenter.swift in Sources */,
 				847ABD991C47B490002C037E /* IQKeyboardReturnKeyHandler.m in Sources */,
 				847ABCFB1C47AF3E002C037E /* SDCycleScrollView.m in Sources */,
@@ -1437,6 +1507,7 @@
 				847ABCAC1C47AF3E002C037E /* BestRemoteFacade.swift in Sources */,
 				847ABCD11C47AF3E002C037E /* UIColumnChart.swift in Sources */,
 				847ABD011C47AF3E002C037E /* ConstraintMaker.swift in Sources */,
+				84FBD1AA1C5621B200B0969D /* HelpListViewController.swift in Sources */,
 				847ABCF71C47AF3E002C037E /* TAAnimatedDotView.m in Sources */,
 				847ABCC11C47AF3E002C037E /* PPiFlatSegmentItem.m in Sources */,
 				847ABCF31C47AF3E002C037E /* RefreshHeaderView.swift in Sources */,
@@ -1459,6 +1530,7 @@
 				847ABCED1C47AF3E002C037E /* UIViewController+MMDrawerController.m in Sources */,
 				847ABCDD1C47AF3E002C037E /* UIColor.swift in Sources */,
 				847ABCEF1C47AF3E002C037E /* RefreshBaseView.swift in Sources */,
+				840D67AD1C5763D900D175EB /* WebPageController.swift in Sources */,
 				847ABCBF1C47AF3E002C037E /* NSString+FontAwesome.m in Sources */,
 				8440A49A1C48D2BC009E8ADD /* ApprovePageHomeHotCell.swift in Sources */,
 				847ABD871C47B490002C037E /* GoogleWearAlert.swift in Sources */,

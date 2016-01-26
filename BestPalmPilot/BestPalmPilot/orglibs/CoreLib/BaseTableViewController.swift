@@ -13,6 +13,11 @@ class BaseTableViewController: RefreshTableViewController {
     var refreshAll:Bool = true
     var dataSource:NSMutableArray=[]//二维数组 [section][index]
     
+    /** 重新刷新界面 */
+    func refreshHeader(){
+        self.dataSource.removeAllObjects()
+        self.refreshContaner.headerBeginRefreshing()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

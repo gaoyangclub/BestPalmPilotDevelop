@@ -30,11 +30,24 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
     }()
     
     private lazy var logoImage:UIImageView = {
+        let imageBack = UIView()
+        self.loginBackView.addSubview(imageBack)
+        imageBack.snp_makeConstraints(closure: { [weak self](make) -> Void in
+            make.top.equalTo(self!.loginBackView)
+            make.left.right.equalTo(self!.usernameBack)
+            make.bottom.equalTo(self!.usernameBack.snp_top)
+        })
+        
        let imageView = UIImageView()
         self.loginBackView.addSubview(imageView)
-//        imageView.layer.cornerRadius = 50
+        imageView.layer.cornerRadius = 15
+        imageView.layer.masksToBounds = true
+        imageView.snp_makeConstraints(closure: { (make) -> Void in
+            make.center.equalTo(imageBack)
+            make.width.height.equalTo(180)
+        })
         imageView.contentMode = UIViewContentMode.ScaleAspectFit
-        BatchLoaderUtil.loadFile("bestLogo.jpeg", callBack: { (image, params) -> Void in
+        BatchLoaderUtil.loadFile("icon512x512", callBack: { (image, params) -> Void in
             imageView.image = image
             })
         return imageView
@@ -44,7 +57,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
         let view = UIView()
         view.layer.borderColor = UICreaterUtils.colorFlat.CGColor
         view.layer.borderWidth = 1//UICreaterUtils.normalLineWidth
-        view.layer.cornerRadius = 2
+        view.layer.cornerRadius = 5
         view.backgroundColor = UIColor.whiteColor()
         self.loginBackView.addSubview(view)
         return view
@@ -55,6 +68,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
         text.clearButtonMode = UITextFieldViewMode.WhileEditing
         text.textColor = UICreaterUtils.colorBlack
         self.usernameBack.addSubview(text)
+        text.font = UIFont.systemFontOfSize(18)
         text.delegate = self
         text.placeholder = "请输入用户名"
         text.returnKeyType = UIReturnKeyType.Done
@@ -79,7 +93,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
         let view = UIView()
         view.layer.borderColor = UICreaterUtils.colorFlat.CGColor
         view.layer.borderWidth = 1//UICreaterUtils.normalLineWidth
-        view.layer.cornerRadius = 2
+        view.layer.cornerRadius = 5
         view.backgroundColor = UIColor.whiteColor()
         self.loginBackView.addSubview(view)
         return view
@@ -90,6 +104,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
         text.clearButtonMode = UITextFieldViewMode.WhileEditing //输入的时候显示close按钮
         text.textColor = UICreaterUtils.colorBlack
         self.passwordBack.addSubview(text)
+        text.font = UIFont.systemFontOfSize(18)
         text.delegate = self //文本交互代理
         text.placeholder = "请输入密码"
         text.returnKeyType = UIReturnKeyType.Done //键盘return键样式
@@ -113,10 +128,11 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
     
     lazy var submitButton:UIButton = {
         let btn = UIButton(type: UIButtonType.System)
-        btn.layer.cornerRadius = 2
+        btn.layer.cornerRadius = 5
         let normalColor:UIColor = BestUtils.themeColor
         btn.backgroundColor = normalColor
         let title:NSString = "登  陆"
+        btn.titleLabel?.font = UIFont.systemFontOfSize(20)//weight文字线条粗细 ,weight:2
         btn.setTitle(title as String, forState: UIControlState.Normal)
         btn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         self.loginBackView.addSubview(btn)
@@ -124,7 +140,6 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
 //        var attstr:NSMutableAttributedString = NSMutableAttributedString(string: title as String)
 //        attstr.addAttribute(NSUnderlineStyleAttributeName, value: 1, range: NSMakeRange(0, title.length))
 //        btn.titleLabel?.attributedText = attstr
-        btn.titleLabel?.font = UIFont.systemFontOfSize(18)//weight文字线条粗细 ,weight:2
         btn.addTarget(self, action: "submitClick:", forControlEvents: UIControlEvents.TouchUpInside)
         return btn
     }()
@@ -203,7 +218,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
             make.left.equalTo(self!.loginBackView).offset(30)
             make.right.equalTo(self!.loginBackView).offset(-30)
             make.bottom.equalTo(self!.loginBackView)
-            make.height.equalTo(40)
+            make.height.equalTo(45)
         }
         passwordBack.snp_makeConstraints { [weak self](make) -> Void in
             make.left.right.height.equalTo(self!.submitButton)
@@ -213,7 +228,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
             make.top.equalTo(self!.passwordBack).offset(5)
             make.bottom.equalTo(self!.passwordBack).offset(-5)
             make.left.equalTo(self!.passwordBack)
-            make.width.equalTo(46)
+            make.width.equalTo(50)
         }
         passwordText.snp_makeConstraints { [weak self](make) -> Void in
             make.left.equalTo(self!.userText)
@@ -227,18 +242,32 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
             make.top.equalTo(self!.usernameBack).offset(5)
             make.bottom.equalTo(self!.usernameBack).offset(-5)
             make.left.equalTo(self!.usernameBack)
-            make.width.equalTo(46)
+            make.width.equalTo(50)
         }
         userText.snp_makeConstraints { [weak self](make) -> Void in
             make.left.equalTo(self!.userIcon.snp_right)
             make.top.bottom.right.equalTo(self!.usernameBack)
         }
-        logoImage.snp_makeConstraints { [weak self](make) -> Void in
-            make.top.equalTo(self!.loginBackView)
-            make.left.right.equalTo(self!.usernameBack)
-            make.bottom.equalTo(self!.usernameBack.snp_top)
-        }
+        
+        logoImage.hidden = false
+//        logoImage.snp_makeConstraints { [weak self](make) -> Void in
+//            make.top.equalTo(self!.loginBackView)
+//            make.left.right.equalTo(self!.usernameBack)
+//            make.bottom.equalTo(self!.usernameBack.snp_top)
+//        }
+//        userText.addPreviousNextDoneOnKeyboardWithTarget(self, previousAction: "previousAction:", nextAction: "nextAction:", doneAction: "doneAction:")
+//        passwordText.addPreviousNextDoneOnKeyboardWithTarget(self, previousAction: "previousAction:", nextAction: "nextAction:", doneAction: "doneAction:",shouldShowPlaceholder: true)
     }
+    
+//    func previousAction(sender:UIBarButtonItem){
+//    }
+//    
+//    func nextAction(sender:UIBarButtonItem){
+//    }
+//    func doneAction(sender:UIBarButtonItem){
+////        sender.resignFirstResponder()
+//        print("确定")
+//    }
     
     override public func viewDidLoad() {
         layoutSubViews()

@@ -158,6 +158,7 @@ class SearchViewController: UITableViewController,UISearchBarDelegate {
     }
     
     private func generateFormListSO(code:String)->FormListSO{
+        pageSO.objectsperpage = 20000
         pageSO.code = code
         pageSO.token = UserDefaultCache.getToken()!
         pageSO.username = UserDefaultCache.getUsercode()!

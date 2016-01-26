@@ -75,6 +75,10 @@ class TabViewController: UITabBarController {
         stateTabChange(subView.itemIndex)
     }
     
+    func getCurrentController()->UIViewController?{
+        return dataProvider?[self.selectedIndex].controller
+    }
+    
     //自定义tabBar视图
     private func customTabBar(){
 //        var height=UIScreen.mainScreen().bounds.size.height

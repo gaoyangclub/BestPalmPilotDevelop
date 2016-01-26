@@ -22,9 +22,6 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
     var formWholeVo:FormWholeVo? //该界面所有列表的数据源
     
     private func initTitleArea(){
-        var a:[NSObject] = []
-        a.append(NSObject())
-        
         let leftItem = UIBarButtonItem(title: "嘿嘿", style: UIBarButtonItemStyle.Done, target: self, action: "cancelClick")
         let customView = UIArrowView(frame:CGRectMake(0, 0, 10, 22))
         customView.direction = .LEFT
@@ -185,7 +182,7 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
     private func initMenuArea(){
         if pageMenu == nil{
             
-            let titleList = [("基本信息","formheaders"),("费用明细","formdetails")]
+            let titleList = [("基本信息","formheaders"),("明细信息","formdetails")]
             var controllerArray:[UIViewController] = []
             for title in titleList{
                 let controller:DetailsPageInfoController = DetailsPageInfoController()
@@ -197,7 +194,7 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
             
             let itemWidth = self.view.frame.width / 2 - 10
             let parameters: [CAPSPageMenuOption] = [
-                //            .MenuHeight(100),
+                .MenuHeight(36),
                 .MenuItemWidth(itemWidth),
                 .MenuMargin(0),
                 //                CAPSPageMenuOption.MenuItemWidthBasedOnTitleTextWidth(true),
@@ -210,22 +207,26 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
                 //            .MenuItemSeparatorPercentageHeight(0.5),
                 .UnselectedMenuItemLabelColor(UICreaterUtils.colorBlack),
                 .SelectedMenuItemLabelColor(BestUtils.deputyColor),
-//                CAPSPageMenuOption.MenuItemSeparatorUnderline(true),
+                CAPSPageMenuOption.MenuItemSeparatorUnderline(true),
                 .MenuItemFont(UIFont.systemFontOfSize(16)),//,weight:1.2
                 .SelectionIndicatorHeight(2),
                 .CenterMenuItems(true),
                 .AddBottomMenuHairline(false)
             ]
-            pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame: CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height - DetailsPageHomeController.BOTTOM_HEIGHT), pageMenuOptions: parameters)
+            pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame:CGRectMake(0,0,self.view.frame.width,0),pageMenuOptions: parameters)
+            // frame: CGRectMake(0.0, 0.0, self.view.frame.width, self.view.frame.height - DetailsPageHomeController.BOTTOM_HEIGHT)
             //        pageMenu.currentPageIndex = selectedIndex
             //        pageMenu.moveToPage(selectedIndex)
             self.view.addSubview(pageMenu!.view)
         }
-        pageMenu.moveToPage(selectedIndex)//动作切换完毕
-//        pageMenu.view.snp_makeConstraints { [weak self](make) -> Void in
-//            make.left.right.top.equalTo(self!.view)
-//            make.bottom.equalTo(self!.bottomView)
-//        }
+//        pageMenu.moveToPage(selectedIndex)//动作切换完毕
+        pageMenu.view.snp_makeConstraints { [weak self](make) -> Void in
+            make.left.right.top.equalTo(self!.view)
+//            make.top.equalTo(self!.view).offset(10)
+//            make.left.equalTo(self!.view).offset(50)
+//            make.right.equalTo(self!.view).offset(-50)
+            make.bottom.equalTo(self!.bottomView.snp_top)
+        }
     }
     
     public func getFormDetails(refresh:Bool,formKey: String, callback: (([FormDetailVo]) -> Void)!) {
@@ -260,10 +261,10 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
     
     func rejectClick(sender:UIButton){
         if opinionText.text == nil || opinionText.text!.isEmpty {
-            JLToast.makeText("请输先入申请意见!").show()
+            JLToast.makeText("请先输入申请意见!").show()
             return
         }
-        showAlert("确定退回该AP吗？"){ [weak self] _ -> Void in
+        BestUtils.showAlert(message:"确定退回该AP吗？",parentController:self){ [weak self] _ -> Void in
             EZLoadingActivity.show("AP退回中", disableUI: true)
             self!.submitAction(BestUtils.AUDIT_APPROVE){ [weak self] json in
                 //必须回传后页面可以交互
@@ -275,7 +276,7 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
     }
     
     func agreeClick(sender:UIButton){
-        showAlert("确定同意该AP吗？"){ [weak self] _ -> Void in
+        BestUtils.showAlert(message:"确定同意该AP吗？",parentController:self){ [weak self] _ -> Void in
             EZLoadingActivity.show("AP审批中", disableUI: true)
             self!.submitAction(BestUtils.AUDIT_REJECT){ [weak self] json in
                 //必须回传后页面可以交互
@@ -309,15 +310,6 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
     private func submitAction(action:String,callBack:ResponseCompletionHandler? = nil){
         //username: UserDefaultCache.getUsername()!
         BestRemoteFacade.audit(formInfoVo.code, action: action, remark: opinionText.text!, userCode: UserDefaultCache.getUsercode()!, groupkey: self.groupkey, callBack: callBack)
-    }
-
-    private func showAlert(failMsg:String,okHandler:((UIAlertAction) -> Void)?){
-        let alertController = UIAlertController(title: "提示", message: failMsg, preferredStyle: UIAlertControllerStyle.Alert)
-        let okAction = UIAlertAction(title: "确定", style: UIAlertActionStyle.Default, handler: okHandler)
-        alertController.addAction(okAction)
-        let cancelAction = UIAlertAction(title: "取消", style: UIAlertActionStyle.Default, handler: nil)
-        alertController.addAction(cancelAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     func cancelClick(){

@@ -67,8 +67,8 @@ class RefreshFooterView: RefreshBaseView {
                 self.prevOffsetY = nil
                 self.statusLabel.text = RefreshFooterNodata as String;
 //                self.scrollView?.userInteractionEnabled = true
-                UIView.animateWithDuration(RefreshSlowAnimationDuration, animations: {
-                     self.scrollView.contentInset.bottom = CGFloat(RefreshFooterHeight);
+                UIView.animateWithDuration(RefreshSlowAnimationDuration, animations: {[weak self]_ in
+                     self?.scrollView.contentInset.bottom = CGFloat(RefreshFooterHeight);
                     },completion:{ [weak self]_ in
                         self?.scrollView?.userInteractionEnabled = true
                     })

@@ -9,13 +9,20 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,UIAlertViewDelegate {
 
     var window: UIWindow?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        let version = (UIDevice.currentDevice().systemVersion as NSString).doubleValue
+        if (version >= 8.0) { //添加通知图标等信任设置
+            let types = UIUserNotificationType(rawValue: UIUserNotificationType.Badge.rawValue|UIUserNotificationType.Sound.rawValue|UIUserNotificationType.Alert.rawValue)
+            let settings = UIUserNotificationSettings(forTypes: types, categories: nil)
+//            let settings = UIUserNotificationSettings(forTypes: UIUserNotificationType.Badge, categories: nil)
+            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        }
         
         let mainFrame = UIScreen.mainScreen().bounds
         
@@ -24,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         JLToastView.setDefaultValue(UIFont.systemFontOfSize(20), forAttributeName: JLToastViewFontAttributeName, userInterfaceIdiom: .Phone)
         
         IQKeyboardManager.sharedManager().enable = true
+        IQKeyboardManager.sharedManager().keyboardDistanceFromTextField = 60
         
         self.window = UIWindow(frame: mainFrame)
         // Override point for customization after application launch.
@@ -36,19 +44,56 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let drawerController = RootDrawerController.getInstance()
         drawerController.centerViewController = main
-        drawerController.rightDrawerViewController = AViewController()
+        drawerController.rightDrawerViewController = AccountSideHomeController()
         
         drawerController.showsShadow = true
-        drawerController.maximumRightDrawerWidth = 200
+        drawerController.maximumRightDrawerWidth = AccountSideHomeController.DrawerWidth
         drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureMode.None
         drawerController.closeDrawerGestureModeMask = MMCloseDrawerGestureMode.All
         drawerController.centerHiddenInteractionMode = MMDrawerOpenCenterInteractionMode.None
         
         self.window!.rootViewController = drawerController
         
+        checkVersion()
+        
         return true
     }
+    
+    private func checkVersion(){
+        let infoDic:NSDictionary = NSBundle.mainBundle().infoDictionary!
+//        CFShow(infoDic)
+        let appVersion:String = infoDic.objectForKey("CFBundleVersion") as! String
+        BestRemoteFacade.getAppVersion { [weak self](json, isSuccess, error) -> Void in
+            if self == nil{
+                print("AppDelegate对象已经销毁")
+                return
+            }
+            if isSuccess {
+//                print(json)
+                let results:NSArray? = json?.object.valueForKey("results") as? NSArray
+                if results != nil && results!.count > 0{
+                    let releaseInfo:NSDictionary = results![0] as! NSDictionary
+                    let latestVersion:String = releaseInfo.objectForKey("version") as! String
+                    self!.trackViewUrl = releaseInfo.objectForKey("trackViewUrl") as! String
+                    if appVersion != latestVersion{ //版本需要更新
+                        let alert = UIAlertView(title: "提示", message: "检测到最新版本，是否需要更新?", delegate: self, cancelButtonTitle: "确定", otherButtonTitles:"取消")
+                        alert.show()
+//                        BestUtils.showAlert(message: "检测到最新版本，是否需要更新?", parentController: RootNavigationControl.getInstance(), okHandler: { _ -> Void in
+//                            UIApplication.sharedApplication().openURL(NSURL(string: trackViewUrl)!)
+//                        })
+                    }
+                }
+            }
+        }
+    }
 
+    private var trackViewUrl:String!
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        if buttonIndex == 0 {//选中确定
+            UIApplication.sharedApplication().openURL(NSURL(string: trackViewUrl)!)
+        }
+    }
+    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

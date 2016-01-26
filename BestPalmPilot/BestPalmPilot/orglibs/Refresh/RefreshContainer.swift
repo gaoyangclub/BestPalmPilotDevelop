@@ -124,6 +124,7 @@ class RefreshContainer: UIView {
     func headerBeginRefreshing()
     {
         headerBeginRefresh = true
+        self.setNeedsLayout()
 //        headerView.beginRefreshing()
     }
     
@@ -133,6 +134,7 @@ class RefreshContainer: UIView {
         footerReset()
         headerView.reset()
         headerBeginRest = true
+        self.setNeedsLayout()
     }
     
     func footerBeginRefreshing()

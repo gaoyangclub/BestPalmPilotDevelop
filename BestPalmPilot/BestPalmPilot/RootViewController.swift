@@ -15,10 +15,7 @@ class RootViewController: TabViewController,LoginViewDelegate {
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-//        self.title = "主页"
-//        UserDefaultCache.clearUser()
+    func checkLoginView(){
         if !UserDefaultCache.hasUser(){//用户不存在
             let delayInSeconds:Int64 =  100000000  * 2
             
@@ -28,12 +25,22 @@ class RootViewController: TabViewController,LoginViewDelegate {
                 let loginController = LoginViewController()
                 loginController.delegate = self
                 self.presentViewController(loginController, animated: true, completion: { () -> Void in
-//                    print("登陆界面弹出完毕")
+                    //                    print("登陆界面弹出完毕")
                 })
             })
         }else{
             initData()//初始化界面
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.title = "登  陆"
+        self.view.backgroundColor = BestUtils.backgroundColor
+        
+        checkLoginView()
+//        UserDefaultCache.clearUser()
         // Do any additional setup after loading the view, typically from a nib.
 //        CoreDataCache.deleteAllData(LoginUserCoreData.self)
 //        CoreDataCache.updateDataByIndex(LoginUserCoreData.self) { (obj) -> Void in
@@ -51,15 +58,30 @@ class RootViewController: TabViewController,LoginViewDelegate {
         initData()//继续初始化界面
     }
     
+    private var selfDataProvider:[TabData]?
     private func initData(){
-        dataProvider = [
-            TabData(data: TabRendererVo(title:"等待审批",iconUrl:"icon_02"),controller: ApprovePageHomeController()),
-            TabData(data: TabRendererVo(title:"最新动态",iconUrl:"icon_06"),controller: AViewController()),
-            TabData(data: TabRendererVo(title:"版本信息",iconUrl:"icon_04"),controller: AViewController())
-//            TabData(data: TabRendererVo(title:"盘古",iconUrl:"icon_05"),controller: AViewController())
-        ]
-        itemClass = MyTabItemRenderer.self
-//        tabBarHeight = 40
+        if selfDataProvider == nil{
+            selfDataProvider = [
+                TabData(data: TabRendererVo(title:"等待审批",iconUrl:"icon_02"),controller: ApprovePageHomeController()),
+                TabData(data: TabRendererVo(title:"最新动态",iconUrl:"icon_06"),controller: createAViewController("掌握最新动态")),
+                TabData(data: TabRendererVo(title:"版本信息",iconUrl:"icon_04"),controller: createAViewController("当前版本信息"))
+                //            TabData(data: TabRendererVo(title:"盘古",iconUrl:"icon_05"),controller: AViewController())
+            ]
+            dataProvider = selfDataProvider
+            itemClass = MyTabItemRenderer.self
+            //        tabBarHeight = 40
+        }else{
+            let controller = getCurrentController()
+            if controller is BaseTableViewController{
+                (controller as! BaseTableViewController).refreshHeader()
+            }
+        }
+    }
+    
+    private func createAViewController(title:String)->AViewController{
+        let a = AViewController()
+        a.title = title
+        return a
     }
     
     override func didReceiveMemoryWarning() {

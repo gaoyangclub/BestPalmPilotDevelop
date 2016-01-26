@@ -13,10 +13,10 @@ class ApprovePageHomeHotCell: BaseTableViewCell {
     static let cellHeight:CGFloat = 108
     
     private let hotList:[ApproveHotVo] = [
-        ApproveHotVo(icon: "fundHot02", title: "使用说明1", link: "http://www.qq.com"),
-        ApproveHotVo(icon: "fundHot08", title: "使用说明2", link: "http://www.qq.com"),
-        ApproveHotVo(icon: "fundHot09", title: "使用说明3", link: "http://www.qq.com"),
-        ApproveHotVo(icon: "fundHot11", title: "使用说明4", link: "http://www.qq.com")
+        ApproveHotVo(icon: "fundHot08", title: "帮助人信息", action: "helpHandler:"),
+        ApproveHotVo(icon: "fundHot02", title: "审批历史", link: "http://www.baidu.com"),
+        ApproveHotVo(icon: "fundHot09", title: "系统点评", link: "http://www.baidu.com"),
+        ApproveHotVo(icon: "fundHot11", title: "使用说明", link: "http://www.baidu.com")
     ]
     
     //    private var iconContainer:UIView!
@@ -54,9 +54,14 @@ class ApprovePageHomeHotCell: BaseTableViewCell {
         
         var preItem:UIView?
         for i in 0..<hotList.count{
+            let avo = hotList[i]
             let area:UIControl = UIControl()
             area.tag = i
-            area.addTarget(self, action: "hotClickHandler:", forControlEvents: UIControlEvents.TouchUpInside)
+            if avo.action != nil{
+                area.addTarget(self, action: avo.action!, forControlEvents: UIControlEvents.TouchUpInside)
+            }else{
+                area.addTarget(self, action: "linkHandler:", forControlEvents: UIControlEvents.TouchUpInside)
+            }
             self.contentView.addSubview(area)
             area.snp_makeConstraints(closure: { [weak self](make) -> Void in
                 make.top.bottom.equalTo(self!.contentView)
@@ -90,17 +95,20 @@ class ApprovePageHomeHotCell: BaseTableViewCell {
         }
     }
     
-    func hotClickHandler(area:UIControl){
-        print("热键说明按钮点击")
-        //        let link = hotList[area.tag].link
-        //        //        println("链接:" + link)
-        //        let webController = DetailsWebPageController()
-        //        webController.linkUrl = link//"https://m.baidu.com/from=844b/s?word=" + noticeVo.title
-        //
-        //        let nc = NSNotification(name: "FundHome:pushView", object: webController)
-        //        NSNotificationCenter.defaultCenter().postNotification(nc)
+    func helpHandler(area:UIControl){ //帮助人列表
+        RootNavigationControl.getInstance().pushViewController(HelpListViewController(), animated: true)
     }
     
+    func linkHandler(area:UIControl){ //链接某个网址
+//        print("热键网址点击")
+        let link = hotList[area.tag].link
+        //        //        println("链接:" + link)
+        let webController = WebPageController()
+        webController.linkUrl = link//"https://m.baidu.com/from=844b/s?word=" + noticeVo.title
+        webController.title = hotList[area.tag].title
+        
+        RootNavigationControl.getInstance().pushViewController(webController, animated: true)
+    }
     
 }
 

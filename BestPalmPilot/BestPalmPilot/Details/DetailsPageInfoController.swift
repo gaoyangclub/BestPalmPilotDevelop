@@ -14,7 +14,7 @@ class DetailsPageInfoController: PageListTableViewController {
     weak var delegate:DetailsPageDelegate?
     
     
-    override func headerRequest(pageSO: PageListSO, callback: ((hasData: Bool) -> Void)!) {
+    override func headerRequest(pageSO: PageListSO?, callback: ((hasData: Bool) -> Void)!) {
         delegate?.getFormDetails?(hasFirstRefreshed, formKey: formKey, callback: { [weak self](dataList:[FormDetailVo]) -> Void in
             if self == nil || self!.isDispose  {
                 print("DetailsPageInfoController对象已经销毁")

@@ -46,25 +46,26 @@ class RefreshHeaderView: RefreshBaseView {
                     
 //                    var mainTable:UIView? = self.scrollView?.getWrapperView()//.subviews[0] as! UIView
                     //                    println(mainTable?.frame.origin.y)
-                    UIView.animateWithDuration(RefreshSlowAnimationDuration, animations: {
+                    UIView.animateWithDuration(RefreshSlowAnimationDuration, animations: {[weak self]_ in
                         //self.frame.size.height
                         //                        self.scrollView.contentOffset.y = -self.scrollView.contentInset.top
                         //                        println("top:\(self.scrollView.contentInset.top)")
                         
 //                        self.scrollView?.frame.origin.y = 0
-                        self.scrollView?.contentInset.top = 0
+                        self?.scrollView?.contentInset.top = 0
                         },completion:{ [weak self] ani in
                             //                        println("ani:\(ani)");
                             self?.scrollView?.userInteractionEnabled = true
                             self?.oldState = RefreshState.Normal //恢复成Normal
+                            self?.hidden = true
 //                            println("scrollView交互打开")
                             //                            self.scrollView.contentInset.top = 0
                             //                            self.scrollView.bounces = true
                     })
                 }else {
 //                    self.hidden = false
-                    UIView.animateWithDuration(RefreshSlowAnimationDuration, animations: {
-                        self.arrowImage!.transform = CGAffineTransformIdentity
+                    UIView.animateWithDuration(RefreshSlowAnimationDuration, animations: {[weak self]_ in
+                        self?.arrowImage!.transform = CGAffineTransformIdentity
                         },completion:{  ani in //[weak self]
                             //                        println("ani:\(ani)");
 //                                                        self.scrollView?.userInteractionEnabled = true
@@ -75,8 +76,8 @@ class RefreshHeaderView: RefreshBaseView {
             case .Pulling:
 //                self.hidden = false
                 self.statusLabel.text = RefreshHeaderReleaseToRefresh as String
-                UIView.animateWithDuration(RefreshSlowAnimationDuration, animations: {
-                    self.arrowImage!.transform = CGAffineTransformMakeRotation(CGFloat(M_PI ))
+                UIView.animateWithDuration(RefreshSlowAnimationDuration, animations: {[weak self]_ in
+                    self?.arrowImage!.transform = CGAffineTransformMakeRotation(CGFloat(M_PI ))
                 })
                 break
             case .Refreshing:
@@ -101,24 +102,24 @@ class RefreshHeaderView: RefreshBaseView {
                 scrollView.userInteractionEnabled = false
 //                println("scrollView交互关闭")
                 self.hidden = false
-                UIView.animateWithDuration(RefreshSlowAnimationDuration, animations: {
+                UIView.animateWithDuration(RefreshSlowAnimationDuration, animations: {[weak self]_ in
                     //                    self.bounds.origin.y = -self.frame.size.height
                     //                    mainTable?.frame.origin.y = self.frame.size.height
                     //                    println(mainTable?.frame.origin.y)
                     //                    self.scrollView.contentInset.top = 0
 //                    var top:CGFloat = 0.0
                     //                    if self.oldState == .Pulling {
-                    _ = self.frame.size.height// + self.scrollView.contentInset.top
+//                    _ = self.frame.size.height// + self.scrollView.contentInset.top
                     //                    }
                     //                    else{
                     //                        top = self.frame.size.height
                     //                    }
                     //                    self.scrollView.contentInset.top = top
                     //                    self.scrollView.contentOffset.y = -top
-                    if self.scrollView != nil && self.scrollView?.contentInset != nil{
-                        self.scrollView?.contentInset.top = self.frame.size.height
+                    if self?.scrollView != nil && self?.scrollView?.contentInset != nil{
+                        self!.scrollView?.contentInset.top = self!.frame.size.height
                     }
-                    },completion:{ _ in //[weak self]
+                    },completion:{ _ in // [weak self]
                         //                        println("ani:\(ani)");
 //                                                self.scrollView?.userInteractionEnabled = true
                         //                        self.scrollView.contentInset.top = 0
@@ -126,6 +127,7 @@ class RefreshHeaderView: RefreshBaseView {
 //                        if self.scrollView != nil && self.scrollView?.contentInset != nil{
 //                            self.scrollView?.contentInset.top = self.frame.size.height
 //                        }
+//                        self?.hidden = true
                 })
                 break
             default:

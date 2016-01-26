@@ -16,5 +16,6 @@
 #include "CustomBadge.h"
 
 #include "IQKeyboardManager.h"
+#include "IQUIView+IQKeyboardToolbar.h"
 
 #endif

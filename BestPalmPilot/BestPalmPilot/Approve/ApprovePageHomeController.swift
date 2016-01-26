@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ApprovePageHomeController: BaseTableViewController {
+class ApprovePageHomeController: PageListTableViewController {
 
     lazy private var searchBar:UISearchBar = {
         let bar = UISearchBar()
@@ -33,7 +33,7 @@ class ApprovePageHomeController: BaseTableViewController {
         //跳转到搜索页面
     }
     
-    private func initTitleArea(){
+    private lazy var rightItem:UIBarButtonItem = {
         let tabItem2 = UIFlatImageTabItem()
         tabItem2.frame = CGRectMake(0, 0, 30, 24)
         tabItem2.sizeType = .FillWidth
@@ -43,27 +43,32 @@ class ApprovePageHomeController: BaseTableViewController {
             tabItem2.image = image
         })
         tabItem2.addTarget(self, action: "setupClick", forControlEvents: UIControlEvents.TouchDown)
-        let rightItem =
+        let buttonItem =
         UIBarButtonItem(title: "嘿嘿", style: UIBarButtonItemStyle.Done, target: self, action: "setupClick")
-        rightItem.customView = tabItem2
+        buttonItem.customView = tabItem2
         
-        self.view.backgroundColor = BestUtils.backgroundColor//UIColor(red: 251/255, green: 251/255, blue: 251/255, alpha: 1)
-        
-        self.tabBarController?.navigationItem.leftBarButtonItem = nil
-        self.tabBarController?.navigationItem.rightBarButtonItem = rightItem
-//        self.tabBarController?.navigationItem.titleView = searchBar
-        
+        return buttonItem
+    }()
+    
+    private lazy var titleView:UIView = {
         let title = "审批管家"
-        self.tabBarController?.title = title
-        let titleView = UIView()
-        let label:UILabel = UICreaterUtils.createLabel(20, UIColor.whiteColor(), title, true, titleView)
+//        self.tabBarController?.title = title
+        let view = UIView()
+        let label:UILabel = UICreaterUtils.createLabel(20, UIColor.whiteColor(), title, true, view)
         label.font = UIFont.systemFontOfSize(20)//20号 ,weight:2
         
-        titleView.addSubview(label)
+        view.addSubview(label)
         label.snp_makeConstraints { (make) -> Void in //[weak self]
-            make.center.equalTo(titleView)
+            make.center.equalTo(view)
         }
-        
+        return view
+    }()
+    
+    private func initTitleArea(){
+        self.view.backgroundColor = BestUtils.backgroundColor//UIColor(red: 251/255, green: 251/255, blue: 251/255, alpha: 1)
+        self.tabBarController?.navigationItem.leftBarButtonItem = nil
+        self.tabBarController?.navigationItem.rightBarButtonItem = rightItem
+        //        self.tabBarController?.navigationItem.titleView = searchBar
         self.tabBarController?.navigationItem.titleView = titleView
     }
     
@@ -73,44 +78,78 @@ class ApprovePageHomeController: BaseTableViewController {
             
         })
     }
-
     
     override func viewWillAppear(animated: Bool) {
+        showFooter = false
+        
         super.viewWillAppear(animated)
         initTitleArea()
-        
-        if hasSetUp {
-            self.refreshContaner.scrollerView.contentOffset.y = 0
-        }
+//        if hasSetUp {
+//            self.refreshContaner.scrollerView.contentOffset.y = 0
+//        }
     }
     
-    private var hasSetUp:Bool = false
-    func setupRefresh(){
-        self.refreshContaner.addHeaderWithCallback(RefreshHeaderView.header(),callback: {
-
-            BestRemoteFacade.getApproveMenu(UserDefaultCache.getUsername()!, callBack: { [weak self](json, isSuccess, error) -> Void in
-                if self == nil{
-                    print("ApprovePageHomeController对象已经销毁")
-                    return
-                }
-                if isSuccess{
-                    
+//    private var hasSetUp:Bool = false
+//    func setupRefresh(){
+//        self.refreshContaner.addHeaderWithCallback(RefreshHeaderView.header(),callback: {
+//
+//            BestRemoteFacade.getApproveMenu(UserDefaultCache.getUsername()!, callBack: { [weak self](json, isSuccess, error) -> Void in
+//                if self == nil{
+//                    print("ApprovePageHomeController对象已经销毁")
+//                    return
+//                }
+//                if isSuccess{
+//                    self?.hasSetUp = true
+//                    
+//                    let menuList:[ApproveMenuVo] = self!.generateApproveMenuList(json!.arrayValue)
+//                    BestUtils.badgeCount = self!.getSystemBadgeCount(menuList)
+//                    
+//                    self?.dataSource.removeAllObjects()
+//                    let approvePageSource = self!.getApprovePageSource(menuList)
+//                    for i in 0..<approvePageSource.count{
+//                        self?.dataSource.addObject(approvePageSource[i])
+//                    }
+//                    self?.tableView.reloadData()
+//                    self?.refreshContaner.headerReset()
+//                }
+//            })
+//        })
+//    }
+    
+    override func headerRequest(pageSO: PageListSO?, callback: ((hasData: Bool) -> Void)!) {
+        BestRemoteFacade.getApproveMenu(UserDefaultCache.getUsername()!, callBack: { [weak self](json, isSuccess, error) -> Void in
+            if self == nil{
+                print("ApprovePageHomeController对象已经销毁")
+                return
+            }
+            if isSuccess{
+                var hasData = true
+                if json!.arrayValue.count > 0{
                     let menuList:[ApproveMenuVo] = self!.generateApproveMenuList(json!.arrayValue)
-                    
-                    self?.hasSetUp = true
+                    BestUtils.badgeCount = self!.getSystemBadgeCount(menuList)
                     
                     self?.dataSource.removeAllObjects()
                     let approvePageSource = self!.getApprovePageSource(menuList)
                     for i in 0..<approvePageSource.count{
                         self?.dataSource.addObject(approvePageSource[i])
                     }
-                    self?.tableView.reloadData()
-                    self?.refreshContaner.headerReset()
+                }else{
+                    hasData = false
+                    BestUtils.badgeCount = 0
                 }
-            })
+                callback(hasData:hasData)
+            }
         })
     }
-    
+
+    private func getSystemBadgeCount(menuList:[ApproveMenuVo])->Int{
+        var count:Int = 0
+        for avo in menuList {
+            count += avo.count
+        }
+        return 5//count
+    }
+
     private func getApprovePageSource(menuList:[ApproveMenuVo])->NSMutableArray{
         let svo = SoueceVo(data: [
             CellVo(cellHeight: ApprovePageHomeHotCell.cellHeight, cellClass: ApprovePageHomeHotCell.self)
@@ -135,10 +174,10 @@ class ApprovePageHomeController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        initTitleArea()
+        viewWillAppear(false)
         
-        self.setupRefresh()
-        self.refreshContaner.headerBeginRefreshing()
+//        self.setupRefresh()
+//        self.refreshContaner.headerBeginRefreshing()
         // Do any additional setup after loading the view.
     }
 
@@ -175,14 +214,16 @@ class ApprovePageHomeController: BaseTableViewController {
 
 }
 class ApproveHotVo{
-    init(icon:String,title:String,link:String){
+    init(icon:String,title:String,link:String? = nil,action:Selector? = nil){
         self.icon = icon
         self.title = title
         self.link = link
+        self.action = action
     }
     var icon:String!
     var title:String!
-    var link:String!
+    var link:String?
+    var action:Selector?
 }
 private class ApprovePageHomeInfoCell: BaseTableViewCell {
     

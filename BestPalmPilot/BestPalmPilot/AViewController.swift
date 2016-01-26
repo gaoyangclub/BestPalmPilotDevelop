@@ -20,12 +20,32 @@ class AViewController: UIViewController {
         initTitleArea()
     }
     
+    private lazy var titleView:UIView = {
+        let back = UIView()
+        let label:UILabel = UICreaterUtils.createLabel(20, UIColor.whiteColor(), self.title!, true, back)
+        label.font = UIFont.systemFontOfSize(20)//20号 ,weight:2
+        
+        back.addSubview(label)
+        label.snp_makeConstraints { (make) -> Void in //[weak self]
+            make.center.equalTo(back)
+        }
+        return back
+    }()
+    
     private func initTitleArea(){
         self.tabBarController?.navigationItem.leftBarButtonItem = nil
         self.tabBarController?.navigationItem.rightBarButtonItem = nil
-        self.tabBarController?.navigationItem.titleView = nil
-        self.tabBarController?.title = "界面A"
+//        self.tabBarController?.navigationItem.titleView = nil
+        self.tabBarController?.navigationItem.titleView = titleView
     }
+    
+    private lazy var tipsLabel:UILabel = {
+       let label = UICreaterUtils.createLabel(50, UICreaterUtils.colorFlat,"敬请期待",true,self.view)
+        label.snp_makeConstraints { [weak self](make) -> Void in //[weak self]
+            make.center.equalTo(self!.view)
+        }
+        return label
+    }()
     
     override func viewDidLoad() {
 //        title = "界面A"
@@ -33,13 +53,16 @@ class AViewController: UIViewController {
 //        self.navigationController?.setToolbarHidden(true, animated: true)
         
         super.viewDidLoad()
-
-        let color:CGFloat = CGFloat(CGFloat(random())/CGFloat(RAND_MAX))
-        let color1:CGFloat = CGFloat(CGFloat(random())/CGFloat(RAND_MAX))
-        let color2:CGFloat = CGFloat(CGFloat(random())/CGFloat(RAND_MAX))
-//        var color3:CGFloat = CGFloat(CGFloat(random())/CGFloat(RAND_MAX))
         
-        view.backgroundColor = UIColor(red: color, green: color1, blue: color2, alpha: 1)//UIColor.blueColor().lighterColor()
+        self.view.backgroundColor = BestUtils.backgroundColor
+        tipsLabel.hidden = false
+
+//        let color:CGFloat = CGFloat(CGFloat(random())/CGFloat(RAND_MAX))
+//        let color1:CGFloat = CGFloat(CGFloat(random())/CGFloat(RAND_MAX))
+//        let color2:CGFloat = CGFloat(CGFloat(random())/CGFloat(RAND_MAX))
+////        var color3:CGFloat = CGFloat(CGFloat(random())/CGFloat(RAND_MAX))
+//        
+//        view.backgroundColor = UIColor(red: color, green: color1, blue: color2, alpha: 1)//UIColor.blueColor().lighterColor()
         // Do any additional setup after loading the view.
     }
 

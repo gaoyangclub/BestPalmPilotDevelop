@@ -13,8 +13,16 @@ typealias ResponseCompletionHandler = (json:JSON?,isSuccess:Bool,error:NSError?)
 
 class BestRemoteFacade: AnyObject {
     
+    private static let appUrl = "http://itunes.apple.com/"
+    
+    private static let appId = "776882837"
+    
     private static let remoteUrl = "http://10.45.10.198:8282/gateway/rest/api/com.best.oasis.husky.ws.mobile.MobileWebService/"
     private static let headers:Dictionary<String,String> = ["X-Route-User":"TEST","X-Route-Token":"TEST"]
+    
+    static func getAppVersion(callBack:ResponseCompletionHandler?){
+        request(appUrl + "lookup",parameters:["id":appId],headers:nil,callBack:callBack)
+    }
     
     static func login(username:String,password:String,appid:String,mobileInfo:String,callBack:ResponseCompletionHandler?){
         request(remoteUrl + "login",parameters:["username":username.getMarks(),"password":password.getMarks(),"appid":appid.getMarks(),"mobileInfo":mobileInfo.getMarks()],callBack:callBack)
@@ -25,15 +33,8 @@ class BestRemoteFacade: AnyObject {
     }
     
     static func getListFormInfos(so:FormListSO,groupkey:String,callBack:ResponseCompletionHandler?){
-        do{
-            let nsdata = try NSJSONSerialization.dataWithJSONObject(so.mj_keyValues(), options: NSJSONWritingOptions.PrettyPrinted)
-            let jsonString:NSString = NSString(data: nsdata, encoding: NSUTF8StringEncoding)!
-//            print(jsonString)
-            request(remoteUrl + "getListFormInfos",parameters:["so":jsonString,"groupkey":groupkey.getMarks()],
-                callBack:callBack)
-        }catch{
-            
-        }
+        request(remoteUrl + "getListFormInfos",parameters:["so":so.getJsonString(),"groupkey":groupkey.getMarks()],
+            callBack:callBack)
     }
     
     static func getFormDetailsVo(code:String,groupkey:String,callBack:ResponseCompletionHandler?){
@@ -43,6 +44,10 @@ class BestRemoteFacade: AnyObject {
     //username:String,
     static func audit(code:String,action:String,remark:String,userCode:String,groupkey:String,callBack:ResponseCompletionHandler?){
         request(remoteUrl + "audit",parameters:["code":code.getMarks(),"action":action.getMarks(),"remark":remark.getMarks(),"staffcode":userCode.getMarks(),"groupkey":groupkey.getMarks()],callBack:callBack)//"staffname":username.getMarks(),
+    }
+    
+    static func getHelpInfo(callBack:ResponseCompletionHandler?){
+        request(remoteUrl + "getHelpInfo",callBack:callBack)
     }
     
 //    private static func modifyParameters(var parameters:Dictionary<String,AnyObject>)->Dictionary<String,AnyObject>{
@@ -60,7 +65,8 @@ class BestRemoteFacade: AnyObject {
 //        return parameters
 //    }
     
-    private static func request(url:String,parameters:Dictionary<String,AnyObject>,method: Alamofire.Method = .POST,callBack:ResponseCompletionHandler? = nil){
+    private static func request(url:String,parameters:Dictionary<String,AnyObject>? = nil,method: Alamofire.Method = .POST,
+        headers:Dictionary<String,String>? = BestRemoteFacade.headers,callBack:ResponseCompletionHandler? = nil){
         Alamofire.request(method, url , parameters: parameters, headers: headers).responseJSON { (response) -> Void in
             if response.result.isSuccess{
                 if let value = response.result.value {

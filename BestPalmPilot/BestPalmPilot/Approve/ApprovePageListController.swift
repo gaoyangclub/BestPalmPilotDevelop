@@ -16,8 +16,8 @@ class ApprovePageListController: PageListTableViewController {
         return FormListSO()
     }
     
-    override func headerRequest(pageSO: PageListSO, callback: ((hasData: Bool) -> Void)!) {
-        let fso = generateFormListSO(pageSO)
+    override func headerRequest(pageSO: PageListSO?, callback: ((hasData: Bool) -> Void)!) {
+        let fso = generateFormListSO(pageSO!)
         BestRemoteFacade.getListFormInfos(fso,groupkey: approveMenuVo.groupkey){[weak self] (json,isSuccess,_) -> Void in
             if self == nil || self!.isDispose  { //self!.isDispose
                 print("ApprovePageListController对象已经销毁")
@@ -49,8 +49,8 @@ class ApprovePageListController: PageListTableViewController {
         return fso
     }
     
-    override func footerRequest(pageSO: PageListSO, callback: ((hasData: Bool) -> Void)!) {
-        let fso = generateFormListSO(pageSO)
+    override func footerRequest(pageSO: PageListSO?, callback: ((hasData: Bool) -> Void)!) {
+        let fso = generateFormListSO(pageSO!)
         BestRemoteFacade.getListFormInfos(fso,groupkey: approveMenuVo.groupkey){[weak self] (json,isSuccess,_) -> Void in
             if self == nil || self!.isDispose  { //self!.isDispose
                 print("ApprovePageListController对象已经销毁")
@@ -195,6 +195,9 @@ class ApprovePageListController: PageListTableViewController {
                     tableView.beginUpdates()
                     tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: row, inSection: section)], withRowAnimation:                     UITableViewRowAnimation.Bottom)
                     tableView.endUpdates()
+                    
+                    approveMenuVo.count -= 1
+                    BestUtils.badgeCount -= 1 //系统图标数字更新
                     
                     refreshContaner.footerStraight() //底部检查刷新
                     return//删除结束

@@ -10,7 +10,7 @@ import UIKit
 
 class PageListTableViewController: BaseTableViewController {
 
-    var pageSO:PageListSO!// = self.createPageSO()
+    var pageSO:PageListSO?// = self.createPageSO()
     var hasSetUp:Bool = false
     var showFooter:Bool = true
     var hasFirstRefreshed:Bool = false //第一次刷新界面
@@ -25,12 +25,12 @@ class PageListTableViewController: BaseTableViewController {
     }
     
     /** 头部下拉全部刷新 */
-    func headerRequest(pageSO:PageListSO,callback:((hasData:Bool) -> Void)!){
+    func headerRequest(pageSO:PageListSO?,callback:((hasData:Bool) -> Void)!){
         
     }
     
     /** 底部上拉刷新 */
-    func footerRequest(pageSO:PageListSO,callback:((hasData:Bool) -> Void)!){
+    func footerRequest(pageSO:PageListSO?,callback:((hasData:Bool) -> Void)!){
         
     }
     

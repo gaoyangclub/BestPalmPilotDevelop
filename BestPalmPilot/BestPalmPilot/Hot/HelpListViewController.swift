@@ -54,7 +54,7 @@ class HelpListViewController: PageListTableViewController {
         self.navigationItem.titleView = titleView
     }
     
-    override func headerRequest(pageSO: PageListSO?, callback: ((hasData: Bool) -> Void)!) {
+    override func headerRequest(pageSO: PageListSO?, callback: ((hasData: Bool,lastUpdateTime:String) -> Void)!) {
         BestRemoteFacade.getHelpInfo {[weak self]  (json, isSuccess, error) -> Void in
             if self == nil || self!.isDispose  {
                 print("HelpListViewController对象已经销毁")
@@ -63,8 +63,8 @@ class HelpListViewController: PageListTableViewController {
             if isSuccess {
 //                print(json)
                 var hasData = true
-                if json != nil{ //.arrayValue.count > 0
-                    let helpInfoList:[HelpInfoVo] = self!.generateHelpInfoList(json!)
+                if json!.arrayValue.count > 0{
+                    let helpInfoList:[HelpInfoVo] = self!.generateHelpInfoList(json!.arrayValue)
                     self!.dataSource.removeAllObjects()
                     let helpInfoPageSource = self!.getHelpInfoPageSource(helpInfoList)
                     for i in 0..<helpInfoPageSource.count{
@@ -73,19 +73,19 @@ class HelpListViewController: PageListTableViewController {
                 }else{
                     hasData = false
                 }
-                callback(hasData:hasData)
+                callback(hasData:hasData,lastUpdateTime:"")
             }
         }
     }
     
     
-    private func generateHelpInfoList(json:JSON)->[HelpInfoVo]{
-        var formList:[HelpInfoVo] = [BestUtils.generateObjByJson(json, type: HelpInfoVo.self) as! HelpInfoVo]
-//        for json in jsonList{
-//            let avo = BestUtils.generateObjByJson(json,typeList: [FormInfoVo.self]) as! FormInfoVo
-//            formList.append(avo)
-//        }
-        return formList
+    private func generateHelpInfoList(jsonList:[JSON])->[HelpInfoVo]{
+        var helpList:[HelpInfoVo] = []//
+        for json in jsonList{
+            let hvo = BestUtils.generateObjByJson(json, type: HelpInfoVo.self) as! HelpInfoVo
+            helpList.append(hvo)
+        }
+        return helpList
     }
     
     private func getHelpInfoPageSource(infoList:[HelpInfoVo])->NSMutableArray{
@@ -143,10 +143,10 @@ class HelpListViewController: PageListTableViewController {
 }
 class HelpInfoVo:NSObject{
     
-    var appversion:String = ""
-    var contact:String = ""
+//    var appversion:String = ""
+    var contact:String = ""//联系方式等 邮件 短信 电话
     var name:String = ""
-    var updateurl:String = ""
+//    var updateurl:String = ""
     
 }
 class HelpInfoPageCell:BaseTableViewCell{

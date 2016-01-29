@@ -87,7 +87,7 @@ public class AccountSideHomeController: UIViewController {
     
     lazy var setupButton:UIButton = {
         let btn = UIButton(type: UIButtonType.System)
-        btn.layer.cornerRadius = 2
+        btn.layer.cornerRadius = 5
         let normalColor:UIColor = FlatUIColors.belizeHoleColor()
         btn.backgroundColor = normalColor
         let title:NSString = "系统设置"
@@ -95,20 +95,20 @@ public class AccountSideHomeController: UIViewController {
         btn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         self.bottomArea.addSubview(btn)
         
-        btn.titleLabel?.font = UIFont.systemFontOfSize(18)//weight文字线条粗细 ,weight:2
+        btn.titleLabel?.font = UIFont.systemFontOfSize(20)//weight文字线条粗细 ,weight:2
         
         btn.snp_makeConstraints(closure: {[weak self] (make) -> Void in
             make.left.equalTo(self!.bottomArea).offset(10)
             make.right.equalTo(self!.bottomArea).offset(-10)
             make.top.equalTo(self!.bottomArea).offset(20)
-            make.height.equalTo(40)
+            make.height.equalTo(45)
         })
         return btn
     }()
     
     lazy var logoutButton:UIButton = {
         let btn = UIButton(type: UIButtonType.System)
-        btn.layer.cornerRadius = 2
+        btn.layer.cornerRadius = 5
         let normalColor:UIColor = FlatUIColors.belizeHoleColor()
         btn.backgroundColor = normalColor
         let title:NSString = "退出登陆"
@@ -116,7 +116,7 @@ public class AccountSideHomeController: UIViewController {
         btn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         self.bottomArea.addSubview(btn)
         
-        btn.titleLabel?.font = UIFont.systemFontOfSize(18)//weight文字线条粗细 ,weight:2
+        btn.titleLabel?.font = UIFont.systemFontOfSize(20)//weight文字线条粗细 ,weight:2
         btn.snp_makeConstraints(closure: {[weak self] (make) -> Void in
             make.left.right.height.equalTo(self!.setupButton)
             make.top.equalTo(self!.setupButton.snp_bottom).offset(10)
@@ -126,7 +126,7 @@ public class AccountSideHomeController: UIViewController {
     
     private func initController(){
         self.view.backgroundColor = UIColor.grayColor()
-        setupButton.enabled = false
+        setupButton.enableElement = false
         setupButton.addTarget(self, action: "setupClick:", forControlEvents: UIControlEvents.TouchUpInside)
         logoutButton.addTarget(self, action: "logoutClick:", forControlEvents: UIControlEvents.TouchUpInside)
     }

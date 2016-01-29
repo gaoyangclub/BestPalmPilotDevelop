@@ -62,13 +62,16 @@ public class BestUtils:AnyObject {
 //        }
 //    }
     
-    public static func showAlert(title:String = "提示",message:String,oklabel:String = "确定",cancellabel:String = "取消",parentController:UIViewController,okHandler:((UIAlertAction) -> Void)?){
-        let alertController = UIAlertController(title:title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        let okAction = UIAlertAction(title: oklabel, style: UIAlertActionStyle.Default, handler: okHandler)
-        alertController.addAction(okAction)
-        let cancelAction = UIAlertAction(title: cancellabel, style: UIAlertActionStyle.Default, handler: nil)
-        alertController.addAction(cancelAction)
-        parentController.presentViewController(alertController, animated: true, completion: nil)
+    public static func showAlert(title:String = "提示",message:String,oklabel:String = "确定",cancellabel:String = "取消",parentController:UIViewController,useCancel:Bool = true,
+        okHandler:((UIAlertAction) -> Void)?){
+            let alertController = UIAlertController(title:title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            let okAction = UIAlertAction(title: oklabel, style: UIAlertActionStyle.Default, handler: okHandler)
+            alertController.addAction(okAction)
+            if useCancel {
+                let cancelAction = UIAlertAction(title: cancellabel, style: UIAlertActionStyle.Default, handler: nil)
+                alertController.addAction(cancelAction)
+            }
+            parentController.presentViewController(alertController, animated: true, completion: nil)
     }
     
     private static var _badgeCount:Int = 0
@@ -101,4 +104,21 @@ extension NSObject{
         }
         return ""
     }
+}
+extension UIControl{
+    
+    public var enableElement:Bool{
+        set(newValue){
+            enabled = newValue
+            if newValue {
+                self.alpha = 1
+            }else{
+                self.alpha = 0.5
+            }
+        }
+        get{
+            return enabled
+        }
+    }
+    
 }

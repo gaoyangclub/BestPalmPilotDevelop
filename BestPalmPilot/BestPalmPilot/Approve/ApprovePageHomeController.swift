@@ -116,14 +116,15 @@ class ApprovePageHomeController: PageListTableViewController {
 //        })
 //    }
     
-    override func headerRequest(pageSO: PageListSO?, callback: ((hasData: Bool) -> Void)!) {
-        BestRemoteFacade.getApproveMenu(UserDefaultCache.getUsername()!, callBack: { [weak self](json, isSuccess, error) -> Void in
+    override func headerRequest(pageSO: PageListSO?, callback: ((hasData: Bool,lastUpdateTime:String) -> Void)!) {
+        BestRemoteFacade.getApproveMenu(UserDefaultCache.getUsercode()!, callBack: { [weak self](json, isSuccess, error) -> Void in
             if self == nil{
                 print("ApprovePageHomeController对象已经销毁")
                 return
             }
             if isSuccess{
                 var hasData = true
+//                print(json)
                 if json!.arrayValue.count > 0{
                     let menuList:[ApproveMenuVo] = self!.generateApproveMenuList(json!.arrayValue)
                     BestUtils.badgeCount = self!.getSystemBadgeCount(menuList)
@@ -137,7 +138,7 @@ class ApprovePageHomeController: PageListTableViewController {
                     hasData = false
                     BestUtils.badgeCount = 0
                 }
-                callback(hasData:hasData)
+                callback(hasData:hasData,lastUpdateTime:"")
             }
         })
     }
@@ -147,7 +148,7 @@ class ApprovePageHomeController: PageListTableViewController {
         for avo in menuList {
             count += avo.count
         }
-        return 5//count
+        return count
     }
 
     private func getApprovePageSource(menuList:[ApproveMenuVo])->NSMutableArray{
@@ -166,6 +167,7 @@ class ApprovePageHomeController: PageListTableViewController {
         for json in jsonList{
             let avo = BestUtils.generateObjByJson(json,typeList: [ApproveMenuVo.self]) as! ApproveMenuVo
             avo.iconurl = "fundTag0\(index++)"
+//            print(avo.count)
             menuList.append(avo)
         }
         return menuList
@@ -212,18 +214,6 @@ class ApprovePageHomeController: PageListTableViewController {
     }
     */
 
-}
-class ApproveHotVo{
-    init(icon:String,title:String,link:String? = nil,action:Selector? = nil){
-        self.icon = icon
-        self.title = title
-        self.link = link
-        self.action = action
-    }
-    var icon:String!
-    var title:String!
-    var link:String?
-    var action:Selector?
 }
 private class ApprovePageHomeInfoCell: BaseTableViewCell {
     
@@ -335,7 +325,9 @@ private class ApprovePageHomeInfoCell: BaseTableViewCell {
 //        avo.count = 88
         if avo.count > 0{
             badgeView.hidden = false
+            
             badgeView.badgeText = "\(avo.count)"
+//            print("个数:\(avo.count)" + " ---  badgeView.badgeText:" + badgeView.badgeText)
             
             badgeView.snp_makeConstraints { [weak self](make) -> Void in
                 make.right.equalTo(self!.arrowView.snp_left).offset(-16)

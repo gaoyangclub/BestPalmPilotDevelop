@@ -131,10 +131,17 @@ class SearchViewController: UITableViewController,UISearchBarDelegate {
             }
         }
     }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        if searchBar.text != nil{
+            print("点击搜索")
+            doSearch(searchBar.text!)
+        }
+    }
 
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-//        searchResult = DataRemoteFacade.searchFundResult(searchBar.text!)
+    private func doSearch(searchText:String){
         if searchText.isEmpty{
+            clearResult()
             searchOutBackView.hidden = true
         }else{
             BestRemoteFacade.getListFormInfos(generateFormListSO(searchText), groupkey: groupkey){ [weak self] (json,isSuccess,_) in
@@ -142,24 +149,36 @@ class SearchViewController: UITableViewController,UISearchBarDelegate {
                     print("SearchViewController对象已经销毁")
                     return
                 }
-                if json!.arrayValue.count > 0{
-                    let fromInfoList:[FormInfoVo] = self!.generateFormInfoList(json!.arrayValue)
-                    self!.searchResult = fromInfoList
-                    self!.tableView.reloadData()
-                    self!.searchOutBackView.hidden = true
-                }else{
-                    self!.searchOutBackView.hidden = false
-                    self!.searchOutTitle.text = "很抱歉,没有找到和'" + searchText + "'有关的审批单"
-                    self!.searchOutTitle.sizeToFit()
+                if isSuccess {
+                    if json!.arrayValue.count > 0{
+                        let fromInfoList:[FormInfoVo] = self!.generateFormInfoList(json!.arrayValue)
+                        self!.searchResult = fromInfoList
+                        self!.tableView.reloadData()
+                        self!.searchOutBackView.hidden = true
+                    }else{
+                        self!.clearResult()
+                        self!.searchOutBackView.hidden = false
+                        self!.searchOutTitle.text = "很抱歉,没有找到和'" + searchText + "'有关的审批单"
+                        self!.searchOutTitle.sizeToFit()
+                    }
                 }
             }
-            
         }
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+//        searchResult = DataRemoteFacade.searchFundResult(searchBar.text!)
+        doSearch(searchText)
+    }
+    
+    private func clearResult(){
+        self.searchResult.removeAll()//清除现有信息
+        self.tableView.reloadData()
     }
     
     private func generateFormListSO(code:String)->FormListSO{
         pageSO.objectsperpage = 20000
-        pageSO.code = code
+        pageSO.codeorcreator = code
         pageSO.token = UserDefaultCache.getToken()!
         pageSO.username = UserDefaultCache.getUsercode()!
         return pageSO

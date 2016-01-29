@@ -15,12 +15,27 @@ class BestRemoteFacade: AnyObject {
     
     private static let appUrl = "http://itunes.apple.com/"
     
-    private static let appId = "776882837"
+    private static let appId = "1"//"776882837"
+    
+    private static let appType = "IOS"//
     
     private static let remoteUrl = "http://10.45.10.198:8282/gateway/rest/api/com.best.oasis.husky.ws.mobile.MobileWebService/"
     private static let headers:Dictionary<String,String> = ["X-Route-User":"TEST","X-Route-Token":"TEST"]
     
-    static func getAppVersion(callBack:ResponseCompletionHandler?){
+    static var appVersionVo:AppVersionVo?
+    
+    static func getLastVersion(callBack:(appVersionVo:AppVersionVo)->Void){
+        //device
+        request(remoteUrl + "getUpdateInfo",parameters:["appType":appType.getMarks()]){ (json, isSuccess, error) -> Void in
+            if isSuccess {
+                BestRemoteFacade.appVersionVo = BestUtils.generateObjByJson(json!, type: AppVersionVo.self) as? AppVersionVo
+                callBack(appVersionVo:BestRemoteFacade.appVersionVo!)
+            }
+        }
+//      getHelpInfo(callBack)
+    }
+    
+    static func getAppStoreVersion(callBack:ResponseCompletionHandler?){
         request(appUrl + "lookup",parameters:["id":appId],headers:nil,callBack:callBack)
     }
     
@@ -33,7 +48,9 @@ class BestRemoteFacade: AnyObject {
     }
     
     static func getListFormInfos(so:FormListSO,groupkey:String,callBack:ResponseCompletionHandler?){
-        request(remoteUrl + "getListFormInfos",parameters:["so":so.getJsonString(),"groupkey":groupkey.getMarks()],
+        let jsonString = so.getJsonString()
+//        print(jsonString)
+        request(remoteUrl + "getListFormInfos",parameters:["so":jsonString,"groupkey":groupkey.getMarks()],
             callBack:callBack)
     }
     
@@ -43,7 +60,7 @@ class BestRemoteFacade: AnyObject {
     
     //username:String,
     static func audit(code:String,action:String,remark:String,userCode:String,groupkey:String,callBack:ResponseCompletionHandler?){
-        request(remoteUrl + "audit",parameters:["code":code.getMarks(),"action":action.getMarks(),"remark":remark.getMarks(),"staffcode":userCode.getMarks(),"groupkey":groupkey.getMarks()],callBack:callBack)//"staffname":username.getMarks(),
+        request(remoteUrl + "audit",parameters:["code":code.getMarks(),"action":action.getMarks(),"remark":remark.getMarks(),"staffCode":userCode.getMarks(),"groupkey":groupkey.getMarks()],callBack:callBack)//"staffname":username.getMarks(),
     }
     
     static func getHelpInfo(callBack:ResponseCompletionHandler?){
@@ -90,3 +107,11 @@ class BestRemoteFacade: AnyObject {
     }
 
 }
+public class AppVersionVo:NSObject{
+    
+    var appversion:String = ""
+    var updateurl:String = ""
+    var updateremark:String = ""//版本更新说明
+    
+}
+

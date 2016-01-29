@@ -16,7 +16,7 @@ class ApprovePageListController: PageListTableViewController {
         return FormListSO()
     }
     
-    override func headerRequest(pageSO: PageListSO?, callback: ((hasData: Bool) -> Void)!) {
+    override func headerRequest(pageSO: PageListSO?, callback: ((hasData: Bool,sorttime:String) -> Void)!) {
         let fso = generateFormListSO(pageSO!)
         BestRemoteFacade.getListFormInfos(fso,groupkey: approveMenuVo.groupkey){[weak self] (json,isSuccess,_) -> Void in
             if self == nil || self!.isDispose  { //self!.isDispose
@@ -26,6 +26,7 @@ class ApprovePageListController: PageListTableViewController {
             if isSuccess {
 //                print(json)
                 var hasData = true
+                var sorttime = fso.sorttime //继续用这个时间
                 if json!.arrayValue.count > 0{
                     let fromInfoList:[FormInfoVo] = self!.generateFormInfoList(json!.arrayValue)
                     self!.dataSource.removeAllObjects()
@@ -33,23 +34,24 @@ class ApprovePageListController: PageListTableViewController {
                     for i in 0..<formInfoPageSource.count{
                         self!.dataSource.addObject(formInfoPageSource[i])
                     }
+                    sorttime = fromInfoList.first!.sorttime //更新最新时间
                 }else{
                     hasData = false
                 }
-                callback(hasData:hasData)
+                callback(hasData:hasData,sorttime:sorttime)
             }
         }
     }
     
     private func generateFormListSO(pageSO:PageListSO)->FormListSO{
         let fso = pageSO as! FormListSO
-        fso.code = approveMenuVo.code
+//        fso.code = approveMenuVo.code
         fso.token = UserDefaultCache.getToken()!
         fso.username = UserDefaultCache.getUsercode()!
         return fso
     }
     
-    override func footerRequest(pageSO: PageListSO?, callback: ((hasData: Bool) -> Void)!) {
+    override func footerRequest(pageSO: PageListSO?, callback: ((hasData: Bool,sorttime:String) -> Void)!) {
         let fso = generateFormListSO(pageSO!)
         BestRemoteFacade.getListFormInfos(fso,groupkey: approveMenuVo.groupkey){[weak self] (json,isSuccess,_) -> Void in
             if self == nil || self!.isDispose  { //self!.isDispose
@@ -57,15 +59,16 @@ class ApprovePageListController: PageListTableViewController {
                 return
             }
             if isSuccess {
-                
                 var hasData = true
+                var sorttime = fso.sorttime //继续用这个时间
                 if json!.arrayValue.isEmpty {
                     hasData = false
                 }else{
                     let fromInfoList:[FormInfoVo] = self!.generateFormInfoList(json!.arrayValue)
                     self!.updateFormInfoPageSource(fromInfoList) //直接新增
+                    sorttime = fromInfoList.first!.sorttime //更新最新时间
                 }
-                callback(hasData:hasData)
+                callback(hasData:hasData,sorttime:sorttime)
             }
         }
     }
@@ -75,6 +78,7 @@ class ApprovePageListController: PageListTableViewController {
         for json in jsonList{
             let avo = BestUtils.generateObjByJson(json,typeList: [FormInfoVo.self]) as! FormInfoVo
             formList.append(avo)
+//            print("sorttime:" + avo.sorttime)
         }
         return formList
     }
@@ -233,8 +237,8 @@ class ApprovePageListController: PageListTableViewController {
 
 }
 class FormListSO:PageListSO{
-
-    var code:String = ""
+//    var code:String = ""
+    var codeorcreator:String = ""
     var token:String = ""
     var username:String = ""
     
@@ -246,6 +250,8 @@ public class FormInfoVo:NSObject{
     var submittime:String = ""
     var submitter:String = ""
     var formtype:String = ""
+    var sorttime:String = ""
+    var lastupdatetime:String = ""
 }
 
 class FormInfoPageCell:BaseTableViewCell{

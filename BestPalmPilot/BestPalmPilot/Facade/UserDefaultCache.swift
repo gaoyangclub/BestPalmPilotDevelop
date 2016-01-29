@@ -10,6 +10,12 @@ import UIKit
 
 class UserDefaultCache: AnyObject {
     
+    static func getHasIntro()->Bool?{
+        return getUserDataByKey("hasIntro") as? Bool
+    }
+    static func setHasIntro(value:Bool?){
+        setUserDataByKey("hasIntro",value: value)
+    }
     static func getUsercode()->String?{
         return getUserDataByKey("usercode") as? String
     }

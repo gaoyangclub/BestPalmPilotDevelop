@@ -54,33 +54,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UIAlertViewDelegate {
         
         self.window!.rootViewController = drawerController
         
-        checkVersion()
+        checkLastVersion()
         
         return true
     }
     
-    private func checkVersion(){
+    private func checkLastVersion(){
         let infoDic:NSDictionary = NSBundle.mainBundle().infoDictionary!
-//        CFShow(infoDic)
-        let appVersion:String = infoDic.objectForKey("CFBundleVersion") as! String
-        BestRemoteFacade.getAppVersion { [weak self](json, isSuccess, error) -> Void in
+        //        CFShow(infoDic)
+        let appVersion:NSString = infoDic.objectForKey("CFBundleShortVersionString") as! NSString
+        BestRemoteFacade.getLastVersion { [weak self] appVersionVo -> Void in
+            if self == nil{
+                print("AppDelegate对象已经销毁")
+                return
+            }
+            if appVersion != appVersionVo.appversion{
+                self!.trackViewUrl = appVersionVo.updateurl //跳转更新地址
+                let alert = UIAlertView(title: "提示", message: "检测到最新版本，是否需要更新?", delegate: self, cancelButtonTitle: "确定", otherButtonTitles:"取消")
+                alert.show()
+            }
+        }
+    }
+    
+    private func checkAppStoreVersion(){
+        let infoDic:NSDictionary = NSBundle.mainBundle().infoDictionary!
+        //        CFShow(infoDic)
+        let appVersion:NSString = infoDic.objectForKey("CFBundleShortVersionString") as! NSString
+        BestRemoteFacade.getAppStoreVersion { [weak self](json, isSuccess, error) -> Void in
             if self == nil{
                 print("AppDelegate对象已经销毁")
                 return
             }
             if isSuccess {
-//                print(json)
+                //                print(json)
                 let results:NSArray? = json?.object.valueForKey("results") as? NSArray
                 if results != nil && results!.count > 0{
                     let releaseInfo:NSDictionary = results![0] as! NSDictionary
-                    let latestVersion:String = releaseInfo.objectForKey("version") as! String
+                    let latestVersion:NSString = releaseInfo.objectForKey("version") as! NSString
                     self!.trackViewUrl = releaseInfo.objectForKey("trackViewUrl") as! String
                     if appVersion != latestVersion{ //版本需要更新
                         let alert = UIAlertView(title: "提示", message: "检测到最新版本，是否需要更新?", delegate: self, cancelButtonTitle: "确定", otherButtonTitles:"取消")
                         alert.show()
-//                        BestUtils.showAlert(message: "检测到最新版本，是否需要更新?", parentController: RootNavigationControl.getInstance(), okHandler: { _ -> Void in
-//                            UIApplication.sharedApplication().openURL(NSURL(string: trackViewUrl)!)
-//                        })
+                        //                        BestUtils.showAlert(message: "检测到最新版本，是否需要更新?", parentController: RootNavigationControl.getInstance(), okHandler: { _ -> Void in
+                        //                            UIApplication.sharedApplication().openURL(NSURL(string: trackViewUrl)!)
+                        //                        })
                     }
                 }
             }

@@ -13,6 +13,9 @@
 #include "SDCycleScrollView.h"
 #include "MMDrawerController.h"
 
+#include "EAIntroPage.h"
+#include "EAIntroView.h"
+
 #include "CustomBadge.h"
 
 #include "IQKeyboardManager.h"

@@ -84,7 +84,7 @@ class RefreshFooterView: RefreshBaseView {
                 self.scrollView?.userInteractionEnabled = false
                 let dirtY:CGFloat = self.scrollView!.contentOffset.y - self.scrollView!.contentSize.height + self.scrollView!.frame.height
 //                println(dirtY)
-                scrollView.contentInset.bottom = dirtY + CGFloat(RefreshFooterHeight)
+                scrollView.contentInset.bottom = CGFloat(RefreshFooterHeight)//dirtY +
                 break
             default:
                 break

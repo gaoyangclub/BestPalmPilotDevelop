@@ -14,9 +14,9 @@ class ApprovePageHomeHotCell: BaseTableViewCell {
     
     private let hotList:[ApproveHotVo] = [
         ApproveHotVo(icon: "fundHot08", title: "帮助人信息", action: "helpHandler:"),
-        ApproveHotVo(icon: "fundHot02", title: "审批历史", link: "http://www.baidu.com"),
-        ApproveHotVo(icon: "fundHot09", title: "系统点评", link: "http://www.baidu.com"),
-        ApproveHotVo(icon: "fundHot11", title: "使用说明", link: "http://www.baidu.com")
+        ApproveHotVo(icon: "fundHot02", title: "审批历史", link: "http://www.baidu.com",enable:false),
+        ApproveHotVo(icon: "fundHot09", title: "系统点评", link: "http://www.baidu.com",enable:false),
+        ApproveHotVo(icon: "fundHot11", title: "使用说明", link: "http://www.baidu.com",enable:false)
     ]
     
     //    private var iconContainer:UIView!
@@ -56,6 +56,7 @@ class ApprovePageHomeHotCell: BaseTableViewCell {
         for i in 0..<hotList.count{
             let avo = hotList[i]
             let area:UIControl = UIControl()
+            area.enableElement = avo.enable
             area.tag = i
             if avo.action != nil{
                 area.addTarget(self, action: avo.action!, forControlEvents: UIControlEvents.TouchUpInside)
@@ -110,5 +111,19 @@ class ApprovePageHomeHotCell: BaseTableViewCell {
         RootNavigationControl.getInstance().pushViewController(webController, animated: true)
     }
     
+}
+private class ApproveHotVo{
+    init(icon:String,title:String,link:String? = nil,action:Selector? = nil,enable:Bool = true){
+        self.icon = icon
+        self.title = title
+        self.link = link
+        self.action = action
+        self.enable = enable
+    }
+    var icon:String!
+    var title:String!
+    var link:String?
+    var action:Selector?
+    var enable:Bool = true
 }
 

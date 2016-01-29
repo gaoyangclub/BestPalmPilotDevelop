@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 高扬. All rights reserved.
 //
 
-import Foundation
+//import Foundation
 import UIKit
 
 typealias LoadCompletionHandler = (image:UIImage,params:[AnyObject])->Void

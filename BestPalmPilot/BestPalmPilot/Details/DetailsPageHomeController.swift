@@ -194,7 +194,7 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
             
             let itemWidth = self.view.frame.width / 2 - 10
             let parameters: [CAPSPageMenuOption] = [
-                .MenuHeight(36),
+                .MenuHeight(45),
                 .MenuItemWidth(itemWidth),
                 .MenuMargin(0),
                 //                CAPSPageMenuOption.MenuItemWidthBasedOnTitleTextWidth(true),
@@ -208,7 +208,7 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
                 .UnselectedMenuItemLabelColor(UICreaterUtils.colorBlack),
                 .SelectedMenuItemLabelColor(BestUtils.deputyColor),
                 CAPSPageMenuOption.MenuItemSeparatorUnderline(true),
-                .MenuItemFont(UIFont.systemFontOfSize(16)),//,weight:1.2
+                .MenuItemFont(UIFont.systemFontOfSize(20)),//,weight:1.2
                 .SelectionIndicatorHeight(2),
                 .CenterMenuItems(true),
                 .AddBottomMenuHairline(false)
@@ -266,24 +266,37 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
         }
         BestUtils.showAlert(message:"确定退回该AP吗？",parentController:self){ [weak self] _ -> Void in
             EZLoadingActivity.show("AP退回中", disableUI: true)
-            self!.submitAction(BestUtils.AUDIT_APPROVE){ [weak self] json in
-                //必须回传后页面可以交互
-                print(json)
-                self!.checkPrevPageListController()
-                EZLoadingActivity.hide()
+            self!.submitAction(BestUtils.AUDIT_APPROVE,callBack:self!.getAuditResult)//{ [weak self] json,isSuccess,error in
+        }
+    }
+    
+    private func getAuditResult(json:JSON?,isSuccess:Bool,error:NSError?)->Void{
+        EZLoadingActivity.hide()
+        if isSuccess {
+            let resultVo = BestUtils.generateObjByJson(json!, type: AuditResultVo.self) as! AuditResultVo
+            if resultVo.result {
+                self.checkPrevPageListController()
+            }else{
+                BestUtils.showAlert("审批失败",message:resultVo.reason, parentController: self, useCancel:false,okHandler: {[weak self]  (_) -> Void in
+                    self!.checkPrevPageListController()//必须回传后页面可以交互
+                    })
             }
+        }else{
+            BestUtils.showAlert("审批失败",message:error!.debugDescription, parentController: self, useCancel:false,okHandler: {[weak self]  (_) -> Void in
+                self!.checkPrevPageListController()//必须回传后页面可以交互
+            })
         }
     }
     
     func agreeClick(sender:UIButton){
         BestUtils.showAlert(message:"确定同意该AP吗？",parentController:self){ [weak self] _ -> Void in
             EZLoadingActivity.show("AP审批中", disableUI: true)
-            self!.submitAction(BestUtils.AUDIT_REJECT){ [weak self] json in
-                //必须回传后页面可以交互
-                print(json)
-                self!.checkPrevPageListController()
-                EZLoadingActivity.hide()
-            }
+            self!.submitAction(BestUtils.AUDIT_REJECT,callBack:self!.getAuditResult)
+//                { [weak self] json in
+//                //必须回传后页面可以交互
+//                self!.checkPrevPageListController()
+//                EZLoadingActivity.hide()
+//            }
         }
     }
     
@@ -356,6 +369,10 @@ public class FormContentVo:NSObject{
     var fieldname:String = ""
     var order:Int = 0
 }
-
+public class AuditResultVo:NSObject{
+    var code:String = ""
+    var reason:String = ""
+    var result:Bool = true
+}
 
 

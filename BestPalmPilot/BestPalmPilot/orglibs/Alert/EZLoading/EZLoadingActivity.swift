@@ -10,31 +10,32 @@ import UIKit
 
 public struct EZLoadingActivity {
     
-    //==========================================================================================================
-    // Feel free to edit these variables
-    //==========================================================================================================
-    public struct Settings {
-        public static var BackgroundColor = UIColor(red: 227/255, green: 232/255, blue: 235/255, alpha: 1.0)
-        public static var ActivityColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
-        public static var TextColor = UIColor(red: 80/255, green: 80/255, blue: 80/255, alpha: 1.0)
-        public static var FontName = "HelveticaNeue-Light"
-        // Other possible stuff: ✓ ✓ ✔︎ ✕ ✖︎ ✘
-        public static var SuccessIcon = "✔︎"
-        public static var FailIcon = "✘"
-        public static var SuccessText = "Success"
-        public static var FailText = "Failure"
-        public static var SuccessColor = UIColor(red: 68/255, green: 118/255, blue: 4/255, alpha: 1.0)
-        public static var FailColor = UIColor(red: 255/255, green: 75/255, blue: 56/255, alpha: 1.0)
-        public static var WidthDivision: CGFloat {
-            get {
-                if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad {
-                    return  3.5
-                } else {
-                    return 1.6
-                }
+    public static var BackgroundColor = UIColor(red: 227/255, green: 232/255, blue: 235/255, alpha: 1.0)
+    public static var ActivityColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
+    public static var TextColor = UIColor(red: 80/255, green: 80/255, blue: 80/255, alpha: 1.0)
+    public static var FontName = "HelveticaNeue-Light"
+    // Other possible stuff: ✓ ✓ ✔︎ ✕ ✖︎ ✘
+    public static var SuccessIcon = "✔︎"
+    public static var FailIcon = "✘"
+    public static var SuccessText = "Success"
+    public static var FailText = "Failure"
+    public static var SuccessColor = UIColor(red: 68/255, green: 118/255, blue: 4/255, alpha: 1.0)
+    public static var FailColor = UIColor(red: 255/255, green: 75/255, blue: 56/255, alpha: 1.0)
+    public static var WidthDivision: CGFloat {
+        get {
+            if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad {
+                return  3.5
+            } else {
+                return 1.6
             }
         }
     }
+    //==========================================================================================================
+    // Feel free to edit these variables
+    //==========================================================================================================
+//    public struct Settings {
+//        
+//    }
     
     private static var instance: LoadingActivity?
     private static var hidingInProgress = false
@@ -102,12 +103,12 @@ public struct EZLoadingActivity {
         var UIDisabled = false
         
         convenience init(text: String, disableUI: Bool) {
-            let width = UIScreen.ScreenWidth / Settings.WidthDivision
+            let width = UIScreen.ScreenWidth / EZLoadingActivity.WidthDivision
             let height = width / 3
             self.init(frame: CGRect(x: 0, y: 0, width: width, height: height))
             center = CGPoint(x: UIScreen.mainScreen().bounds.midX, y: UIScreen.mainScreen().bounds.midY)
             autoresizingMask = [.FlexibleTopMargin, .FlexibleLeftMargin, .FlexibleBottomMargin, .FlexibleRightMargin]
-            backgroundColor = Settings.BackgroundColor
+            backgroundColor = EZLoadingActivity.BackgroundColor
             alpha = 1
             layer.cornerRadius = 8
             createShadow()
@@ -116,12 +117,12 @@ public struct EZLoadingActivity {
             
             activityView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
             activityView.frame = CGRect(x: 10, y: yPosition, width: 40, height: 40)
-            activityView.color = Settings.ActivityColor
+            activityView.color = EZLoadingActivity.ActivityColor
             activityView.startAnimating()
             
             textLabel = UILabel(frame: CGRect(x: 60, y: yPosition, width: width - 70, height: 40))
-            textLabel.textColor = Settings.TextColor
-            textLabel.font = UIFont(name: Settings.FontName, size: 30)
+            textLabel.textColor = EZLoadingActivity.TextColor
+            textLabel.font = UIFont(name: EZLoadingActivity.FontName, size: 30)
             textLabel.adjustsFontSizeToFitWidth = true
             textLabel.minimumScaleFactor = 0.25
             textLabel.textAlignment = NSTextAlignment.Center
@@ -175,7 +176,7 @@ public struct EZLoadingActivity {
             }
             
             icon = UILabel(frame: CGRect(x: 10, y: frame.height/2 - 20, width: 40, height: 40))
-            icon.font = UIFont(name: Settings.FontName, size: 60)
+            icon.font = UIFont(name: EZLoadingActivity.FontName, size: 60)
             icon.textAlignment = NSTextAlignment.Center
             
             if animated {
@@ -184,13 +185,13 @@ public struct EZLoadingActivity {
             
             if success != nil {
                 if success! {
-                    icon.textColor = Settings.SuccessColor
-                    icon.text = Settings.SuccessIcon
-                    textLabel.text = Settings.SuccessText
+                    icon.textColor = EZLoadingActivity.SuccessColor
+                    icon.text = EZLoadingActivity.SuccessIcon
+                    textLabel.text = EZLoadingActivity.SuccessText
                 } else {
-                    icon.textColor = Settings.FailColor
-                    icon.text = Settings.FailIcon
-                    textLabel.text = Settings.FailText
+                    icon.textColor = EZLoadingActivity.FailColor
+                    icon.text = EZLoadingActivity.FailIcon
+                    textLabel.text = EZLoadingActivity.FailText
                 }
             }
             

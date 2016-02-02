@@ -14,8 +14,8 @@ class ApprovePageHomeHotCell: BaseTableViewCell {
     
     private let hotList:[ApproveHotVo] = [
         ApproveHotVo(icon: "fundHot08", title: "帮助人信息", action: "helpHandler:"),
+        ApproveHotVo(icon: "fundHot09", title: "系统点评", action: "commentHandler:"),
         ApproveHotVo(icon: "fundHot02", title: "审批历史", link: "http://www.baidu.com",enable:false),
-        ApproveHotVo(icon: "fundHot09", title: "系统点评", link: "http://www.baidu.com",enable:false),
         ApproveHotVo(icon: "fundHot11", title: "使用说明", link: "http://www.baidu.com",enable:false)
     ]
     
@@ -98,6 +98,10 @@ class ApprovePageHomeHotCell: BaseTableViewCell {
     
     func helpHandler(area:UIControl){ //帮助人列表
         RootNavigationControl.getInstance().pushViewController(HelpListViewController(), animated: true)
+    }
+    
+    func commentHandler(area:UIControl){ //系统点评
+        RootNavigationControl.getInstance().pushViewController(CommentPageController(), animated: true)
     }
     
     func linkHandler(area:UIControl){ //链接某个网址

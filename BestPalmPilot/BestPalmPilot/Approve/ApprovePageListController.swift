@@ -105,15 +105,12 @@ class ApprovePageListController: PageListTableViewController {
         }
     }
     
-    private func initTitleArea(){
-        let leftItem = UIBarButtonItem(title: "嘿嘿", style: UIBarButtonItemStyle.Done, target: self, action: "cancelClick")
-        let customView = UIArrowView(frame:CGRectMake(0, 0, 10, 22))
-        customView.direction = .LEFT
-        customView.lineColor = UIColor.whiteColor()
-        customView.lineThinkness = 2
-        leftItem.customView = customView
-        customView.addTarget(self, action: "cancelClick", forControlEvents: UIControlEvents.TouchDown)
-        
+    private lazy var titleView:UIView = UIView()
+    private lazy var titleLabel:UILabel = BestUtils.createNavigationTitleLabel(self.titleView,title:"申请审核")
+    
+    private lazy var leftItem:UIBarButtonItem = BestUtils.createNavigationLeftButtonItem(self,action: "cancelClick")
+    
+    private lazy var rightItems:[UIBarButtonItem] = {
         let tabItem1 = UIFlatImageTabItem()
         tabItem1.frame = CGRectMake(0, 0, 30, 24)
         tabItem1.sizeType = .FillWidth
@@ -139,27 +136,19 @@ class ApprovePageListController: PageListTableViewController {
         let rightItem2 =
         UIBarButtonItem(title: "嘿嘿", style: UIBarButtonItemStyle.Done, target: self, action: "setupClick")
         rightItem2.customView = tabItem2
-        
+        return [rightItem2,rightItem1]
+    }()
+    
+    private func initTitleArea(){
         self.navigationItem.leftBarButtonItem = leftItem
         //        self.navigationItem.rightBarButtonItem = rightItem
-        self.navigationItem.rightBarButtonItems = [rightItem2,rightItem1]
+        self.navigationItem.rightBarButtonItems = rightItems
+        self.navigationItem.titleView = titleView
         
-        let title = "申请审核"
-        
-        self.title = title
+        self.title = "申请审核"
+        titleLabel.text = self.title
         
         self.view.backgroundColor = BestUtils.backgroundColor
-        
-        let titleView = UIView()
-        let label:UILabel = UICreaterUtils.createLabel(20, UIColor.whiteColor(), title, true, titleView)
-        label.font = UIFont.systemFontOfSize(20)//20号 ,weight:2
-        
-        titleView.addSubview(label)
-        label.snp_makeConstraints { (make) -> Void in //[weak self]
-            make.center.equalTo(titleView)
-        }
-        
-        self.navigationItem.titleView = titleView
     }
     
     override func viewDidLoad() {

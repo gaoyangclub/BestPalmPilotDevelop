@@ -6,6 +6,7 @@
 #define PullRefreshScrollerTest_BridgeHeader_h
 
 #include "MJExtension.h"
+#include "DeviceUtil.h"
 
 #include "PPiFlatSegmentedControl.h"
 #include "UIAwesomeButton.h"

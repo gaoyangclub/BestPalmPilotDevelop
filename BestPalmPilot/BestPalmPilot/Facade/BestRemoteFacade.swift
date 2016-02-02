@@ -11,22 +11,82 @@ import Alamofire
 
 typealias ResponseCompletionHandler = (json:JSON?,isSuccess:Bool,error:NSError?)->Void
 
-class BestRemoteFacade: AnyObject {
+public class BestRemoteFacade: AnyObject {
     
     private static let appUrl = "http://itunes.apple.com/"
+    
+//    private static let restletUrl = "http://dianping.800best.com/rest/dianping/saveComment" //点评专用生产地址
+    private static let restletUrl = "http://dianping-test.800best.com/rest/dianping/saveComment" //点评专用测试地址
     
     private static let appId = "1"//"776882837"
     
     private static let appType = "IOS"//
     
+    public static var appName:String{
+        get{
+            let infoDic:NSDictionary? = NSBundle.mainBundle().infoDictionary
+            if infoDic != nil && infoDic?.valueForKey("CFBundleName") is String{
+                return infoDic?.valueForKey("CFBundleName") as! String
+            }
+            return "审批管家"
+        }
+    }
+    
+    public static var appVersion:String{
+        get{
+            let infoDic:NSDictionary? = NSBundle.mainBundle().infoDictionary
+            if infoDic != nil && infoDic?.valueForKey("CFBundleShortVersionString") is String{
+                return infoDic?.valueForKey("CFBundleShortVersionString") as! String
+            }
+            return "0.0"
+        }
+    }
+    
     private static let remoteUrl = "http://10.45.10.198:8282/gateway/rest/api/com.best.oasis.husky.ws.mobile.MobileWebService/"
     private static let headers:Dictionary<String,String> = ["X-Route-User":"TEST","X-Route-Token":"TEST"]
     
-    static var appVersionVo:AppVersionVo?
+//    private String userId;//点评人的识别码（必填）
+//    private String userAttr1;//点评人的三个额外属性（选填）
+//    private String userAttr2;
+//    private String userAttr3;
+//    private String app;//系统名（必填）
+//    private String component;//功能模块/组件（选填）
+//    private String page;//具体页面（必填）
+//    private Integer score;//评价分值（必填）, 分数大于0分，则点评前台显示为好评，小于0分，则显示差评，等于0分，则显示为留言
+//    private String detail;//具体的评价描述（好评选填，差评必填）
+//    private Date submitTime;//定评时间（必填） 传递时的日期格式为YYYY-MM-DD HH:MI:SS
     
+    //提交点评
+    static func submitComment(userCode:String,score:Int,component:String,pageTitle:String,detail:String,callBack:ResponseCompletionHandler?){
+        let date:NSDate = NSDate()
+        let fmt:NSDateFormatter = NSDateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateString = fmt.stringFromDate(date)
+        
+//        print(component)
+//        print(pageTitle)
+////        print(phone)
+//        print(dateString)
+//        print(detail)
+        
+        let cvo = CommentVo()
+        cvo.userId = userCode
+        cvo.app = appName
+        cvo.score = score
+        cvo.component = component
+        cvo.page = pageTitle
+        cvo.detail = detail
+//        cvo.userAttr1 = phone
+        cvo.submitTime = dateString
+        
+        request(restletUrl,parameters:["json":cvo.jsonString],headers:nil,callBack:callBack)
+        //["userId":userCode.marks,"app":appName.marks,"component":component.marks,"page":pageTitle.marks,"score":score,"detail":detail.marks,"userAttr1":phone.marks,"submitTime":dateString.marks]
+    }
+    
+    static var appVersionVo:AppVersionVo?
     static func getLastVersion(callBack:(appVersionVo:AppVersionVo)->Void){
         //device
-        request(remoteUrl + "getUpdateInfo",parameters:["appType":appType.getMarks()]){ (json, isSuccess, error) -> Void in
+        request(remoteUrl + "getUpdateInfo",parameters:["appType":appType.marks]){ (json, isSuccess, error) -> Void in
             if isSuccess {
                 BestRemoteFacade.appVersionVo = BestUtils.generateObjByJson(json!, type: AppVersionVo.self) as? AppVersionVo
                 callBack(appVersionVo:BestRemoteFacade.appVersionVo!)
@@ -40,27 +100,27 @@ class BestRemoteFacade: AnyObject {
     }
     
     static func login(username:String,password:String,appid:String,mobileInfo:String,callBack:ResponseCompletionHandler?){
-        request(remoteUrl + "login",parameters:["username":username.getMarks(),"password":password.getMarks(),"appid":appid.getMarks(),"mobileInfo":mobileInfo.getMarks()],callBack:callBack)
+        request(remoteUrl + "login",parameters:["username":username.marks,"password":password.marks,"appid":appid.marks,"mobileInfo":mobileInfo.marks],callBack:callBack)
     }
     
     static func getApproveMenu(username:String,callBack:ResponseCompletionHandler?){
-        request(remoteUrl + "getAppMenu",parameters:["username":username.getMarks()],callBack:callBack)
+        request(remoteUrl + "getAppMenu",parameters:["username":username.marks],callBack:callBack)
     }
     
     static func getListFormInfos(so:FormListSO,groupkey:String,callBack:ResponseCompletionHandler?){
-        let jsonString = so.getJsonString()
+        let jsonString = so.jsonString
 //        print(jsonString)
-        request(remoteUrl + "getListFormInfos",parameters:["so":jsonString,"groupkey":groupkey.getMarks()],
+        request(remoteUrl + "getListFormInfos",parameters:["so":jsonString,"groupkey":groupkey.marks],
             callBack:callBack)
     }
     
     static func getFormDetailsVo(code:String,groupkey:String,callBack:ResponseCompletionHandler?){
-        request(remoteUrl + "getForm",parameters:["code":code.getMarks(),"groupkey":groupkey.getMarks()],callBack:callBack)
+        request(remoteUrl + "getForm",parameters:["code":code.marks,"groupkey":groupkey.marks],callBack:callBack)
     }
     
     //username:String,
     static func audit(code:String,action:String,remark:String,userCode:String,groupkey:String,callBack:ResponseCompletionHandler?){
-        request(remoteUrl + "audit",parameters:["code":code.getMarks(),"action":action.getMarks(),"remark":remark.getMarks(),"staffCode":userCode.getMarks(),"groupkey":groupkey.getMarks()],callBack:callBack)//"staffname":username.getMarks(),
+        request(remoteUrl + "audit",parameters:["code":code.marks,"action":action.marks,"remark":remark.marks,"staffCode":userCode.marks,"groupkey":groupkey.marks],callBack:callBack)//"staffname":username.marks,
     }
     
     static func getHelpInfo(callBack:ResponseCompletionHandler?){
@@ -108,10 +168,21 @@ class BestRemoteFacade: AnyObject {
 
 }
 public class AppVersionVo:NSObject{
-    
     var appversion:String = ""
     var updateurl:String = ""
     var updateremark:String = ""//版本更新说明
-    
 }
+public class CommentVo:NSObject{
+    var userId:String = "" //点评人的识别码（必填）
+    var userAttr1:String = ""//点评人的三个额外属性（选填）
+    var userAttr2:String = ""
+    var userAttr3:String = ""
+    var app:String = ""//系统名（必填）
+    var component:String = ""//功能模块/组件（选填）
+    var page:String = ""//具体页面（必填）
+    var score:Int = 0//评价分值（必填）, 分数大于0分，则点评前台显示为好评，小于0分，则显示差评，等于0分，则显示为留言
+    var detail:String = ""//具体的评价描述（好评选填，差评必填）
+    var submitTime:String = ""//定评时间（必填） 传递时的日期格式为YYYY-MM-DD HH:MI:SS
+}
+
 

@@ -14,7 +14,43 @@ class SearchViewController: UITableViewController,UISearchBarDelegate {
     
     private var pageSO = FormListSO()
     
-    private var searchBar:UISearchBar!
+    private lazy var searchBar:UISearchBar = {
+       let search = UISearchBar()
+        search.placeholder = "请输入工号或姓名"
+        search.showsCancelButton = true
+        search.becomeFirstResponder()//直接获得焦点
+        //        searchBar.translucent = false //是否透视效果
+        //        searchBar.showsScopeBar = true//显示选择栏
+        search.sizeToFit()
+        search.tintColor=UIColor.blueColor()//会获取到光标
+        search.setShowsCancelButton(false, animated: true)
+        
+        BatchLoaderUtil.loadFile("empty", callBack: { (image, params) -> Void in
+            search.backgroundImage = image // 需要用1像素的透明图片代替背景图
+        })
+        search.delegate = self
+        
+        let topView: UIView = search.subviews[0]
+        for view in topView.subviews  {
+            if view.isKindOfClass(NSClassFromString("UINavigationButton")!){
+                self.cancelButton = view as? UIButton
+                //                cancelButton.hidden = true
+            }
+        }
+        if (self.cancelButton != nil) {
+            //            cancelButton.buttonType
+            //            cancelButton.titleLabel?.font = UIFont.systemFontOfSize(18, weight: 2)
+            //            cancelButton.titleLabel?.text = "取消"
+            //            cancelButton.titleLabel?.sizeToFit()
+            self.cancelButton.setTitle("取消", forState: UIControlState.Normal)
+            self.cancelButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            //            cancelButton.setTitleColor(UIColor.yellowColor(), forState: UIControlState.Selected)
+        }
+        self.cancelButton.addTarget(self, action: "doCancel", forControlEvents: UIControlEvents.TouchDown)
+        
+        return search
+    }()
+    
     private var cancelButton:UIButton!
     
     lazy private var rightItem:UIBarButtonItem = UIBarButtonItem(title: "取消", style: UIBarButtonItemStyle.Done, target: self, action: "doCancel")
@@ -32,63 +68,8 @@ class SearchViewController: UITableViewController,UISearchBarDelegate {
         super.viewDidLoad()
 
         searchOutImage.hidden = false
-        
-//        let leftItem = //UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "cancelClick")
-//        UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Done, target: self, action: nil)
-//        self.navigationItem.leftBarButtonItem = leftItem
-        
-        
         self.navigationItem.rightBarButtonItem = rightItem
-        
-//        self.navigationItem.hidesBackButton = true//直接隐藏back按钮
-//        let tap = UIPanGestureRecognizer(target: self, action: "panHandler")
-//        self.view.addGestureRecognizer(tap)
-        
         self.navigationItem.hidesBackButton = true
-        
-        searchBar = UISearchBar()
-        searchBar.placeholder = "请输入工号或AP";
-        searchBar.showsCancelButton = true
-        searchBar.becomeFirstResponder()//直接获得焦点
-        //        searchBar.translucent = false //是否透视效果
-        //        searchBar.showsScopeBar = true//显示选择栏
-        searchBar.sizeToFit()
-        searchBar.tintColor=UIColor.blueColor()//会获取到光标
-        searchBar.setShowsCancelButton(false, animated: true)
-        
-        let topView: UIView = searchBar.subviews[0] 
-        for view in topView.subviews  {
-            if view.isKindOfClass(NSClassFromString("UINavigationButton")!){
-                cancelButton = view as? UIButton
-//                cancelButton.hidden = true
-            }
-        }
-        if (cancelButton != nil) {
-//            cancelButton.buttonType
-//            cancelButton.titleLabel?.font = UIFont.systemFontOfSize(18, weight: 2)
-//            cancelButton.titleLabel?.text = "取消"
-//            cancelButton.titleLabel?.sizeToFit()
-            cancelButton.setTitle("取消", forState: UIControlState.Normal)
-            cancelButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-//            cancelButton.setTitleColor(UIColor.yellowColor(), forState: UIControlState.Selected)
-        }
-        cancelButton.addTarget(self, action: "doCancel", forControlEvents: UIControlEvents.TouchDown)
-        
-//        let searchView:UIView = UIView(frame: CGRectMake(0, 0, 100, 20))
-//        searchView.addSubview(searchBar)
-//        searchView.backgroundColor = UIColor.yellowColor()
-        
-        BatchLoaderUtil.loadFile("empty", callBack: { (image, params) -> Void in
-            self.searchBar.backgroundImage = image // 需要用1像素的透明图片代替背景图
-        })
-        
-        searchBar.delegate = self
-//        searchBar.barTintColor = UIColor.clearColor()
-        
-//        searchBar.snp_makeConstraints { (make) -> Void in
-//            make.center.equalTo(searchView)
-//        }
-        
         self.navigationItem.titleView = searchBar
         
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None //去掉Cell自带线条

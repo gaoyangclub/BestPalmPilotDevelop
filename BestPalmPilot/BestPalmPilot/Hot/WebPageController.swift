@@ -23,31 +23,9 @@ class WebPageController: UIViewController {
     }()
     
     private lazy var titleView:UIView = UIView()
+    private lazy var titleLabel:UILabel = BestUtils.createNavigationTitleLabel(self.titleView)
     
-    private lazy var titleLabel:UILabel = {
-        let label:UILabel = UICreaterUtils.createLabel(20, UIColor.whiteColor(), "", true, self.titleView)
-        label.font = UIFont.systemFontOfSize(20)//20号 ,weight:2
-        
-        self.titleView.addSubview(label)
-        label.snp_makeConstraints { [weak self](make) -> Void in //[weak self]
-            make.center.equalTo(self!.titleView)
-        }
-        return label
-    }()
-    
-    private lazy var leftItem:UIBarButtonItem = {
-        let buttonItem = UIBarButtonItem(title: "嘿嘿", style: UIBarButtonItemStyle.Done, target: self, action: "cancelClick")
-        let customView = UIArrowView(frame:CGRectMake(0, 0, 10, 22))
-        customView.direction = .LEFT
-        ////        customView.isClosed = true
-        customView.lineColor = UIColor.whiteColor()
-        customView.lineThinkness = 2
-        ////        customView.fillColor = UIColor.blueColor()
-        buttonItem.customView = customView
-        customView.addTarget(self, action: "cancelClick", forControlEvents: UIControlEvents.TouchDown)
-        return buttonItem
-    }()
-    
+    private lazy var leftItem:UIBarButtonItem = BestUtils.createNavigationLeftButtonItem(self,action: "cancelClick")
     
     override func viewWillAppear(animated: Bool){
         super.viewWillAppear(animated)

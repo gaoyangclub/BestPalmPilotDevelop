@@ -29,7 +29,7 @@ class RootViewController: TabViewController,LoginViewDelegate,EAIntroDelegate {
                 let loginController = LoginViewController()
                 loginController.delegate = self
                 self.presentViewController(loginController, animated: true, completion: { () -> Void in
-                    //                    print("登陆界面弹出完毕")
+                    //                    print("登录界面弹出完毕")
                 })
             })
         }else{
@@ -40,7 +40,7 @@ class RootViewController: TabViewController,LoginViewDelegate,EAIntroDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.title = "登  陆"
+//        self.title = "登  录"
         self.view.backgroundColor = BestUtils.backgroundColor
         
         if UserDefaultCache.getHasIntro() != nil && UserDefaultCache.getHasIntro()!{
@@ -56,7 +56,7 @@ class RootViewController: TabViewController,LoginViewDelegate,EAIntroDelegate {
 //        }
 //        let data:AnyObject? = CoreDataCache.getDataByIndex(LoginUserCoreData.self)
 //        if data == nil{
-//            print("先登陆")
+//            print("先登录")
 //        }else{
 //            initData()//初始化界面
 //        }

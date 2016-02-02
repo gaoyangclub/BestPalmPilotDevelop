@@ -26,6 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UIAlertViewDelegate {
         
         let mainFrame = UIScreen.mainScreen().bounds
         
+        EZLoadingActivity.SuccessText = "提交成功"
+        EZLoadingActivity.FailText = "提交失败"
+        
         JLToastView.setDefaultValue(mainFrame.height / 2, forAttributeName: JLToastViewPortraitOffsetYAttributeName, userInterfaceIdiom: .Phone)
         JLToastView.setDefaultValue(mainFrame.width / 2, forAttributeName: JLToastViewLandscapeOffsetYAttributeName, userInterfaceIdiom: .Phone)
         JLToastView.setDefaultValue(UIFont.systemFontOfSize(20), forAttributeName: JLToastViewFontAttributeName, userInterfaceIdiom: .Phone)
@@ -60,15 +63,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UIAlertViewDelegate {
     }
     
     private func checkLastVersion(){
-        let infoDic:NSDictionary = NSBundle.mainBundle().infoDictionary!
-        //        CFShow(infoDic)
-        let appVersion:NSString = infoDic.objectForKey("CFBundleShortVersionString") as! NSString
         BestRemoteFacade.getLastVersion { [weak self] appVersionVo -> Void in
             if self == nil{
                 print("AppDelegate对象已经销毁")
                 return
             }
-            if appVersion != appVersionVo.appversion{
+            if BestRemoteFacade.appVersion != appVersionVo.appversion{
                 self!.trackViewUrl = appVersionVo.updateurl //跳转更新地址
                 let alert = UIAlertView(title: "提示", message: "检测到最新版本，是否需要更新?", delegate: self, cancelButtonTitle: "确定", otherButtonTitles:"取消")
                 alert.show()

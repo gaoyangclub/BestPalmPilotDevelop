@@ -21,17 +21,12 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
     
     var formWholeVo:FormWholeVo? //该界面所有列表的数据源
     
-    private func initTitleArea(){
-        let leftItem = UIBarButtonItem(title: "嘿嘿", style: UIBarButtonItemStyle.Done, target: self, action: "cancelClick")
-        let customView = UIArrowView(frame:CGRectMake(0, 0, 10, 22))
-        customView.direction = .LEFT
-        customView.lineColor = UIColor.whiteColor()
-        customView.lineThinkness = 2
-        leftItem.customView = customView
-        customView.addTarget(self, action: "cancelClick", forControlEvents: UIControlEvents.TouchDown)
-        
-        self.navigationItem.leftBarButtonItem = leftItem
-        
+    private lazy var titleView:UIView = UIView()
+    private lazy var titleLabel:UILabel = BestUtils.createNavigationTitleLabel(self.titleView)
+    
+    private lazy var leftItem:UIBarButtonItem = BestUtils.createNavigationLeftButtonItem(self,action: "cancelClick")
+    
+    private lazy var rightItem:UIBarButtonItem = {
         let tabItem2 = UIFlatImageTabItem()
         tabItem2.frame = CGRectMake(0, 0, 30, 24)
         tabItem2.sizeType = .FillWidth
@@ -41,28 +36,20 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
             tabItem2.image = image
         })
         tabItem2.addTarget(self, action: "setupClick", forControlEvents: UIControlEvents.TouchDown)
-        let rightItem =
+        let item =
         UIBarButtonItem(title: "嘿嘿", style: UIBarButtonItemStyle.Done, target: self, action: "setupClick")
-        rightItem.customView = tabItem2
-        
+        item.customView = tabItem2
+        return item
+    }()
+    
+    private func initTitleArea(){
+        self.navigationItem.leftBarButtonItem = leftItem
         self.navigationItem.rightBarButtonItem = rightItem
-        
-        let title = "申请明细"
-        
-        self.title = title
-        
-        self.view.backgroundColor = BestUtils.backgroundColor//UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
-        
-        let titleView = UIView()
-        let label:UILabel = UICreaterUtils.createLabel(20, UIColor.whiteColor(), title, true, titleView)
-        label.font = UIFont.systemFontOfSize(20)//20号 ,weight:2
-        
-        titleView.addSubview(label)
-        label.snp_makeConstraints { (make) -> Void in //[weak self]
-            make.center.equalTo(titleView)
-        }
-        
         self.navigationItem.titleView = titleView
+        self.title = "申请明细"
+        titleLabel.text = self.title
+        
+        self.view.backgroundColor = BestUtils.backgroundColor
     }
     
     private static let BOTTOM_HEIGHT:CGFloat = 150

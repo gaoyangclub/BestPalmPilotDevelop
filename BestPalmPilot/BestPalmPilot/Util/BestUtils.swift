@@ -27,7 +27,6 @@ public class BestUtils:AnyObject {
     /** 审批退回 */
     public static let AUDIT_REJECT = "REJECT"
     
-    
     public static func generateObjByJson(json:JSON,type:NSObject.Type)->NSObject{
         return generateObjByJson(json,typeList: [type])
     }
@@ -74,6 +73,29 @@ public class BestUtils:AnyObject {
             parentController.presentViewController(alertController, animated: true, completion: nil)
     }
     
+    public static func createNavigationTitleLabel(parent:UIView,title:String = "")->UILabel{
+        let label:UILabel = UICreaterUtils.createLabel(20, UIColor.whiteColor(), title, true, parent)
+        label.font = UIFont.systemFontOfSize(20)//20号 ,weight:2
+        
+        label.snp_makeConstraints { (make) -> Void in //[weak self]
+            make.center.equalTo(parent)
+        }
+        return label
+    }
+    
+    public static func createNavigationLeftButtonItem(target:AnyObject?,action:Selector)->UIBarButtonItem{
+        let buttonItem = UIBarButtonItem(title: "嘿嘿", style: UIBarButtonItemStyle.Done, target: target, action: action)
+        let customView = UIArrowView(frame:CGRectMake(0, 0, 10, 22))
+        customView.direction = .LEFT
+        ////        customView.isClosed = true
+        customView.lineColor = UIColor.whiteColor()
+        customView.lineThinkness = 2
+        ////        customView.fillColor = UIColor.blueColor()
+        buttonItem.customView = customView
+        customView.addTarget(target, action: action, forControlEvents: UIControlEvents.TouchDown)
+        return buttonItem
+    }
+    
     private static var _badgeCount:Int = 0
     public static var badgeCount:Int{
         get{
@@ -88,21 +110,31 @@ public class BestUtils:AnyObject {
             UIApplication.sharedApplication().applicationIconBadgeNumber = _badgeCount
         }
     }
+    
+    
+    
 }
 extension String{
-    func getMarks()->String{
-        return "\"" + self + "\""
+//    func getMarks()->String{
+//        return "\"" + self + "\""
+//    }
+    public var marks:String{
+        get{
+            return "\"" + self + "\""
+        }
     }
 }
 extension NSObject{
-    func getJsonString()->String{
-        do{
-            let nsdata = try NSJSONSerialization.dataWithJSONObject(self.mj_keyValues(), options: NSJSONWritingOptions.PrettyPrinted)
-            return NSString(data: nsdata, encoding: NSUTF8StringEncoding) as! String
-        }catch{
-            
+    public var jsonString:String{
+        get{
+            do{
+                let nsdata = try NSJSONSerialization.dataWithJSONObject(self.mj_keyValues(), options: NSJSONWritingOptions.PrettyPrinted)
+                return NSString(data: nsdata, encoding: NSUTF8StringEncoding) as! String
+            }catch{
+                
+            }
+            return ""
         }
-        return ""
     }
 }
 extension UIControl{

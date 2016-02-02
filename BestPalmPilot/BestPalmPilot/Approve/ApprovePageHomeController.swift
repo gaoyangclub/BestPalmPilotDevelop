@@ -50,19 +50,8 @@ class ApprovePageHomeController: PageListTableViewController {
         return buttonItem
     }()
     
-    private lazy var titleView:UIView = {
-        let title = "审批管家"
-//        self.tabBarController?.title = title
-        let view = UIView()
-        let label:UILabel = UICreaterUtils.createLabel(20, UIColor.whiteColor(), title, true, view)
-        label.font = UIFont.systemFontOfSize(20)//20号 ,weight:2
-        
-        view.addSubview(label)
-        label.snp_makeConstraints { (make) -> Void in //[weak self]
-            make.center.equalTo(view)
-        }
-        return view
-    }()
+    private lazy var titleView:UIView = UIView()
+    private lazy var titleLabel:UILabel = BestUtils.createNavigationTitleLabel(self.titleView)
     
     private func initTitleArea(){
         self.view.backgroundColor = BestUtils.backgroundColor//UIColor(red: 251/255, green: 251/255, blue: 251/255, alpha: 1)
@@ -70,6 +59,7 @@ class ApprovePageHomeController: PageListTableViewController {
         self.tabBarController?.navigationItem.rightBarButtonItem = rightItem
         //        self.tabBarController?.navigationItem.titleView = searchBar
         self.tabBarController?.navigationItem.titleView = titleView
+        titleLabel.text = "审批管家"
     }
     
     //拉开抽屉设置(登入登出等)

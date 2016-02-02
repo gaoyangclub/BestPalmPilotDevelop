@@ -111,7 +111,7 @@ public class AccountSideHomeController: UIViewController {
         btn.layer.cornerRadius = 5
         let normalColor:UIColor = FlatUIColors.belizeHoleColor()
         btn.backgroundColor = normalColor
-        let title:NSString = "退出登陆"
+        let title:NSString = "退出登录"
         btn.setTitle(title as String, forState: UIControlState.Normal)
         btn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         self.bottomArea.addSubview(btn)

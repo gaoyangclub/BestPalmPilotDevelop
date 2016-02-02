@@ -131,7 +131,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
         btn.layer.cornerRadius = 5
         let normalColor:UIColor = BestUtils.themeColor
         btn.backgroundColor = normalColor
-        let title:NSString = "登  陆"
+        let title:NSString = "登  录"
         btn.titleLabel?.font = UIFont.systemFontOfSize(20)//weight文字线条粗细 ,weight:2
         btn.setTitle(title as String, forState: UIControlState.Normal)
         btn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
@@ -153,7 +153,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
             JLToast.makeText("请输入密码!").show()
             return
         }
-        EZLoadingActivity.show("账号登陆中", disableUI: true)
+        EZLoadingActivity.show("账号登录中", disableUI: true)
         BestRemoteFacade.login(userText.text!, password: passwordText.text!, appid: "1", mobileInfo: "1") {[weak self] (json,var isSuccess,_) -> Void in
             if self == nil{
                 print("LoginViewController对象已经销毁")
@@ -177,7 +177,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
                     self?.delegate?.loginViewWillDismiss?(self!)
                     
                     self?.dismissViewControllerAnimated(true, completion: { () -> Void in
-                        //                print("登陆界面关闭")
+                        //                print("登录界面关闭")
                         self?.delegate?.loginViewDidDismiss?(self!)
                     })
                 }else{
@@ -187,9 +187,9 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
             }else{
                 failMsg = "网络连接错误,请检查您手机的网络状态或者稍后登陆"
             }
-            if(!isSuccess){ //登陆失败
+            if(!isSuccess){ //登录失败
                 EZLoadingActivity.hide()
-                let alertController = UIAlertController(title: "登陆失败", message: failMsg, preferredStyle: UIAlertControllerStyle.Alert)
+                let alertController = UIAlertController(title: "登录失败", message: failMsg, preferredStyle: UIAlertControllerStyle.Alert)
                 let okAction = UIAlertAction(title: "好的", style: UIAlertActionStyle.Default, handler: nil)
                 alertController.addAction(okAction)
                 self?.presentViewController(alertController, animated: true, completion: nil)
@@ -197,7 +197,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
 //                let delayInSeconds:Int64 =  100000000  * 2
 //                let popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW,delayInSeconds)
 //                dispatch_after(popTime, dispatch_get_main_queue(), {
-//                _ = UIAlertController(title: "登陆失败", message: json["failmsg"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
+//                _ = UIAlertController(title: "登录失败", message: json["failmsg"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
 //                    self.presentViewController(alertController, animated: true, completion: nil)
 //                })
             }else{
@@ -275,7 +275,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
 //        userText.becomeFirstResponder()
         
         super.viewDidLoad()
-//        self.title = "登陆页面"
+//        self.title = "登录页面"
         self.view.backgroundColor = BestUtils.backgroundColor//UIColor(red: 241/255, green: 243/255, blue: 247/255, alpha: 1)
 
         // Do any additional setup after loading the view.

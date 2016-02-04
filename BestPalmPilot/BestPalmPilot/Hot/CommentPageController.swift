@@ -135,7 +135,7 @@ class CommentPageController: UIViewController,UITextFieldDelegate  {
         var preView:UIView?
         for i in 0..<count{
             let tabItem = UIFlatImageTabItem()
-            BatchLoaderUtil.loadFile("star", callBack: { (image, params) -> Void in
+            BatchLoaderForSwift.loadFile("star", callBack: { (image) -> Void in
                 tabItem.image = image
             })
             self.starArea.addSubview(tabItem)

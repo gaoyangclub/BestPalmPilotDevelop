@@ -21,7 +21,7 @@ class HelpListViewController: PageListTableViewController {
         tabItem2.sizeType = .FillWidth
         tabItem2.normalColor = UIColor.whiteColor()
         //        tabItem.selectColor = UICreaterUtils.colorRise
-        BatchLoaderUtil.loadFile("campaign", callBack: { (image, params) -> Void in
+        BatchLoaderForSwift.loadFile("campaign", callBack: { (image) -> Void in
             tabItem2.image = image
         })
         tabItem2.addTarget(self, action: "setupClick", forControlEvents: UIControlEvents.TouchDown)
@@ -161,7 +161,7 @@ class HelpInfoPageCell:BaseTableViewCell{
         tabItem.userInteractionEnabled = false
         tabItem.sizeType = .FillWidth
         tabItem.normalColor = UIColor.whiteColor()//UICreaterUtils.colorRise
-        BatchLoaderUtil.loadFile("phone", callBack: { [weak self](image, params) -> Void in
+        BatchLoaderForSwift.loadFile("phone", callBack: { [weak self](image) -> Void in
             tabItem.image = image
         })
         tabItem.snp_makeConstraints(closure: { [weak self](make) -> Void in //[weak self]

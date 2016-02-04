@@ -89,7 +89,7 @@ class ApprovePageHomeHotCell: BaseTableViewCell {
                 make.centerX.equalTo(area)
                 make.top.equalTo(18)
             })
-            BatchLoaderUtil.loadFile(hotList[i].icon, callBack: { (image, params) -> Void in
+            BatchLoaderForSwift.loadFile(hotList[i].icon, callBack: { (image) -> Void in
                 imageView.image = image
             })
             preItem = area

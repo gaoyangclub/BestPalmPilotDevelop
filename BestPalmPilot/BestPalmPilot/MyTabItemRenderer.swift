@@ -96,7 +96,7 @@ class MyTabItemRenderer: BaseItemRenderer {
         }
         
         let vo = data as! TabRendererVo
-        BatchLoaderUtil.loadFile(vo.iconUrl, callBack: { [weak self](image, params) -> Void in
+        BatchLoaderForSwift.loadFile(vo.iconUrl, callBack: { [weak self](image) -> Void in
             self!.tabItem.image = image
         })
         self.tabItem.select = selected

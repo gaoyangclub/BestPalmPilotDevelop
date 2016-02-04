@@ -60,7 +60,7 @@ public class AccountSideHomeController: UIViewController {
         tabItem.sizeType = .FillWidth
         tabItem.normalColor = UICreaterUtils.colorFlat
         
-        BatchLoaderUtil.loadFile("userIcon", callBack: { (image, params) -> Void in
+        BatchLoaderForSwift.loadFile("userIcon", callBack: { (image) -> Void in
             tabItem.image = image
         })
         

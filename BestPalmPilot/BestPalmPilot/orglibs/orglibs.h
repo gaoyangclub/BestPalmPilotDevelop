@@ -3,6 +3,7 @@
 //
 #include "MJExtension.h"
 #include "DeviceUtil.h"
+#include "BatchLoaderForOC.h"
 
 #include "PPiFlatSegmentedControl.h"
 #include "UIAwesomeButton.h"

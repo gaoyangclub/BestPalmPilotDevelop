@@ -47,7 +47,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
             make.width.height.equalTo(180)
         })
         imageView.contentMode = UIViewContentMode.ScaleAspectFit
-        BatchLoaderUtil.loadFile("icon512x512", callBack: { (image, params) -> Void in
+        BatchLoaderForSwift.loadFile("icon512x512", callBack: { (image) -> Void in
             imageView.image = image
             })
         return imageView
@@ -83,7 +83,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
         tabItem.normalColor = UIColor.grayColor()
 //        tabItem.selectColor = UICreaterUtils.colorRise
         
-        BatchLoaderUtil.loadFile("userIcon", callBack: { (image, params) -> Void in
+        BatchLoaderForSwift.loadFile("userIcon", callBack: { (image) -> Void in
             tabItem.image = image
         })
         return tabItem
@@ -120,7 +120,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
         tabItem.normalColor = UIColor.grayColor()
         //        tabItem.selectColor = UICreaterUtils.colorRise
         
-        BatchLoaderUtil.loadFile("passwordIcon", callBack: { (image, params) -> Void in
+        BatchLoaderForSwift.loadFile("passwordIcon", callBack: { (image) -> Void in
             tabItem.image = image
         })
         return tabItem

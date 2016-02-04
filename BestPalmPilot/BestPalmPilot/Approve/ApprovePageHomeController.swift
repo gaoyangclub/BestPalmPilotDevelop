@@ -14,7 +14,7 @@ class ApprovePageHomeController: PageListTableViewController {
         let bar = UISearchBar()
         bar.placeholder = "请输入审批信息"
         
-        BatchLoaderUtil.loadFile("empty", callBack: { (image, params) -> Void in
+        BatchLoaderForSwift.loadFile("empty", callBack: { (image) -> Void in
             bar.backgroundImage = image // 需要用1像素的透明图片代替背景图 不然动画交互的时候会坑爹的闪现灰底
         })
         
@@ -39,7 +39,7 @@ class ApprovePageHomeController: PageListTableViewController {
         tabItem2.sizeType = .FillWidth
         tabItem2.normalColor = UIColor.whiteColor()
         //        tabItem.selectColor = UICreaterUtils.colorRise
-        BatchLoaderUtil.loadFile("campaign", callBack: { (image, params) -> Void in //[weak self]
+        BatchLoaderForSwift.loadFile("campaign", callBack: { (image) -> Void in //[weak self]
             tabItem2.image = image
         })
         tabItem2.addTarget(self, action: "setupClick", forControlEvents: UIControlEvents.TouchDown)
@@ -287,7 +287,7 @@ private class ApprovePageHomeInfoCell: BaseTableViewCell {
             make.height.equalTo(24)
             make.centerY.equalTo(self!.tagLabel)
         }
-        BatchLoaderUtil.loadFile(avo.iconurl, callBack: { [weak self](image, params) -> Void in
+        BatchLoaderForSwift.loadFile(avo.iconurl, callBack: { [weak self](image) -> Void in
             self!.iconView.image = image
         })
         

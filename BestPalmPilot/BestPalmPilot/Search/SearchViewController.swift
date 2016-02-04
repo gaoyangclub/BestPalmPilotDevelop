@@ -25,7 +25,7 @@ class SearchViewController: UITableViewController,UISearchBarDelegate {
         search.tintColor=UIColor.blueColor()//会获取到光标
         search.setShowsCancelButton(false, animated: true)
         
-        BatchLoaderUtil.loadFile("empty", callBack: { (image, params) -> Void in
+        BatchLoaderForSwift.loadFile("empty", callBack: { (image) -> Void in
             search.backgroundImage = image // 需要用1像素的透明图片代替背景图
         })
         search.delegate = self
@@ -269,7 +269,7 @@ class SearchViewController: UITableViewController,UISearchBarDelegate {
         self.searchOutBackView.addSubview(imageView)
         //        imageView.layer.cornerRadius = 50
         imageView.contentMode = UIViewContentMode.ScaleAspectFit
-        BatchLoaderUtil.loadFile("searchOut.jpg", callBack: { (image, params) -> Void in
+        BatchLoaderForSwift.loadFile("searchOut.jpg", callBack: { (image) -> Void in
             imageView.image = image
         })
         imageView.snp_makeConstraints(closure: { [weak self](make) -> Void in

@@ -9,15 +9,15 @@
 import UIKit
 
 class ImageSlideView: UIControl {
-
     
-//     Only override drawRect: if you perform custom drawing.
-//     An empty implementation adversely affects performance during animation.
+    
+    //     Only override drawRect: if you perform custom drawing.
+    //     An empty implementation adversely affects performance during animation.
     override func drawRect(rect: CGRect) {
         reloadData()
         print("开始渲染视图")
     }
-
+    
     
     enum ImageTweenStyle:Int{
         case Fade
@@ -33,7 +33,7 @@ class ImageSlideView: UIControl {
     var autoRound:Bool = true //自动轮播
     
     override func layoutSubviews(){
-//        super.layoutSubviews()
+        //        super.layoutSubviews()
         print("重新布局UI")
         reloadData()
         //        setNeedsDisplay()
@@ -77,7 +77,7 @@ class ImageSlideView: UIControl {
         set(newValue){
             _dataSource = newValue
             if _dataSource != nil{ //有数据
-//                reset = true //全部重置
+                //                reset = true //全部重置
                 _currentPage = 0
                 setNeedsDisplay()
             }
@@ -90,7 +90,7 @@ class ImageSlideView: UIControl {
     
     var timeDelay:Int = 5 //5秒后切换页面
     
-//    private var reset:Bool = true
+    //    private var reset:Bool = true
     
     //重新加载数据生成视图
     func reloadData(){
@@ -115,7 +115,7 @@ class ImageSlideView: UIControl {
         
         if pageControl == nil{
             pageControl = UIPageControl()
-//            pageControl?.frame.size = sg
+            //            pageControl?.frame.size = sg
             self.addSubview(pageControl!)
             
             pageControl?.addTarget(self, action: "pageControlChange", forControlEvents: UIControlEvents.ValueChanged)
@@ -124,16 +124,16 @@ class ImageSlideView: UIControl {
             let constraint = NSLayoutConstraint(item: pageControl!, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterX, multiplier: 1.0, constant: 0)
             
             self.addConstraint(constraint)
-//            var color:UIColor = UIColor.blackColor()
-//            color.colorWithAlphaComponent(0.5)
-//            pageControl?.pageIndicatorTintColor = color
+            //            var color:UIColor = UIColor.blackColor()
+            //            color.colorWithAlphaComponent(0.5)
+            //            pageControl?.pageIndicatorTintColor = color
         }
         
         showPageControlBottm()
         
-//        if(reset){ //数据重置
-            pageControl?.numberOfPages = self._dataSource!.count
-//        }
+        //        if(reset){ //数据重置
+        pageControl?.numberOfPages = self._dataSource!.count
+        //        }
         
         if _currentPage > self._dataSource!.count{
             _currentPage = 0 //出界只能清零
@@ -141,12 +141,12 @@ class ImageSlideView: UIControl {
         
         pageControl?.currentPage = _currentPage
         
-        BatchLoaderUtil.loadFile(_dataSource![_currentPage], callBack: imageLoadedThenPage)
-//        showCurrentPage()
+        BatchLoaderForSwift.loadFile(_dataSource![_currentPage], callBack: imageLoadedThenPage)
+        //        showCurrentPage()
         
-//        println("reload complete")
+        //        println("reload complete")
         
-//        reset = false
+        //        reset = false
     }
     
     func timeHandler(){
@@ -182,12 +182,12 @@ class ImageSlideView: UIControl {
             //变化图片
             let isLeft:Bool = pageControl!.currentPage < _currentPage
             _currentPage = pageControl!.currentPage
-//            showCurrentPage()
+            //            showCurrentPage()
             turnPage(isLeft,nowPage:_currentPage)
         }
     }
     
-//    private var animation:CABasicAnimation?
+    //    private var animation:CABasicAnimation?
     private func turnPage(isLeft:Bool,nowPage:Int){
         
         if _dataSource == nil{
@@ -202,8 +202,11 @@ class ImageSlideView: UIControl {
         
         pageControl?.currentPage = nowPage//同步切换位置
         
-        BatchLoaderUtil.loadFile(_dataSource![nowPage], callBack: imageLoaded, imageViewNext!)
-//        imageViewNext?.image = _dataSource![nowPage] as? UIImage
+        BatchLoaderForSwift.loadFile(_dataSource![nowPage]){ image in
+            self.imageViewNext?.image = image
+        }//, callBack: imageLoaded, imageViewNext!)
+        
+        //        imageViewNext?.image = _dataSource![nowPage] as? UIImage
         
         if(tweenStyle == ImageTweenStyle.Fade){
             //        if animation != nil{
@@ -216,7 +219,7 @@ class ImageSlideView: UIControl {
             animation.delegate = self
             
             
-//            imageViewPrev?.layer.removeAllAnimations() //先清除之前的缓动
+            //            imageViewPrev?.layer.removeAllAnimations() //先清除之前的缓动
             imageViewPrev?.layer.addAnimation(animation, forKey: "Image-opacity")
         }else{
             if(isLeft){
@@ -273,6 +276,12 @@ class ImageSlideView: UIControl {
         }
     }
     
+    //    func imageLoaded(data:UIImage?,params:[AnyObject]){
+    //        let imageView = params[0] as! UIImageView//原视图
+    //        //        var url = params[1] //原图片地址
+    //        imageView.image = data! //显示
+    //    }
+    
     private var pageConstraint:NSLayoutConstraint?
     private func showPageControlBottm(){
         if pageControl != nil{
@@ -286,7 +295,7 @@ class ImageSlideView: UIControl {
     }
     
     private func showCurrentPage(image:UIImage){
-//        BatchLoaderUtil.loadFile(url, callBack: imageLoaded,imageViewPrev!)
+        //        BatchLoaderUtil.loadFile(url, callBack: imageLoaded,imageViewPrev!)
         imageViewPrev?.image = image//_dataSource![_currentPage]
         imageViewNext?.image = nil //清空
         if autoRound{
@@ -298,15 +307,9 @@ class ImageSlideView: UIControl {
         }
     }
     
-    func imageLoaded(data:UIImage?,params:[AnyObject]){
-        let imageView = params[0] as! UIImageView//原视图
-        //        var url = params[1] //原图片地址
-        imageView.image = data! //显示
-    }
-    
-    func imageLoadedThenPage(data:UIImage?,params:[AnyObject]){
-//        var nextCall:(image:UIImage)->Void = params[0] as! (image:UIImage)->Void
-//        nextCall(image: data!)
+    func imageLoadedThenPage(data:UIImage?){//,params:[AnyObject]
+        //        var nextCall:(image:UIImage)->Void = params[0] as! (image:UIImage)->Void
+        //        nextCall(image: data!)
         self.showCurrentPage(data!)
     }
     
@@ -334,7 +337,7 @@ class ImageSlideView: UIControl {
         self.dataSource = dataSource //添加数据并显示
         addAllEvent()
     }
-
+    
     required init?(coder aDecoder: NSCoder) { //屏蔽该初始化方法
         fatalError("init(coder:) has not been implemented")
     }
@@ -342,5 +345,5 @@ class ImageSlideView: UIControl {
     
     
     
-
+    
 }

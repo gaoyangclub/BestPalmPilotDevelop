@@ -157,7 +157,7 @@
 //        }
         if(_selAction!=nil){
 //            objc_msgSend(_target,_selAction,[NSNumber numberWithInteger:selectedIndex],selectedIndex);
-            [_target performSelector:_selAction withObject:[NSNumber numberWithInt:selectedIndex]];
+            [_target performSelector:_selAction withObject:[NSNumber numberWithInteger:selectedIndex] afterDelay:0];
         }
     }
 }

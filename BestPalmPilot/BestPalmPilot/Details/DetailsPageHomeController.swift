@@ -32,7 +32,7 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
         tabItem2.sizeType = .FillWidth
         tabItem2.normalColor = UIColor.whiteColor()
         //        tabItem.selectColor = UICreaterUtils.colorRise
-        BatchLoaderUtil.loadFile("campaign", callBack: { (image, params) -> Void in
+        BatchLoaderForSwift.loadFile("campaign", callBack: { (image) -> Void in
             tabItem2.image = image
         })
         tabItem2.addTarget(self, action: "setupClick", forControlEvents: UIControlEvents.TouchDown)

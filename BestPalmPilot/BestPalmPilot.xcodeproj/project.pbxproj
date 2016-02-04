@@ -80,7 +80,6 @@
 		847ABCC41C47AF3E002C037E /* BaseItemRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847ABC351C47AF3E002C037E /* BaseItemRenderer.swift */; };
 		847ABCC51C47AF3E002C037E /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847ABC361C47AF3E002C037E /* BaseTableViewCell.swift */; };
 		847ABCC61C47AF3E002C037E /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847ABC371C47AF3E002C037E /* BaseTableViewController.swift */; };
-		847ABCC71C47AF3E002C037E /* BatchLoaderUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847ABC381C47AF3E002C037E /* BatchLoaderUtil.swift */; };
 		847ABCC81C47AF3E002C037E /* CalculateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847ABC391C47AF3E002C037E /* CalculateUtils.swift */; };
 		847ABCC91C47AF3E002C037E /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847ABC3A1C47AF3E002C037E /* CAPSPageMenu.swift */; };
 		847ABCCA1C47AF3E002C037E /* CASectionPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847ABC3B1C47AF3E002C037E /* CASectionPageMenu.swift */; };
@@ -196,6 +195,9 @@
 		84F52B7A1C4E3BC400CF96FE /* DetailsPageHomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F52B791C4E3BC400CF96FE /* DetailsPageHomeController.swift */; };
 		84F7B3641C51F85200F32756 /* searchOut.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 84F7B3631C51F85200F32756 /* searchOut.jpg */; };
 		84F7B3671C52194C00F32756 /* EZLoadingActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F7B3661C52194C00F32756 /* EZLoadingActivity.swift */; };
+		84F8245B1C632D9C00E07D38 /* BatchLoaderForOC.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F824571C632D9C00E07D38 /* BatchLoaderForOC.m */; };
+		84F8245C1C632D9C00E07D38 /* BatchLoaderForSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F824581C632D9C00E07D38 /* BatchLoaderForSwift.swift */; };
+		84F8245D1C632D9C00E07D38 /* FileInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F8245A1C632D9C00E07D38 /* FileInfo.m */; };
 		84FBD1A71C55EF9300B0969D /* AccountSideHomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FBD1A61C55EF9300B0969D /* AccountSideHomeController.swift */; };
 		84FBD1AA1C5621B200B0969D /* HelpListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FBD1A91C5621B200B0969D /* HelpListViewController.swift */; };
 		84FBD1AD1C56378D00B0969D /* phone.png in Resources */ = {isa = PBXBuildFile; fileRef = 84FBD1AC1C56378D00B0969D /* phone.png */; };
@@ -392,7 +394,6 @@
 		847ABC351C47AF3E002C037E /* BaseItemRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseItemRenderer.swift; sourceTree = "<group>"; };
 		847ABC361C47AF3E002C037E /* BaseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		847ABC371C47AF3E002C037E /* BaseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
-		847ABC381C47AF3E002C037E /* BatchLoaderUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatchLoaderUtil.swift; sourceTree = "<group>"; };
 		847ABC391C47AF3E002C037E /* CalculateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculateUtils.swift; sourceTree = "<group>"; };
 		847ABC3A1C47AF3E002C037E /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSPageMenu.swift; sourceTree = "<group>"; };
 		847ABC3B1C47AF3E002C037E /* CASectionPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CASectionPageMenu.swift; sourceTree = "<group>"; };
@@ -541,6 +542,11 @@
 		84F52B791C4E3BC400CF96FE /* DetailsPageHomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsPageHomeController.swift; sourceTree = "<group>"; };
 		84F7B3631C51F85200F32756 /* searchOut.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = searchOut.jpg; sourceTree = "<group>"; };
 		84F7B3661C52194C00F32756 /* EZLoadingActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EZLoadingActivity.swift; sourceTree = "<group>"; };
+		84F824561C632D9C00E07D38 /* BatchLoaderForOC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatchLoaderForOC.h; sourceTree = "<group>"; };
+		84F824571C632D9C00E07D38 /* BatchLoaderForOC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatchLoaderForOC.m; sourceTree = "<group>"; };
+		84F824581C632D9C00E07D38 /* BatchLoaderForSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatchLoaderForSwift.swift; sourceTree = "<group>"; };
+		84F824591C632D9C00E07D38 /* FileInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileInfo.h; sourceTree = "<group>"; };
+		84F8245A1C632D9C00E07D38 /* FileInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileInfo.m; sourceTree = "<group>"; };
 		84FBD1A61C55EF9300B0969D /* AccountSideHomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountSideHomeController.swift; sourceTree = "<group>"; };
 		84FBD1A91C5621B200B0969D /* HelpListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpListViewController.swift; sourceTree = "<group>"; };
 		84FBD1AC1C56378D00B0969D /* phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = phone.png; sourceTree = "<group>"; };
@@ -838,6 +844,7 @@
 		847ABC271C47AF3E002C037E /* orglibs */ = {
 			isa = PBXGroup;
 			children = (
+				84F824551C632D9C00E07D38 /* Loader */,
 				8434CB061C6069660019A190 /* Device */,
 				844645481C5886CE00BE8CC6 /* EAIntroView */,
 				840049DA1C4CE79000D20B90 /* MJExtension */,
@@ -882,7 +889,6 @@
 				847ABC351C47AF3E002C037E /* BaseItemRenderer.swift */,
 				847ABC361C47AF3E002C037E /* BaseTableViewCell.swift */,
 				847ABC371C47AF3E002C037E /* BaseTableViewController.swift */,
-				847ABC381C47AF3E002C037E /* BatchLoaderUtil.swift */,
 				847ABC391C47AF3E002C037E /* CalculateUtils.swift */,
 				847ABC3A1C47AF3E002C037E /* CAPSPageMenu.swift */,
 				847ABC3B1C47AF3E002C037E /* CASectionPageMenu.swift */,
@@ -1206,6 +1212,18 @@
 			path = EZLoading;
 			sourceTree = "<group>";
 		};
+		84F824551C632D9C00E07D38 /* Loader */ = {
+			isa = PBXGroup;
+			children = (
+				84F824561C632D9C00E07D38 /* BatchLoaderForOC.h */,
+				84F824571C632D9C00E07D38 /* BatchLoaderForOC.m */,
+				84F824581C632D9C00E07D38 /* BatchLoaderForSwift.swift */,
+				84F824591C632D9C00E07D38 /* FileInfo.h */,
+				84F8245A1C632D9C00E07D38 /* FileInfo.m */,
+			);
+			path = Loader;
+			sourceTree = "<group>";
+		};
 		84FBD19F1C55EF4900B0969D /* Account */ = {
 			isa = PBXGroup;
 			children = (
@@ -1520,14 +1538,15 @@
 				847ABD941C47B490002C037E /* IQUITextFieldView+Additions.m in Sources */,
 				847ABCBC1C47AF3E002C037E /* LoginViewController.swift in Sources */,
 				847ABCAB1C47AF3E002C037E /* AViewController.swift in Sources */,
+				84F8245C1C632D9C00E07D38 /* BatchLoaderForSwift.swift in Sources */,
 				847ABCFD1C47AF3E002C037E /* Constraint.swift in Sources */,
 				847ABBC91C47AED1002C037E /* AppDelegate.swift in Sources */,
 				8402B5281C4F7F5200D79ABB /* DetailsPageInfoController.swift in Sources */,
 				847ABD041C47AF3E002C037E /* EdgeInsets.swift in Sources */,
 				847ABD0B1C47AF3E002C037E /* LBXPermissions.swift in Sources */,
 				847ABCD31C47AF3E002C037E /* UIFlatImageTabItem.swift in Sources */,
+				84F8245D1C632D9C00E07D38 /* FileInfo.m in Sources */,
 				847ABD901C47B490002C037E /* JLToastView.swift in Sources */,
-				847ABCC71C47AF3E002C037E /* BatchLoaderUtil.swift in Sources */,
 				840049F51C4CE79000D20B90 /* NSObject+MJClass.m in Sources */,
 				847ABCC61C47AF3E002C037E /* BaseTableViewController.swift in Sources */,
 				8440A49D1C48D3BC009E8ADD /* BestUtils.swift in Sources */,
@@ -1575,6 +1594,7 @@
 				847ABCF21C47AF3E002C037E /* RefreshFooterView.swift in Sources */,
 				847ABCED1C47AF3E002C037E /* UIViewController+MMDrawerController.m in Sources */,
 				847ABCDD1C47AF3E002C037E /* UIColor.swift in Sources */,
+				84F8245B1C632D9C00E07D38 /* BatchLoaderForOC.m in Sources */,
 				847ABCEF1C47AF3E002C037E /* RefreshBaseView.swift in Sources */,
 				840D67AD1C5763D900D175EB /* WebPageController.swift in Sources */,
 				847ABCBF1C47AF3E002C037E /* NSString+FontAwesome.m in Sources */,

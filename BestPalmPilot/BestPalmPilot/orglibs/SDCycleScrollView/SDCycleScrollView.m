@@ -24,6 +24,7 @@
 #import "UIView+SDExtension.h"
 #import "TAPageControl.h"
 #import "NSData+SDDataCache.h"
+#import "BatchLoaderForOC.h"
 //#import "FinanceApplicationTest-Swift.h"
 
 
@@ -227,42 +228,67 @@ NSString * const ID = @"cycleCell";
 - (void)loadImageAtIndex:(NSInteger)index
 {
     NSString *urlStr = self.imageURLStringsGroup[index];
-    NSURL *url = [NSURL URLWithString:urlStr];
-    // 如果有缓存，直接加载缓存
-    NSData *data = [NSData getDataCacheWithIdentifier:urlStr];
     
+    //    NSURL *url = [NSURL URLWithString:urlStr];
+    //    [NSURLRequest requestWithURL:url]
+    //    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url]
+    //                                       queue:[[NSOperationQueue alloc] init]
+    //                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
+    //     {
+    //         if(connectionError){
+    //             //             printf(connectionError);
+    //             return;
+    //         }
+    //         //                                   if (!connectionError) {
+    //         UIImage* image = [UIImage imageWithData:data];
+    //         [self.imagesGroup setObject:image atIndexedSubscript:index];
+    //         if (index == 0) {
+    //             [self.mainView reloadData];
+    //         }
+    //     }];
     
-    if (data) {
-        [self.imagesGroup setObject:[UIImage imageWithData:data] atIndexedSubscript:index];
-    } else {
-//        BatchLoaderUtil;
-        // 网络加载图片并缓存图片
-        [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url]
-                                           queue:[[NSOperationQueue alloc] init]
-                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError){
-                                   if (!connectionError) {
-                                       UIImage *image = [UIImage imageWithData:data];
-                                       if (!image) return; // 防止错误数据导致崩溃
-                                       [self.imagesGroup setObject:image atIndexedSubscript:index];
-                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                           if (index == 0) {
-                                               [self.mainView reloadData];
-                                           }
-                                       });
-                                       [data saveDataCacheWithIdentifier:url.absoluteString];
-                                   } else { // 加载数据失败
-                                       static int repeat = 0;
-                                       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                           if (repeat > 10) return;
-                                           [self loadImageAtIndex:index];
-                                           repeat++;
-                                       });
-                                       
-                                   }
-                               }
-         
-         ];
-    }
+    [BatchLoaderForOC loadFile:urlStr _:^(UIImage * image) {
+        if(image != NULL){
+            [self.imagesGroup setObject:image atIndexedSubscript:index];
+            if (index == 0) {
+                [self.mainView reloadData];
+            }
+        }
+    }];
+    
+    //    // 如果有缓存，直接加载缓存
+    //    NSData *data = [NSData getDataCacheWithIdentifier:urlStr];
+    //    if (data) {
+    //        [self.imagesGroup setObject:[UIImage imageWithData:data] atIndexedSubscript:index];
+    //    } else {
+    ////        BatchLoaderUtil;
+    //        // 网络加载图片并缓存图片
+    //        [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url]
+    //                                           queue:[[NSOperationQueue alloc] init]
+    //                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError){
+    //                                   if (!connectionError) {
+    //                                       UIImage *image = [UIImage imageWithData:data];
+    //                                       if (!image) return; // 防止错误数据导致崩溃
+    //                                       [self.imagesGroup setObject:image atIndexedSubscript:index];
+    //                                       dispatch_async(dispatch_get_main_queue(), ^{
+    //                                           if (index == 0) {
+    //                                               [self.mainView reloadData];
+    //                                           }
+    //                                       });
+    //                                       [data saveDataCacheWithIdentifier:url.absoluteString];
+    //                                   } else { // 加载数据失败
+    //                                       static int repeat = 0;
+    //                                       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    //                                           if (repeat > 10) return;
+    //                                           [self loadImageAtIndex:index];
+    //                                           repeat++;
+    //                                       });
+    //
+    //                                   }
+    //                               }
+    //
+    //         ];
+    //    }
     
 }
 

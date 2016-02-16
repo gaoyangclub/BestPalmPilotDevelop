@@ -136,6 +136,7 @@ class ApprovePageHomeController: PageListTableViewController {
     private func getSystemBadgeCount(menuList:[ApproveMenuVo])->Int{
         var count:Int = 0
         for avo in menuList {
+//            avo.count = Int(arc4random_uniform(10) + 1)//  10
             count += avo.count
         }
         return count
@@ -265,11 +266,29 @@ private class ApprovePageHomeInfoCell: BaseTableViewCell {
         return tabItem
     }()
     
-    private lazy var badgeView:CustomBadge = {
-        let badge = CustomBadge(string: "1",withScale: 1.2)
-        badge.badgeStyle.badgeInsetColor = FlatUIColors.alizarinColor()
-        self.contentView.addSubview(badge)
-        return badge
+//    private lazy var badgeView:CustomBadge = {
+//        let badge = CustomBadge(string: "1",withScale: 1.2)
+//        badge.badgeStyle.badgeInsetColor = FlatUIColors.alizarinColor()
+//        self.contentView.addSubview(badge)
+//        return badge
+//    }()
+    private lazy var tagView:RoundTagView = {
+        let tag = RoundTagView()
+        tag.showBorder = false
+        tag.showBack = true
+        tag.tagSize = 20
+        tag.cornerRadius = 14
+        tag.minTagWidth = 28
+        tag.minTagHeight = 28
+        tag.tagColor = UIColor.whiteColor()
+        tag.backColor = FlatUIColors.alizarinColor()
+        self.contentView.addSubview(tag)
+        
+        tag.snp_makeConstraints { [weak self](make) -> Void in
+            make.right.equalTo(self!.arrowView.snp_left).offset(-16)
+            make.centerY.equalTo(self!.contentView)
+        }
+        return tag
     }()
     
     private func initCell(){
@@ -313,32 +332,40 @@ private class ApprovePageHomeInfoCell: BaseTableViewCell {
             make.right.equalTo(self!.contentView).offset(-30)
         }
 //        avo.count = 88
-        if avo.count > 0{
-            badgeView.hidden = false
-            
-            badgeView.badgeText = "\(avo.count)"
-//            print("个数:\(avo.count)" + " ---  badgeView.badgeText:" + badgeView.badgeText)
-            
-            badgeView.snp_makeConstraints { [weak self](make) -> Void in
-                make.right.equalTo(self!.arrowView.snp_left).offset(-16)
-                make.centerY.equalTo(self!.contentView)
-                make.width.equalTo(34)
-                make.height.equalTo(34)
-            }
-        }else{
-            badgeView.hidden = true
-        }
         
+        avo.countProxy?.observe({ [weak self] value -> Void in
+            if value > 0{
+                self?.tagView.hidden = false
+                
+//                self?.badgeView.badgeText = "\(value)"
+//                self?.badgeView.autoBadgeSizeWithString("\(value)")//
+                self?.tagView.tagText = "\(value)"
+                //            print("个数:\(avo.count)" + " ---  badgeView.badgeText:" + badgeView.badgeText)
+            }else{
+                self?.tagView.hidden = true
+            }
+        })
     }
     
 }
 public class ApproveMenuVo:NSObject{
+    
+    override init() {
+        super.init()
+        self.countProxy = Observable<Int>(object:self, keyPath: "count")
+    }
     var iconurl:String = ""
     var code:String = ""
     var sortindex:Int = 0 //排序
     var groupkey:String = "" //系统类型
     var groupname:String = "" //系统名称描述
-    var count:Int = 0 //待处理条数
+    var count:Int = 0{
+        didSet{
+            countProxy?.value = count//更新数据
+        }
+    }//Observable(0) //待处理条数
+    var countProxy:Observable<Int>?// = Observable<Int>(object:self, keyPath: "value")
+
 }
 
 

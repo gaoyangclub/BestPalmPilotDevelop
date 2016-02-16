@@ -45,9 +45,11 @@ public class BestUtils:AnyObject {
                     arr.append(generateObjByJson(subJson,typeList: typeList,selectIndex: selectIndex + 1))
                 }
                 obj.setValue(arr, forKey: key)
+//                putObjectValue(obj, key: key, value: arr)
 //                (obj.valueForKey(key)  Array).append(obj)
             }else{
                 obj.setValue(value.object, forKey: key)
+//                putObjectValue(obj, key: key, value: value.object)
             }
 //            if !(value.object is NSNull){
 //                
@@ -55,6 +57,16 @@ public class BestUtils:AnyObject {
         }
         return obj
     }
+    
+//    private static func putObjectValue(obj:NSObject,key:String,value:AnyObject){
+////        print(obj.valueForKey(key)?.classForCoder)
+//        if obj.valueForKey(key) is Observable<AnyObject>{
+//            obj.setValue(Observable(value), forKey: key)
+//        }else{
+//            obj.setValue(value, forKey: key)
+//        }
+//    }
+    
 //    public static func generateDicByObj(obj:NSObject){
 //        for (key,value) in obj {
 //            

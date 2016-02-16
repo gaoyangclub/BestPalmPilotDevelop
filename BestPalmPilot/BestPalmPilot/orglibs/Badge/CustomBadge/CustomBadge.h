@@ -48,6 +48,7 @@
 @property(nonatomic, strong) BadgeStyle *badgeStyle;
 @property(nonatomic) CGFloat badgeCornerRoundness;
 @property(nonatomic) CGFloat badgeScaleFactor;
+@property(nonatomic) CGFloat badgeLeftpadding;
 
 + (CustomBadge*) customBadgeWithString:(NSString *)badgeString;
 + (CustomBadge*) customBadgeWithString:(NSString *)badgeString withScale:(CGFloat)scale;

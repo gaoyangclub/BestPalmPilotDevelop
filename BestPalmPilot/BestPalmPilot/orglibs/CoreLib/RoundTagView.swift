@@ -27,6 +27,36 @@ class RoundTagView:UIView{
         }
     }
     
+    var backColor:UIColor = UIColor.blackColor(){
+        didSet{
+            setNeedsLayout()
+        }
+    }
+    
+    var showBorder:Bool = true{
+        didSet{
+            setNeedsLayout()
+        }
+    }
+    
+    var borderWidth:CGFloat = 0.6{
+        didSet{
+            setNeedsLayout()
+        }
+    }
+    
+    var cornerRadius:CGFloat = 3{
+        didSet{
+            setNeedsLayout()
+        }
+    }
+    
+    var showBack:Bool = false{
+        didSet{
+            setNeedsLayout()
+        }
+    }
+    
     //    private lazy var tagLabel:UILabel = {
     //       let labal = UICreaterUtils.createLabel(10, UIColor.grayColor(), "")
     //        return labal
@@ -36,6 +66,17 @@ class RoundTagView:UIView{
     
     override func layoutSubviews() {
         initView()
+    }
+    
+    var minTagWidth:CGFloat = 20{
+        didSet{
+            setNeedsLayout()
+        }
+    }
+    var minTagHeight:CGFloat = 10{
+        didSet{
+            setNeedsLayout()
+        }
     }
     
     private func initView(){
@@ -49,12 +90,22 @@ class RoundTagView:UIView{
                 make.center.equalTo(self!)
             }
             
-            self.layer.borderColor = tagColor.CGColor
-            self.layer.borderWidth = 0.6
-            self.layer.cornerRadius = 3
+            if showBorder {
+                self.layer.borderColor = tagColor.CGColor
+                self.layer.borderWidth = borderWidth
+            }else{
+                self.layer.borderWidth = 0
+            }
+            if showBack{
+                self.backgroundColor = self.backColor
+            }else{
+                self.backgroundColor = UIColor.clearColor()
+            }
+            self.layer.cornerRadius = cornerRadius
             self.snp_makeConstraints { [weak self](make) -> Void in
-                make.width.greaterThanOrEqualTo(20)
+                make.width.greaterThanOrEqualTo(self!.minTagWidth)
                 make.width.equalTo(self!.tagLabel).offset(6)
+                make.height.greaterThanOrEqualTo(self!.minTagHeight)
                 make.height.equalTo(self!.tagLabel).offset(2)
             }
         }

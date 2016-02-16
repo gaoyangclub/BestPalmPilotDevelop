@@ -64,6 +64,7 @@
         self.badgeStyle = style;
 		self.badgeCornerRoundness = 0.4;
 		self.badgeScaleFactor = scale;
+        self.badgeLeftpadding = 6;
         [self autoBadgeSizeWithString:badgeString];
 	}
 	return self;
@@ -228,20 +229,26 @@
 }
 
 - (void)drawRect:(CGRect)rect {
-	
 	CGContextRef context = UIGraphicsGetCurrentContext();
-	[self drawRoundedRectWithContext:context withRect:rect];
+    CGRect tempRect;
+    if ([self.badgeText length]<2) {
+        tempRect = rect;//保持原样
+    }else{
+        tempRect = CGRectMake(rect.origin.x + _badgeLeftpadding, rect.origin.y, rect.size.width - _badgeLeftpadding * 2, rect.size.height);
+    }
+    
+	[self drawRoundedRectWithContext:context withRect:tempRect];
 	
 	if(self.badgeStyle.badgeShining) {
-		[self drawShineWithContext:context withRect:rect];
+		[self drawShineWithContext:context withRect:tempRect];
 	}
 	
 	if (self.badgeStyle.badgeFrame)  {
-		[self drawFrameWithContext:context withRect:rect];
+		[self drawFrameWithContext:context withRect:tempRect];
 	}
 	
 	if ([self.badgeText length]>0) {
-		CGFloat sizeOfFont = 13.5*badgeScaleFactor;
+		CGFloat sizeOfFont = 13.5*badgeScaleFactor;//13.5
 		if ([self.badgeText length]<2) {
             sizeOfFont += sizeOfFont * 0.20f;
 		}

@@ -34,6 +34,7 @@
 		840D67AB1C57424F00D175EB /* icon512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 840D67A51C57424F00D175EB /* icon512x512.png */; };
 		840D67AD1C5763D900D175EB /* WebPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D67AC1C5763D900D175EB /* WebPageController.swift */; };
 		8434CB091C6069920019A190 /* DeviceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 8434CB081C6069920019A190 /* DeviceUtil.m */; };
+		843B6A961C74501400E23571 /* GYButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843B6A951C74501400E23571 /* GYButton.swift */; };
 		8440A4651C48C383009E8ADD /* icon_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 8440A4551C48C383009E8ADD /* icon_01.png */; };
 		8440A4661C48C383009E8ADD /* icon_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8440A4561C48C383009E8ADD /* icon_01@2x.png */; };
 		8440A4671C48C383009E8ADD /* icon_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 8440A4571C48C383009E8ADD /* icon_02.png */; };
@@ -375,6 +376,7 @@
 		840D67AC1C5763D900D175EB /* WebPageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebPageController.swift; sourceTree = "<group>"; };
 		8434CB071C6069920019A190 /* DeviceUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceUtil.h; sourceTree = "<group>"; };
 		8434CB081C6069920019A190 /* DeviceUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceUtil.m; sourceTree = "<group>"; };
+		843B6A951C74501400E23571 /* GYButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GYButton.swift; sourceTree = "<group>"; };
 		8440A4551C48C383009E8ADD /* icon_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_01.png; sourceTree = "<group>"; };
 		8440A4561C48C383009E8ADD /* icon_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_01@2x.png"; sourceTree = "<group>"; };
 		8440A4571C48C383009E8ADD /* icon_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_02.png; sourceTree = "<group>"; };
@@ -1059,6 +1061,7 @@
 		847ABC341C47AF3E002C037E /* CoreLib */ = {
 			isa = PBXGroup;
 			children = (
+				843B6A951C74501400E23571 /* GYButton.swift */,
 				847ABC351C47AF3E002C037E /* BaseItemRenderer.swift */,
 				847ABC361C47AF3E002C037E /* BaseTableViewCell.swift */,
 				847ABC371C47AF3E002C037E /* BaseTableViewController.swift */,
@@ -1688,6 +1691,7 @@
 				840049D31C4CBFD700D20B90 /* CustomBadge.m in Sources */,
 				844C96C81C72DADE00315A0B /* UICollectionView+Bond.swift in Sources */,
 				84FEDF051C5F2B4C00B163D9 /* CommentPageController.swift in Sources */,
+				843B6A961C74501400E23571 /* GYButton.swift in Sources */,
 				844C96BF1C72DADE00315A0B /* ObservableArrayEvent.swift in Sources */,
 				847ABCEB1C47AF3E002C037E /* MMDrawerController.m in Sources */,
 				847ABD921C47B490002C037E /* IQNSArray+Sort.m in Sources */,
@@ -1986,7 +1990,6 @@
 			buildSettings = {
 				APP_DISPLAY_NAME = "审批管家测试版";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = BestPalmPilot/Info.plist;
@@ -2004,7 +2007,6 @@
 			buildSettings = {
 				APP_DISPLAY_NAME = "审批管家";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = BestPalmPilot/Info.plist;

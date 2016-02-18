@@ -55,8 +55,8 @@ class ApprovePageHomeHotCell: BaseTableViewCell {
         var preItem:UIView?
         for i in 0..<hotList.count{
             let avo = hotList[i]
-            let area:UIControl = UIControl()
-            area.enableElement = avo.enable
+            let area:GYButton = GYButton()
+            area.enabled = avo.enable
             area.tag = i
             if avo.action != nil{
                 area.addTarget(self, action: avo.action!, forControlEvents: UIControlEvents.TouchUpInside)

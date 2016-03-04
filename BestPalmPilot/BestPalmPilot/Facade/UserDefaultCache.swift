@@ -10,12 +10,16 @@ import UIKit
 
 class UserDefaultCache: AnyObject {
     
-    static func getHasIntro()->Bool?{
-        return getUserDataByKey("hasIntro") as? Bool
+    static let introVersion:String = "00"//介绍系列的版本号
+    private static let introKey:String = "introVersion"
+    
+    static func getIntroVersion()->String?{
+        return getUserDataByKey(introKey) as? String
     }
-    static func setHasIntro(value:Bool?){
-        setUserDataByKey("hasIntro",value: value)
+    static func setIntroVersion(value:String?){
+        setUserDataByKey(introKey,value: value)
     }
+    
     static func getUsercode()->String?{
         return getUserDataByKey("usercode") as? String
     }

@@ -50,7 +50,18 @@ public class BestUtils:AnyObject {
 //                putObjectValue(obj, key: key, value: arr)
 //                (obj.valueForKey(key)  Array).append(obj)
             }else{
-                obj.setValue(value.object, forKey: key)
+//                do{
+//                    var a:AnyObject? = value.object
+//                    try obj.validateValue(&a, forKeyPath: key)
+////                    obj.validateValue(<#T##ioValue: AutoreleasingUnsafeMutablePointer<AnyObject?>##AutoreleasingUnsafeMutablePointer<AnyObject?>#>, forKey: <#T##String#>)
+//                }catch{
+//                    print("字段" + key + "不存在")
+//                }
+                if obj.respondsToSelector(Selector(key)){
+                    obj.setValue(value.object, forKey: key)
+                }else{
+                    print("字段" + key + "不存在")
+                }
 //                putObjectValue(obj, key: key, value: value.object)
             }
 //            if !(value.object is NSNull){

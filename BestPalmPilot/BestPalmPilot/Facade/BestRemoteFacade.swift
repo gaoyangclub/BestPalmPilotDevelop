@@ -15,17 +15,17 @@ public class BestRemoteFacade: AnyObject {
     
     public static var isDebug:Bool{
         get{
-            let bundleIdentifier = getBundleValue("CFBundleIdentifier")
+            let bundleIdentifier = getBundleValue("CFBundleVersion")
             if bundleIdentifier != nil{
-                return bundleIdentifier != "com.best.oasis.ios.iapp" //测试模式
+                return bundleIdentifier != "1" //测试模式
             }
             return true
         }
     }
     
     private static let restletUrl = isDebug ?
-        "http://dianping-test.800best.com/rest/dianping/saveComment" : //点评专用生产地址
-        "http://dianping.800best.com/rest/dianping/saveComment"//点评专用测试地址
+        "http://dianping-test.800best.com/rest/dianping/saveComment" : //点评专用测试地址
+        "http://dianping.800best.com/rest/dianping/saveComment" //点评专用生产地址
     
     //    private static let remoteUrl = "http://10.45.10.198:8282/gateway/rest/api/com.best.oasis.husky.ws.mobile.MobileWebService/"
     private static let remoteUrl = isDebug ?
@@ -77,6 +77,7 @@ public class BestRemoteFacade: AnyObject {
         let date:NSDate = NSDate()
         let fmt:NSDateFormatter = NSDateFormatter()
         fmt.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
         let dateString = fmt.stringFromDate(date)
         
 //        print(component)

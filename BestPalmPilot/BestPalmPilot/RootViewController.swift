@@ -43,7 +43,7 @@ class RootViewController: TabViewController,LoginViewDelegate,EAIntroDelegate {
 //        self.title = "登  录"
         self.view.backgroundColor = BestUtils.backgroundColor
         
-        if UserDefaultCache.getHasIntro() != nil && UserDefaultCache.getHasIntro()!{
+        if UserDefaultCache.getIntroVersion() == UserDefaultCache.introVersion{//版本号一致
             checkLoginView()
         }else{//打开介绍
             showIntroWithCrossDissolve()
@@ -162,7 +162,7 @@ class RootViewController: TabViewController,LoginViewDelegate,EAIntroDelegate {
     
     func introDidFinish(introView: EAIntroView!) {
 //        print("介绍完成")
-        UserDefaultCache.setHasIntro(true)//系统介绍过了 永远不会再打开
+        UserDefaultCache.setIntroVersion(UserDefaultCache.introVersion)//系统介绍过了 相同introVersion不会再打开
         checkLoginView()
     }
 

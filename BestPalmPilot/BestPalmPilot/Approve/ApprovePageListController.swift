@@ -244,7 +244,7 @@ public class FormInfoVo:NSObject{
     var id:Float = 0
     var code:String = ""
     var remark:String? = ""//备注
-    var submittime:String = ""
+    var showtime:String = ""
     var submitter:String = ""
     var formtype:String = ""
     var sorttime:String = ""
@@ -378,7 +378,7 @@ class FormInfoPageCell:BaseTableViewCell{
         submitterLabel.text = fvo.submitter
         submitterLabel.sizeToFit()
         
-        submitTimeLabel.text = fvo.submittime
+        submitTimeLabel.text = fvo.showtime
         submitTimeLabel.sizeToFit()
         
         tagView.tagText = "\(indexPath.row + 1)"// + "  section:\(indexPath.section + 1)"

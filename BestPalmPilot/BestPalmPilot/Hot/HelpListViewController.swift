@@ -172,6 +172,18 @@ class HelpInfoPageCell:BaseTableViewCell{
         return tabItem
     }()
     
+    private lazy var topLine:UIView = {
+        let view:UIView = UIView()
+        view.backgroundColor = UICreaterUtils.normalLineColor
+        self.contentView.addSubview(view)
+        view.snp_makeConstraints { [weak self](make) -> Void in
+            make.left.right.equalTo(self!.bottomLine)
+            make.top.equalTo(self!.contentView)
+            make.height.equalTo(UICreaterUtils.normalLineWidth)
+        }
+        return view
+    }()
+    
     private lazy var bottomLine:UIView = {
         let view:UIView = UIView()
         view.backgroundColor = UICreaterUtils.normalLineColor
@@ -223,6 +235,7 @@ class HelpInfoPageCell:BaseTableViewCell{
         self.selectionStyle = UITableViewCellSelectionStyle.Blue
         self.backgroundColor = UIColor.whiteColor()
         self.iconView.hidden = false
+        self.topLine.hidden = indexPath.row != 0
         initText()
     }
 

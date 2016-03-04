@@ -10,7 +10,12 @@ import UIKit
 
 class RootNavigationControl: UINavigationController {
 
-    var navigationColor = UIColor(red: 232 / 255, green: 50 / 255, blue: 85 / 255, alpha: 0.5) //
+    var navigationColor = UIColor(red: 232 / 255, green: 50 / 255, blue: 85 / 255, alpha: 0.5){
+        didSet{
+            self.navigationBar.barTintColor = navigationColor
+        }
+    }
+    var hairlineHidden:Bool = false
     
     private static var instance:RootNavigationControl!
     static func getInstance()->RootNavigationControl{
@@ -28,8 +33,23 @@ class RootNavigationControl: UINavigationController {
     */
     override func viewWillAppear(animated: Bool){
 //        self.navigationController?.navigationBar.translucent = false//    Bar的高斯模糊效果，默认为YES
+        super.viewWillAppear(animated)
         self.navigationBar.barTintColor = navigationColor
+        self.navBarHairlineImageView?.hidden = true
     }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navBarHairlineImageView?.hidden = false
+    }
+    
+    private lazy var navBarHairlineImageView:UIImageView? = {
+        if !self.hairlineHidden {
+            return nil//不需要隐藏
+        }
+        let hailline = self.findHairlineImageViewUnder(self.navigationBar)
+        return hailline
+    }()//{// = [self findHairlineImageViewUnder:navigationBar];
     
     override func viewDidLoad() {
 //        hidesBottomBarWhenPushed = true
@@ -38,5 +58,21 @@ class RootNavigationControl: UINavigationController {
 //        setToolbarHidden(true, animated: false)
 //        navigationBar.hidden = true
     }
+    
+    private func findHairlineImageViewUnder(view:UIView)->UIImageView?{
+//        print("findHairline Height:\(view.bounds.size.height)")
+        if (view is UIImageView && view.bounds.size.height <= 1.0) {
+            return view as? UIImageView
+        }
+        for subview in view.subviews {
+            let imageView:UIImageView? = self.findHairlineImageViewUnder(subview);
+            if (imageView != nil) {
+                return imageView
+            }
+        }
+        return nil
+    }
+
+    
 
 }

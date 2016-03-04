@@ -12,6 +12,7 @@ class PageListTableViewController: BaseTableViewController {
 
     var pageSO:PageListSO?// = self.createPageSO()
     var hasSetUp:Bool = false
+    var showHeader:Bool = true
     var showFooter:Bool = true
     var hasFirstRefreshed:Bool = false //第一次刷新界面
     
@@ -34,27 +35,39 @@ class PageListTableViewController: BaseTableViewController {
         
     }
     
+    func pureTable()->Bool{
+        return false
+    }
+    
     func setupRefresh(){
         self.hasSetUp = true
         
-        self.refreshContaner.addHeaderWithCallback(RefreshHeaderView.header(),callback: { [weak self] ()-> Void in
-//            self?.pageSO?.pagenumber = PageListSO.firstPageNumber//重新清零
-           self?.pageSO?.sorttime = ""
-            
-            self?.headerRequest((self!.pageSO)){ [weak self] hasData,lastUpdateTime in//获取数据完毕 刷新界面
-                self?.pageSO?.sorttime = lastUpdateTime
-                self?.hasFirstRefreshed = true
-                if hasData {
-                    self?.tableView?.reloadData()
-                    self?.refreshContaner?.headerReset()
-                }else{
-                    self?.refreshContaner?.headerReset()
-                    self?.refreshContaner?.footerNodata()
-//                    self?.pageSO?.pagenumber = PageListSO.firstPageNumber //清空页数
-                    self?.pageSO?.sorttime = ""
+        if pureTable(){ //纯净无刷新功能列表
+            showHeader = false
+            showFooter = false
+            self.tableView?.reloadData()
+        }
+        
+        if showHeader{
+            self.refreshContaner.addHeaderWithCallback(RefreshHeaderView.header(),callback: { [weak self] ()-> Void in
+                //            self?.pageSO?.pagenumber = PageListSO.firstPageNumber//重新清零
+                self?.pageSO?.sorttime = ""
+                
+                self?.headerRequest((self!.pageSO)){ [weak self] hasData,lastUpdateTime in//获取数据完毕 刷新界面
+                    self?.pageSO?.sorttime = lastUpdateTime
+                    self?.hasFirstRefreshed = true
+                    if hasData {
+                        self?.tableView?.reloadData()
+                        self?.refreshContaner?.headerReset()
+                    }else{
+                        self?.refreshContaner?.headerReset()
+                        self?.refreshContaner?.footerNodata()
+                        //                    self?.pageSO?.pagenumber = PageListSO.firstPageNumber //清空页数
+                        self?.pageSO?.sorttime = ""
+                    }
                 }
-            }
-        })
+            })
+        }
         
         if showFooter {
             self.refreshContaner.addFooterWithCallback(RefreshFooterView.footer(),callback: { [weak self] ()-> Void in

@@ -114,7 +114,7 @@ class ApprovePageListController: PageListTableViewController {
         let tabItem1 = UIFlatImageTabItem()
         tabItem1.frame = CGRectMake(0, 0, 30, 24)
         tabItem1.sizeType = .FillWidth
-        tabItem1.normalColor = UIColor.whiteColor()
+        tabItem1.normalColor = BestUtils.themeColor//UIColor.whiteColor()
         //        tabItem.selectColor = UICreaterUtils.colorRise
         BatchLoaderForSwift.loadFile("magnifie", callBack: { (image) -> Void in
             tabItem1.image = image
@@ -124,18 +124,26 @@ class ApprovePageListController: PageListTableViewController {
         UIBarButtonItem(title: "嘿嘿", style: UIBarButtonItemStyle.Done, target: self, action: "searchClick")
         rightItem1.customView = tabItem1
         
-        let tabItem2 = UIFlatImageTabItem()
-        tabItem2.frame = CGRectMake(0, 0, 30, 24)
-        tabItem2.sizeType = .FillWidth
-        tabItem2.normalColor = UIColor.whiteColor()
+        let imageContainer = UIControl()
+        imageContainer.frame = CGRectMake(0, 0, 30, 24)
+        
+        let tabItem2 = UIImageView()//UIFlatImageTabItem()
+        imageContainer.addSubview(tabItem2)
+        tabItem2.snp_makeConstraints{ (make) -> Void in
+            make.left.right.top.bottom.equalTo(imageContainer)
+        }
+        
+        tabItem2.contentMode = UIViewContentMode.ScaleAspectFit
+//        tabItem2.sizeType = .FillWidth
+//        tabItem2.normalColor = BestUtils.themeColor
         //        tabItem.selectColor = UICreaterUtils.colorRise
         BatchLoaderForSwift.loadFile("campaign", callBack: { (image) -> Void in
             tabItem2.image = image
         })
-        tabItem2.addTarget(self, action: "setupClick", forControlEvents: UIControlEvents.TouchDown)
+        imageContainer.addTarget(self, action: "setupClick", forControlEvents: UIControlEvents.TouchDown)
         let rightItem2 =
         UIBarButtonItem(title: "嘿嘿", style: UIBarButtonItemStyle.Done, target: self, action: "setupClick")
-        rightItem2.customView = tabItem2
+        rightItem2.customView = imageContainer
         return [rightItem2,rightItem1]
     }()
     
@@ -247,6 +255,18 @@ class FormInfoPageCell:BaseTableViewCell{
     
     static let cellHeight:CGFloat  = 70
     
+    private lazy var topLine:UIView = {
+        let view:UIView = UIView()
+        view.backgroundColor = UICreaterUtils.normalLineColor
+        self.contentView.addSubview(view)
+        view.snp_makeConstraints { [weak self](make) -> Void in
+            make.left.right.equalTo(self!.bottomLine)
+            make.top.equalTo(self!.contentView)
+            make.height.equalTo(UICreaterUtils.normalLineWidth)
+        }
+        return view
+    }()
+    
     private lazy var bottomLine:UIView = {
         let view:UIView = UIView()
         view.backgroundColor = UICreaterUtils.normalLineColor
@@ -319,6 +339,9 @@ class FormInfoPageCell:BaseTableViewCell{
 //            print("row5更新")
 //        }
         initText()
+        
+        topLine.hidden = indexPath.row != 0
+//            !isFirst
     }
     
     private lazy var tagView:RoundTagView = {

@@ -36,7 +36,7 @@ class RefreshContainer: UIView {
         view.State = .Normal
     }
     
-    var headerView:RefreshHeaderView!{
+    var headerView:RefreshHeaderView?{
         didSet{
             self.setNeedsLayout()
         }
@@ -63,8 +63,8 @@ class RefreshContainer: UIView {
 //        removeFooter();
         
         if headerView != nil{
-            headerView.scrollView = scrollerView
-            self.addSubview(headerView)
+            headerView?.scrollView = scrollerView
+            self.addSubview(headerView!)
         }
 //        scrollerView.snp_makeConstraints { (make) -> Void in
 //            make.left.right.top.bottom.equalTo(self)
@@ -84,7 +84,7 @@ class RefreshContainer: UIView {
         
         if headerBeginRefresh{
             headerBeginRefresh = false
-            headerView.beginRefreshing()
+            headerView?.beginRefreshing()
         }
         
 //        if footerBeginRest {
@@ -94,7 +94,7 @@ class RefreshContainer: UIView {
         
         if headerBeginRest{ //再刷一次
             headerBeginRest = false
-            headerView.reset()
+            headerView?.reset()
         }
         
     }
@@ -132,7 +132,7 @@ class RefreshContainer: UIView {
     func headerReset()
     {
         footerReset()
-        headerView.reset()
+        headerView?.reset()
         headerBeginRest = true
         self.setNeedsLayout()
     }

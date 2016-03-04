@@ -53,11 +53,22 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="icon512x512.png" translatesAutoresizingMaskIntoConstraints="NO" id="Ktw-Zu-BIC">
+                                <rect key="frame" x="171" y="51" width="185" height="147"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.25490196078431371" green="0.5607843137254902" blue="0.78431372549019607" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="147" id="AM8-j3-nb3"/>
+                                    <constraint firstAttribute="width" constant="185" id="dBY-Hm-s3v"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" red="0.0" green="0.64313725490196083" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.25490196078431371" green="0.55686274509803924" blue="0.78431372549019607" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="1AQ-QS-ny0" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="1Ve-CD-f9N"/>
+                            <constraint firstItem="1AQ-QS-ny0" firstAttribute="top" secondItem="Ktw-Zu-BIC" secondAttribute="bottom" constant="8" id="CL3-95-vIG"/>
+                            <constraint firstItem="Ktw-Zu-BIC" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Ir6-Ng-cIq"/>
                             <constraint firstItem="1AQ-QS-ny0" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="mav-bx-Qcy"/>
                             <constraint firstAttribute="trailingMargin" secondItem="1AQ-QS-ny0" secondAttribute="trailing" id="qIG-FS-xFw"/>
                             <constraint firstItem="1AQ-QS-ny0" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="uJr-0B-1NI"/>
@@ -69,4 +80,7 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icon512x512.png" width="512" height="512"/>
+    </resources>
 </document>

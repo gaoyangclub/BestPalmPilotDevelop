@@ -41,13 +41,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UIAlertViewDelegate {
         self.window!.backgroundColor = UIColor.whiteColor()
         self.window!.makeKeyAndVisible()
         let main:RootNavigationControl = RootNavigationControl.getInstance()
-        main.navigationColor = BestUtils.themeColor//FlatUIColors.cloudsColor()//UIColor(red: 90 / 255, green: 115 / 255, blue: 169 / 255, alpha: 0.5) //
+        main.hairlineHidden = true
+        main.navigationColor = UIColor.whiteColor()//BestUtils.themeColor//FlatUIColors.cloudsColor()//UIColor(red: 90 / 255,         green: 115 / 255, blue: 169 / 255, alpha: 0.5) //
         main.setViewControllers([RootViewController()], animated: false)
         //        let main = RootNavigationControl(rootViewController:RootViewController())
+//        main.navigationBar.shadowImage = nil
+        //        main.navigationBar.backIndicatorImage = nil
+//        main.navigationBar.backIndicatorTransitionMaskImage = nil
         
         let drawerController = RootDrawerController.getInstance()
         drawerController.centerViewController = main
-        drawerController.rightDrawerViewController = AccountSideHomeController()
+        drawerController.rightDrawerViewController = RightSideHomeController()//AccountSideHomeController()
         
         drawerController.showsShadow = true
         drawerController.maximumRightDrawerWidth = AccountSideHomeController.DrawerWidth
@@ -63,6 +67,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UIAlertViewDelegate {
     }
     
     private func checkLastVersion(){
+//        let infoDic:NSDictionary = NSBundle.mainBundle().infoDictionary!
+//        CFShow(infoDic)
         BestRemoteFacade.getLastVersion { [weak self] appVersionVo -> Void in
             if self == nil{
                 print("AppDelegate对象已经销毁")
@@ -78,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UIAlertViewDelegate {
     
     private func checkAppStoreVersion(){
         let infoDic:NSDictionary = NSBundle.mainBundle().infoDictionary!
-        //        CFShow(infoDic)
+//        CFShow(infoDic)
         let appVersion:NSString = infoDic.objectForKey("CFBundleShortVersionString") as! NSString
         BestRemoteFacade.getAppStoreVersion { [weak self](json, isSuccess, error) -> Void in
             if self == nil{

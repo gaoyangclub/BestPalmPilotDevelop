@@ -42,7 +42,7 @@ class CommentPageController: UIViewController,UITextFieldDelegate  {
     }()
     
     private lazy var subTitleLabel:UILabel = {
-       let label = UICreaterUtils.createLabel(24, UICreaterUtils.colorBlack, "", true, self.subTitleBack)
+       let label = UICreaterUtils.createLabel(18, UICreaterUtils.colorBlack, "", true, self.subTitleBack)
         label.snp_makeConstraints(closure: { [weak self](make) -> Void in
             make.centerY.equalTo(self!.subTitleBack)
             make.left.equalTo(self!.subTitleBack).offset(15)
@@ -73,7 +73,7 @@ class CommentPageController: UIViewController,UITextFieldDelegate  {
     private lazy var submitButton:UIButton = {
         let btn = UIButton(type: UIButtonType.System)
         btn.layer.cornerRadius = 5
-        let normalColor:UIColor = BestUtils.themeColor
+        let normalColor:UIColor = BestUtils.deputyColor
         btn.backgroundColor = normalColor
         let title:NSString = "提  交"
         btn.setTitle(title as String, forState: UIControlState.Normal)
@@ -121,7 +121,7 @@ class CommentPageController: UIViewController,UITextFieldDelegate  {
         return view
     }()
     private lazy var starLabel:UILabel = {
-        let label = UICreaterUtils.createLabel(24, UICreaterUtils.colorBlack, "", true, self.starArea)
+        let label = UICreaterUtils.createLabel(16, UICreaterUtils.colorBlack, "", true, self.starArea)
         label.snp_makeConstraints(closure: { [weak self](make) -> Void in
             make.centerY.equalTo(self!.starArea)
             make.left.equalTo(self!.starArea).offset(15)

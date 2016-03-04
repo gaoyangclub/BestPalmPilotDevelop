@@ -119,7 +119,7 @@ class FormDetailHeader:BaseItemRenderer{
         if square == nil{
             square = UIView()
             addSubview(square)
-            square.backgroundColor = BestUtils.themeColor
+            square.backgroundColor = BestUtils.deputyColor
             square.snp_makeConstraints(closure: { [weak self](make) -> Void in
                 make.left.equalTo(self!.topLine).offset(10 - 5)
                 make.centerY.equalTo(self!)

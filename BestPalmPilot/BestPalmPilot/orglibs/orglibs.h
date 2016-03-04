@@ -15,9 +15,12 @@
 #include "EAIntroView.h"
 
 #include "CustomBadge.h"
+#include "DWPageControl.h"
 
 #include "IQKeyboardManager.h"
 #include "IQUIView+IQKeyboardToolbar.h"
+
+
 
 //#ifndef PullRefreshScrollerTest_BridgeHeader_h
 //#define PullRefreshScrollerTest_BridgeHeader_h

@@ -27,18 +27,26 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
     private lazy var leftItem:UIBarButtonItem = BestUtils.createNavigationLeftButtonItem(self,action: "cancelClick")
     
     private lazy var rightItem:UIBarButtonItem = {
-        let tabItem2 = UIFlatImageTabItem()
-        tabItem2.frame = CGRectMake(0, 0, 30, 24)
-        tabItem2.sizeType = .FillWidth
-        tabItem2.normalColor = UIColor.whiteColor()
+        let imageContainer = UIControl()
+        imageContainer.frame = CGRectMake(0, 0, 30, 24)
+        
+        let tabItem2 = UIImageView()//UIFlatImageTabItem()
+        imageContainer.addSubview(tabItem2)
+        tabItem2.snp_makeConstraints{ (make) -> Void in
+            make.left.right.top.bottom.equalTo(imageContainer)
+        }
+        
+        tabItem2.contentMode = UIViewContentMode.ScaleAspectFit
+        //        tabItem2.sizeType = .FillWidth
+        //        tabItem2.normalColor = BestUtils.themeColor
         //        tabItem.selectColor = UICreaterUtils.colorRise
         BatchLoaderForSwift.loadFile("campaign", callBack: { (image) -> Void in
             tabItem2.image = image
         })
-        tabItem2.addTarget(self, action: "setupClick", forControlEvents: UIControlEvents.TouchDown)
+        imageContainer.addTarget(self, action: "setupClick", forControlEvents: UIControlEvents.TouchDown)
         let item =
         UIBarButtonItem(title: "嘿嘿", style: UIBarButtonItemStyle.Done, target: self, action: "setupClick")
-        item.customView = tabItem2
+        item.customView = imageContainer
         return item
     }()
     
@@ -106,7 +114,7 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
     private lazy var agreeButton:UIButton = {
         let btn = UIButton(type: UIButtonType.System)
         btn.layer.cornerRadius = 2
-        let normalColor:UIColor = BestUtils.themeColor
+        let normalColor:UIColor = BestUtils.deputyColor
         btn.backgroundColor = normalColor
         let title:NSString = "同  意"
         btn.setTitle(title as String, forState: UIControlState.Normal)
@@ -125,7 +133,7 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
     private lazy var rejectButton:UIButton = {
         let btn = UIButton(type: UIButtonType.System)
         btn.layer.cornerRadius = 2
-        let normalColor:UIColor = BestUtils.themeColor
+        let normalColor:UIColor = BestUtils.deputyColor
         btn.backgroundColor = normalColor
         let title:NSString = "退  回"
         btn.setTitle(title as String, forState: UIControlState.Normal)
@@ -194,7 +202,7 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
                 //            .MenuItemSeparatorPercentageHeight(0.5),
                 .UnselectedMenuItemLabelColor(UICreaterUtils.colorBlack),
                 .SelectedMenuItemLabelColor(BestUtils.deputyColor),
-                CAPSPageMenuOption.MenuItemSeparatorUnderline(true),
+//                CAPSPageMenuOption.MenuItemSeparatorUnderline(true),//下划线
                 .MenuItemFont(UIFont.systemFontOfSize(20)),//,weight:1.2
                 .SelectionIndicatorHeight(2),
                 .CenterMenuItems(true),
@@ -251,10 +259,10 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
             JLToast.makeText("请先输入申请意见!").show()
             return
         }
-        BestUtils.showAlert(message:"确定退回该AP吗？",parentController:self){ [weak self] _ -> Void in
-            EZLoadingActivity.show("AP退回中", disableUI: true)
-            self!.submitAction(BestUtils.AUDIT_APPROVE,callBack:self!.getAuditResult)//{ [weak self] json,isSuccess,error in
-        }
+//        BestUtils.showAlert(message:"确定退回该审批单吗？",parentController:self){ [weak self] _ -> Void in
+            EZLoadingActivity.show("审批单退回中", disableUI: true)
+            submitAction(BestUtils.AUDIT_APPROVE,callBack:self.getAuditResult)//{ [weak self] json,isSuccess,error in
+//        }
     }
     
     private func getAuditResult(json:JSON?,isSuccess:Bool,error:NSError?)->Void{
@@ -276,8 +284,8 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
     }
     
     func agreeClick(sender:UIButton){
-        BestUtils.showAlert(message:"确定同意该AP吗？",parentController:self){ [weak self] _ -> Void in
-            EZLoadingActivity.show("AP审批中", disableUI: true)
+        BestUtils.showAlert(message:"确定同意该审批单吗？",parentController:self){ [weak self] _ -> Void in
+            EZLoadingActivity.show("审批单提交中", disableUI: true)
             self!.submitAction(BestUtils.AUDIT_REJECT,callBack:self!.getAuditResult)
 //                { [weak self] json in
 //                //必须回传后页面可以交互

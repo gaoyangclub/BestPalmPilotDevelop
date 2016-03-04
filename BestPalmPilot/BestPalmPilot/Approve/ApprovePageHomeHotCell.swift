@@ -10,20 +10,25 @@ import UIKit
 
 class ApprovePageHomeHotCell: BaseTableViewCell {
     
-    static let cellHeight:CGFloat = 108
+    static let cellHeight:CGFloat = 80
     
     private let hotList:[ApproveHotVo] = [
-        ApproveHotVo(icon: "fundHot08", title: "帮助人信息", action: "helpHandler:"),
-        ApproveHotVo(icon: "fundHot09", title: "系统点评", action: "commentHandler:"),
-        ApproveHotVo(icon: "fundHot02", title: "审批历史", link: "http://www.baidu.com",enable:false),
-        ApproveHotVo(icon: "fundHot11", title: "使用说明", link: "http://www.baidu.com",enable:false)
+        ApproveHotVo(icon: "message", title: "帮助人信息", action: "helpHandler:"),
+        ApproveHotVo(icon: "comment", title: "系统点评", action: "commentHandler:")
+//        ApproveHotVo(icon: "history", title: "审批历史", link: "http://www.baidu.com",enable:false),
+//        ApproveHotVo(icon: "instruction", title: "使用说明", link: "http://www.baidu.com",enable:false)
     ]
     
     //    private var iconContainer:UIView!
-    override func layoutSubviews(){
-        self.contentView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
+    
+    override func showSubviews() {
+        self.contentView.backgroundColor = UIColor(red: 237/255, green: 243/255, blue: 255/255, alpha: 1)
         initCell()
     }
+//    
+//    override func layoutSubviews(){
+//        
+//    }
     
     private lazy var bottomLine:UIView = {
         let view:UIView = UIView()
@@ -52,6 +57,8 @@ class ApprovePageHomeHotCell: BaseTableViewCell {
             make.height.equalTo(UICreaterUtils.normalLineWidth)
         }
         
+//        let subW = Float(self.contentView.frame.width / CGFloat(self.hotList.count))
+        
         var preItem:UIView?
         for i in 0..<hotList.count{
             let avo = hotList[i]
@@ -67,6 +74,7 @@ class ApprovePageHomeHotCell: BaseTableViewCell {
             area.snp_makeConstraints(closure: { [weak self](make) -> Void in
                 make.top.bottom.equalTo(self!.contentView)
                 make.width.equalTo(self!.contentView).dividedBy(self!.hotList.count)
+//                make.width.equalTo(subW)
                 //                make.left.equalTo(self.contentView.snp_width).multipliedBy(Double(i) / Double(hotList.count))
                 if preItem != nil{
                     make.left.equalTo(preItem!.snp_right)
@@ -78,16 +86,17 @@ class ApprovePageHomeHotCell: BaseTableViewCell {
             let titleLabel = UICreaterUtils.createLabel(12, UICreaterUtils.colorBlack, hotList[i].title, true, area)
             titleLabel.snp_makeConstraints(closure: { (make) -> Void in //[weak self]
                 make.centerX.equalTo(area)
-                make.bottom.equalTo(-18)
+                make.bottom.equalTo(-16)
             })
             
             let imageView = UIImageView()
             imageView.contentMode = UIViewContentMode.ScaleAspectFit //保持比例
             area.addSubview(imageView)
             imageView.snp_makeConstraints(closure: { (make) -> Void in //[weak self]
-                make.height.equalTo(46)
+                make.height.equalTo(40)
+//                make.left.right.equalTo(area)
                 make.centerX.equalTo(area)
-                make.top.equalTo(18)
+                make.top.equalTo(10)
             })
             BatchLoaderForSwift.loadFile(hotList[i].icon, callBack: { (image) -> Void in
                 imageView.image = image

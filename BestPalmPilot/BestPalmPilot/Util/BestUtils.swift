@@ -10,8 +10,10 @@ import UIKit
 
 public class BestUtils:AnyObject {
 
-    public static let themeColor = FlatUIColors.dodgerBlueColor()//UIColor(red: 81/255, green: 121/255, blue: 178/255, alpha: 1)
-    public static let deputyColor = FlatUIColors.peterRiverColor()
+    public static let themeColor = UIColor(red: 49/255, green: 93/255, blue: 176/255, alpha: 1)
+    //FlatUIColors.dodgerBlueColor()
+    
+    public static let deputyColor = UIColor(red: 65/255, green: 142/255, blue: 200/255, alpha: 1)//FlatUIColors.belizeHoleColor()//peterRiverColor()
     
     public static let backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
     
@@ -86,7 +88,7 @@ public class BestUtils:AnyObject {
     }
     
     public static func createNavigationTitleLabel(parent:UIView,title:String = "")->UILabel{
-        let label:UILabel = UICreaterUtils.createLabel(20, UIColor.whiteColor(), title, true, parent)
+        let label:UILabel = UICreaterUtils.createLabel(20, themeColor, title, true, parent)//UIColor.whiteColor()
         label.font = UIFont.systemFontOfSize(20)//20号 ,weight:2
         
         label.snp_makeConstraints { (make) -> Void in //[weak self]
@@ -100,7 +102,7 @@ public class BestUtils:AnyObject {
         let customView = UIArrowView(frame:CGRectMake(0, 0, 10, 22))
         customView.direction = .LEFT
         ////        customView.isClosed = true
-        customView.lineColor = UIColor.whiteColor()
+        customView.lineColor = themeColor//UIColor.whiteColor()
         customView.lineThinkness = 2
         ////        customView.fillColor = UIColor.blueColor()
         buttonItem.customView = customView

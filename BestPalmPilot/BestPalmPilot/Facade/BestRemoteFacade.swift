@@ -13,37 +13,53 @@ typealias ResponseCompletionHandler = (json:JSON?,isSuccess:Bool,error:NSError?)
 
 public class BestRemoteFacade: AnyObject {
     
+    public static var isDebug:Bool{
+        get{
+            let bundleIdentifier = getBundleValue("CFBundleIdentifier")
+            if bundleIdentifier != nil{
+                return bundleIdentifier != "com.best.oasis.ios.iapp" //测试模式
+            }
+            return true
+        }
+    }
+    
+    private static let restletUrl = isDebug ?
+        "http://dianping-test.800best.com/rest/dianping/saveComment" : //点评专用生产地址
+        "http://dianping.800best.com/rest/dianping/saveComment"//点评专用测试地址
+    
+    //    private static let remoteUrl = "http://10.45.10.198:8282/gateway/rest/api/com.best.oasis.husky.ws.mobile.MobileWebService/"
+    private static let remoteUrl = isDebug ?
+        "http://edi-test.appl.800best.com:1502/gateway/rest/api/com.best.oasis.husky.ws.mobile.MobileWebService/" :
+        "http://edi-test.appl.800best.com:1502/gateway/rest/api/com.best.oasis.husky.ws.mobile.MobileWebService/"
+    
+    private static let headers:Dictionary<String,String> = isDebug ?
+        ["X-Route-User":"TEST","X-Route-Token":"TEST"] : //["X-Route-User":"TEST","X-Route-Token":"TEST"]
+        ["X-Route-User":"IAPP","X-Route-Token":"IAPPToken"] //xingng接口的生产环境配置，X-Route-User：IAPP，X-Route-Token：IAPPToken
+    
     private static let appUrl = "http://itunes.apple.com/"
-    
-//    private static let restletUrl = "http://dianping.800best.com/rest/dianping/saveComment" //点评专用生产地址
-    private static let restletUrl = "http://dianping-test.800best.com/rest/dianping/saveComment" //点评专用测试地址
-    
-    private static let appId = "1"//"776882837"
+    private static let appId = "1"//"776882837"//从Appstore更新的应用id
     
     private static let appType = "IOS"//
     
     public static var appName:String{
         get{
-            let infoDic:NSDictionary? = NSBundle.mainBundle().infoDictionary
-            if infoDic != nil && infoDic?.valueForKey("CFBundleName") is String{
-                return infoDic?.valueForKey("CFBundleName") as! String
-            }
-            return "审批管家"
+            return getBundleValue("CFBundleName") ?? "审批管家"
         }
     }
     
     public static var appVersion:String{
         get{
-            let infoDic:NSDictionary? = NSBundle.mainBundle().infoDictionary
-            if infoDic != nil && infoDic?.valueForKey("CFBundleShortVersionString") is String{
-                return infoDic?.valueForKey("CFBundleShortVersionString") as! String
-            }
-            return "0.0"
+            return getBundleValue("CFBundleShortVersionString") ?? "0.0"
         }
     }
     
-    private static let remoteUrl = "http://10.45.10.198:8282/gateway/rest/api/com.best.oasis.husky.ws.mobile.MobileWebService/"
-    private static let headers:Dictionary<String,String> = ["X-Route-User":"TEST","X-Route-Token":"TEST"]
+    private static func getBundleValue(key:String)->String?{
+        let infoDic:NSDictionary? = NSBundle.mainBundle().infoDictionary
+        if infoDic != nil && infoDic?.valueForKey(key) is String{
+            return infoDic?.valueForKey(key) as? String
+        }
+        return nil
+    }
     
 //    private String userId;//点评人的识别码（必填）
 //    private String userAttr1;//点评人的三个额外属性（选填）

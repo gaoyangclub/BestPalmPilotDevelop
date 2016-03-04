@@ -34,18 +34,27 @@ class ApprovePageHomeController: PageListTableViewController {
     }
     
     private lazy var rightItem:UIBarButtonItem = {
-        let tabItem2 = UIFlatImageTabItem()
-        tabItem2.frame = CGRectMake(0, 0, 30, 24)
-        tabItem2.sizeType = .FillWidth
-        tabItem2.normalColor = UIColor.whiteColor()
+        let imageContainer = UIControl()
+        imageContainer.frame = CGRectMake(0, 0, 30, 24)
+        
+        let tabItem2 = UIImageView()//UIFlatImageTabItem()
+        imageContainer.addSubview(tabItem2)
+        tabItem2.snp_makeConstraints{ (make) -> Void in
+            make.left.right.top.bottom.equalTo(imageContainer)
+        }
+        
+        tabItem2.contentMode = UIViewContentMode.ScaleAspectFit
+        //        tabItem2.sizeType = .FillWidth
+        //        tabItem2.normalColor = BestUtils.themeColor
         //        tabItem.selectColor = UICreaterUtils.colorRise
-        BatchLoaderForSwift.loadFile("campaign", callBack: { (image) -> Void in //[weak self]
+        BatchLoaderForSwift.loadFile("campaign", callBack: { (image) -> Void in
             tabItem2.image = image
         })
-        tabItem2.addTarget(self, action: "setupClick", forControlEvents: UIControlEvents.TouchDown)
+        
+        imageContainer.addTarget(self, action: "setupClick", forControlEvents: UIControlEvents.TouchDown)
         let buttonItem =
         UIBarButtonItem(title: "嘿嘿", style: UIBarButtonItemStyle.Done, target: self, action: "setupClick")
-        buttonItem.customView = tabItem2
+        buttonItem.customView = imageContainer
         
         return buttonItem
     }()
@@ -154,10 +163,10 @@ class ApprovePageHomeController: PageListTableViewController {
     
     private func generateApproveMenuList(jsonList:[JSON])->[ApproveMenuVo]{
         var menuList:[ApproveMenuVo] = []
-        var index:Int = 1
+        var index:Int = 0
         for json in jsonList{
             let avo = BestUtils.generateObjByJson(json,typeList: [ApproveMenuVo.self]) as! ApproveMenuVo
-            avo.iconurl = "fundTag0\(index++)"
+            avo.iconurl = "approve_tag0\(index++ % 2)"
 //            print(avo.count)
             menuList.append(avo)
         }
@@ -175,7 +184,7 @@ class ApprovePageHomeController: PageListTableViewController {
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+//        tableView.deselectRowAtIndexPath(indexPath, animated: false)
         
         let section = indexPath.section
         let source = dataSource[section] as! SoueceVo
@@ -208,10 +217,10 @@ class ApprovePageHomeController: PageListTableViewController {
 }
 private class ApprovePageHomeInfoCell: BaseTableViewCell {
     
-    static let cellHeight:CGFloat = 80
+    static let cellHeight:CGFloat = 70
     
     override func showSubviews(){
-        self.selectionStyle = UITableViewCellSelectionStyle.Gray
+        self.selectionStyle = UITableViewCellSelectionStyle.None
         self.contentView.backgroundColor = UIColor.whiteColor()
         initCell()
     }
@@ -225,12 +234,12 @@ private class ApprovePageHomeInfoCell: BaseTableViewCell {
     
     
     private lazy var tagLabel:UILabel = {
-        let label = UICreaterUtils.createLabel(26, FlatUIColors.ebonyClayColor(), "", true, self.contentView)
+        let label = UICreaterUtils.createLabel(18, FlatUIColors.ebonyClayColor(), "", true, self.contentView)
         return label
     }()
     
     private lazy var titleLabel:UILabel = {
-        let label = UICreaterUtils.createLabel(18, UICreaterUtils.colorFlat, "", true, self.contentView)
+        let label = UICreaterUtils.createLabel(16, UICreaterUtils.colorFlat, "", true, self.contentView)
         return label
     }()
     
@@ -257,12 +266,19 @@ private class ApprovePageHomeInfoCell: BaseTableViewCell {
         return arrow
     }()
     
-    private lazy var iconView:UIFlatImageTabItem = {
-        let tabItem = UIFlatImageTabItem()
+//    private lazy var iconView:UIFlatImageTabItem = {
+//        let tabItem = UIFlatImageTabItem()
+//        self.contentView.addSubview(tabItem)
+//        tabItem.userInteractionEnabled = false
+//        tabItem.sizeType = .FillWidth
+//        tabItem.normalColor = BestUtils.deputyColor//UICreaterUtils.colorRise
+//        return tabItem
+//    }()
+    
+    private lazy var iconView:UIImageView = {
+        let tabItem = UIImageView()
         self.contentView.addSubview(tabItem)
-        tabItem.userInteractionEnabled = false
-        tabItem.sizeType = .FillWidth
-        tabItem.normalColor = BestUtils.deputyColor//UICreaterUtils.colorRise
+        tabItem.contentMode = UIViewContentMode.ScaleAspectFit
         return tabItem
     }()
     
@@ -302,9 +318,9 @@ private class ApprovePageHomeInfoCell: BaseTableViewCell {
         iconView.snp_makeConstraints { [weak self](make) -> Void in
             make.left.equalTo(self!.contentView).offset(2)
             //            make.size.equalTo(CGSize(width: 40, height: 24))
-            make.width.equalTo(40)
-            make.height.equalTo(24)
-            make.centerY.equalTo(self!.tagLabel)
+            make.width.equalTo(60)
+            make.height.equalTo(40)
+            make.centerY.equalTo(self!.contentView)
         }
         BatchLoaderForSwift.loadFile(avo.iconurl, callBack: { [weak self](image) -> Void in
             self!.iconView.image = image
@@ -320,7 +336,7 @@ private class ApprovePageHomeInfoCell: BaseTableViewCell {
         
         titleLabel.snp_makeConstraints { [weak self](make) -> Void in
             make.left.equalTo(self!.tagLabel)
-            make.top.equalTo(self!.contentView.snp_centerY).offset(6)
+            make.top.equalTo(self!.contentView.snp_centerY).offset(4)
         }
         self.titleLabel.text = avo.groupname
         self.titleLabel.sizeToFit()

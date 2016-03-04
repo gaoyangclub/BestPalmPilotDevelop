@@ -54,12 +54,14 @@ class MyTabItemRenderer: BaseItemRenderer {
         let vo = data as! TabRendererVo
         
         labelView.text = vo.title
-        labelView.textColor = themeColor
+        labelView.textColor = MyTabItemRenderer.selectColor//themeColor
         //        labelView.sizeToFit()
     }
     
     private var imageContainer:UIView!
-    private var tabItem:UIFlatImageTabItem!
+//    private var tabItem:UIFlatImageTabItem!
+    private var imageView:UIImageView!
+    
     private func initImage(){
         if imageContainer == nil{
             imageContainer = UIView()
@@ -74,44 +76,37 @@ class MyTabItemRenderer: BaseItemRenderer {
                 make.top.equalTo(self!).offset(5)
             }
             
-            tabItem = UIFlatImageTabItem()
-            //        tabItem.backgroundColor = UIColor.blackColor()
-            imageContainer.addSubview(tabItem)
-            tabItem.sizeType = .FillWidth
-            tabItem.normalColor = MyTabItemRenderer.normalColor
-            tabItem.selectColor = MyTabItemRenderer.selectColor
+//            tabItem = UIFlatImageTabItem()
+//            //        tabItem.backgroundColor = UIColor.blackColor()
+//            imageContainer.addSubview(tabItem)
+//            tabItem.sizeType = .FillWidth
+//            tabItem.normalColor = MyTabItemRenderer.normalColor
+//            tabItem.selectColor = MyTabItemRenderer.selectColor
+//            
+//            tabItem.snp_makeConstraints(closure: { [weak self](make) -> Void in
+//                make.height.equalTo(20)
+//                make.left.right.equalTo(self!.imageContainer)
+//                make.center.equalTo(self!.imageContainer)
+//            })
+            imageView = UIImageView()
+            imageView.contentMode = UIViewContentMode.ScaleAspectFit
+            imageContainer.addSubview(imageView)
             
-            tabItem.snp_makeConstraints(closure: { [weak self](make) -> Void in
-                make.height.equalTo(20)
+            imageView.snp_makeConstraints { [weak self](make) -> Void in
+//                make.center.equalTo(tempUI)
+                make.height.equalTo(26)
                 make.left.right.equalTo(self!.imageContainer)
                 make.center.equalTo(self!.imageContainer)
-            })
-//            imageView = UIImageView()
-//            tempUI.addSubview(imageView)
-//            
-//            imageView.snp_makeConstraints { (make) -> Void in
-//                make.center.equalTo(tempUI)
-//            }
+            }
             
         }
-        
         let vo = data as! TabRendererVo
         BatchLoaderForSwift.loadFile(vo.iconUrl, callBack: { [weak self](image) -> Void in
-            self!.tabItem.image = image
+//            self!.tabItem.image = image
+            self!.imageView.image = image
         })
-        self.tabItem.select = selected
+//        self.tabItem.select = selected
     }
-    
-//    private func showImage(){
-//        if(selected){
-//            imageView.image = selectImage
-//        }else{
-//            imageView.image = normalImage
-//        }
-//    }
-    
-//    private var normalImage:UIImage!
-//    private var selectImage:UIImage!
     
     private static var normalColor:UIColor = FlatUIColors.concreteColor()
     private static var selectColor:UIColor = BestUtils.themeColor///FlatUIColors.belizeHoleColor()//UIColor(red: 232 / 255, green: 50 / 255, blue: 85 / 255, alpha: 1) //FlatUIColors.alizarinColor(alpha: 1)

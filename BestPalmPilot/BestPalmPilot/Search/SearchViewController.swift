@@ -22,12 +22,13 @@ class SearchViewController: UITableViewController,UISearchBarDelegate {
         //        searchBar.translucent = false //是否透视效果
         //        searchBar.showsScopeBar = true//显示选择栏
         search.sizeToFit()
-        search.tintColor=UIColor.blueColor()//会获取到光标
+        search.tintColor = UIColor.blueColor()//会获取到光标
         search.setShowsCancelButton(false, animated: true)
         
         BatchLoaderForSwift.loadFile("empty", callBack: { (image) -> Void in
             search.backgroundImage = image // 需要用1像素的透明图片代替背景图
         })
+        
         search.delegate = self
         
         let topView: UIView = search.subviews[0]
@@ -57,6 +58,8 @@ class SearchViewController: UITableViewController,UISearchBarDelegate {
     
     override func viewWillAppear(animated: Bool) {
     
+        RootNavigationControl.getInstance().navigationColor = BestUtils.deputyColor
+        
         if !hasObserver{
             tableView.addObserver(self, forKeyPath: "contentOffset", options: NSKeyValueObservingOptions.New, context: nil)
             hasObserver = true
@@ -76,6 +79,7 @@ class SearchViewController: UITableViewController,UISearchBarDelegate {
     }
     
     override func viewWillDisappear(animated: Bool) {
+        RootNavigationControl.getInstance().navigationColor = UIColor.whiteColor()
         super.viewWillDisappear(animated)
         searchBar.resignFirstResponder()//注:在隐藏焦点的同时会自动将cancelButton.enabled=false
     }
@@ -120,14 +124,20 @@ class SearchViewController: UITableViewController,UISearchBarDelegate {
         }
     }
 
+    private var nowText:String?;//正在搜索的关键字
     private func doSearch(searchText:String){
+        nowText = searchText
         if searchText.isEmpty{
             clearResult()
             searchOutBackView.hidden = true
         }else{
             BestRemoteFacade.getListFormInfos(generateFormListSO(searchText), groupkey: groupkey){ [weak self] (json,isSuccess,_) in
-                if self == nil { //self!.isDispose
+                if self == nil {
                     print("SearchViewController对象已经销毁")
+                    return
+                }
+                if self!.nowText != searchText{//异步获取结束发现当前关键字和搜索时不一致了(输入太快 先输入的异步比后输入的异步查询慢的情况下 避免先输入的结果覆盖后输入的结果)
+                    print("输入太快 先输入的异步比后输入的异步查询慢")
                     return
                 }
                 if isSuccess {

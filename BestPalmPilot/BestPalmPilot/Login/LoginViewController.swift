@@ -129,7 +129,7 @@ public class LoginViewController: UIViewController,UITextFieldDelegate {
     lazy var submitButton:UIButton = {
         let btn = UIButton(type: UIButtonType.System)
         btn.layer.cornerRadius = 5
-        let normalColor:UIColor = BestUtils.themeColor
+        let normalColor:UIColor = BestUtils.deputyColor
         btn.backgroundColor = normalColor
         let title:NSString = "登  录"
         btn.titleLabel?.font = UIFont.systemFontOfSize(20)//weight文字线条粗细 ,weight:2

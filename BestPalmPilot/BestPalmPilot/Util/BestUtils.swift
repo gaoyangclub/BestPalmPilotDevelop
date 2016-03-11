@@ -41,28 +41,28 @@ public class BestUtils:AnyObject {
             if value.type == .Null{//数据为null
                 continue
             }
-            if value.type == .Array{
-                var arr:[AnyObject] = []
-                for subJson in value.arrayValue{
-                    arr.append(generateObjByJson(subJson,typeList: typeList,selectIndex: selectIndex + 1))
-                }
-                obj.setValue(arr, forKey: key)
-//                putObjectValue(obj, key: key, value: arr)
-//                (obj.valueForKey(key)  Array).append(obj)
-            }else{
-//                do{
-//                    var a:AnyObject? = value.object
-//                    try obj.validateValue(&a, forKeyPath: key)
-////                    obj.validateValue(<#T##ioValue: AutoreleasingUnsafeMutablePointer<AnyObject?>##AutoreleasingUnsafeMutablePointer<AnyObject?>#>, forKey: <#T##String#>)
-//                }catch{
-//                    print("字段" + key + "不存在")
-//                }
-                if obj.respondsToSelector(Selector(key)){
-                    obj.setValue(value.object, forKey: key)
+            if obj.respondsToSelector(Selector(key)){//字段在对象中存在
+                if value.type == .Array{
+                    var arr:[AnyObject] = []
+                    for subJson in value.arrayValue{
+                        arr.append(generateObjByJson(subJson,typeList: typeList,selectIndex: selectIndex + 1))
+                    }
+                    obj.setValue(arr, forKey: key)
+                    //                putObjectValue(obj, key: key, value: arr)
+                    //                (obj.valueForKey(key)  Array).append(obj)
                 }else{
-                    print("字段" + key + "不存在")
+                    //                do{
+                    //                    var a:AnyObject? = value.object
+                    //                    try obj.validateValue(&a, forKeyPath: key)
+                    ////                    obj.validateValue(<#T##ioValue: AutoreleasingUnsafeMutablePointer<AnyObject?>##AutoreleasingUnsafeMutablePointer<AnyObject?>#>, forKey: <#T##String#>)
+                    //                }catch{
+                    //                    print("字段" + key + "不存在")
+                    //                }
+                    obj.setValue(value.object, forKey: key)
+                    //                putObjectValue(obj, key: key, value: value.object)
                 }
-//                putObjectValue(obj, key: key, value: value.object)
+            }else{
+                print("字段" + key + "不存在")
             }
 //            if !(value.object is NSNull){
 //                

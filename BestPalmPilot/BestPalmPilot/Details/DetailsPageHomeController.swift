@@ -157,6 +157,16 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
         return true
     }
     
+    public func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        if range.length == 1 {
+            return true
+        }
+        let textCount = (textField.text! as NSString).length
+        return textCount < MAX_LIMIT_NUMS
+    }
+    
+    private let MAX_LIMIT_NUMS:Int = 200
+    
     private func initBottomArea(){
         opinionText.delegate = self
         rejectButton.addTarget(self, action: "rejectClick:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -203,7 +213,7 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
                 .UnselectedMenuItemLabelColor(UICreaterUtils.colorBlack),
                 .SelectedMenuItemLabelColor(BestUtils.deputyColor),
 //                CAPSPageMenuOption.MenuItemSeparatorUnderline(true),//下划线
-                .MenuItemFont(UIFont.systemFontOfSize(20)),//,weight:1.2
+                .MenuItemFont(UIFont.systemFontOfSize(16)),//,weight:1.2
                 .SelectionIndicatorHeight(2),
                 .CenterMenuItems(true),
                 .AddBottomMenuHairline(false)
@@ -261,7 +271,7 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
         }
 //        BestUtils.showAlert(message:"确定退回该审批单吗？",parentController:self){ [weak self] _ -> Void in
             EZLoadingActivity.show("审批单退回中", disableUI: true)
-            submitAction(BestUtils.AUDIT_APPROVE,callBack:self.getAuditResult)//{ [weak self] json,isSuccess,error in
+            submitAction(BestUtils.AUDIT_REJECT,callBack:self.getAuditResult)//{ [weak self] json,isSuccess,error in
 //        }
     }
     
@@ -286,7 +296,7 @@ public class DetailsPageHomeController: UIViewController,UITextFieldDelegate,Det
     func agreeClick(sender:UIButton){
         BestUtils.showAlert(message:"确定同意该审批单吗？",parentController:self){ [weak self] _ -> Void in
             EZLoadingActivity.show("审批单提交中", disableUI: true)
-            self!.submitAction(BestUtils.AUDIT_REJECT,callBack:self!.getAuditResult)
+            self!.submitAction(BestUtils.AUDIT_APPROVE,callBack:self!.getAuditResult)
 //                { [weak self] json in
 //                //必须回传后页面可以交互
 //                self!.checkPrevPageListController()

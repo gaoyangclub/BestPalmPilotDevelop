@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CommentPageController: UIViewController,UITextFieldDelegate  {
+class CommentPageController: UIViewController,UITextFieldDelegate,UITextViewDelegate  {
 
     private lazy var titleView:UIView = UIView()
     private lazy var titleLabel:UILabel = BestUtils.createNavigationTitleLabel(self.titleView)
@@ -245,6 +245,7 @@ class CommentPageController: UIViewController,UITextFieldDelegate  {
         textView.layer.borderColor = UICreaterUtils.colorFlat.CGColor
         textView.layer.borderWidth = 1//UICreaterUtils.normalLineWidth
         textView.layer.cornerRadius = 5
+        textView.delegate = self
         self.detailArea.addSubview(textView)
         textView.snp_makeConstraints(closure: { [weak self](make) -> Void in
             make.left.equalTo(self!.detailArea).offset(15)
@@ -254,6 +255,15 @@ class CommentPageController: UIViewController,UITextFieldDelegate  {
         })
         return textView
     }()
+    
+    private let MAX_LIMIT_NUMS:Int = 200
+    func textViewDidChange(textView: UITextView) {
+        let nsTextContent:NSString = textView.text
+        if nsTextContent.length > MAX_LIMIT_NUMS
+        {
+            textView.text = nsTextContent.substringToIndex(MAX_LIMIT_NUMS)//截取到最大位置的字符
+        }
+    }
     
     func starSelectHandler(tabItem:UIFlatImageTabItem){
         fillStar(tabItem.tag + 1)

@@ -30,11 +30,11 @@ public class BestRemoteFacade: AnyObject {
     //    private static let remoteUrl = "http://10.45.10.198:8282/gateway/rest/api/com.best.oasis.husky.ws.mobile.MobileWebService/"
     private static let remoteUrl = isDebug ?
         "http://edi-test.appl.800best.com:1502/gateway/rest/api/com.best.oasis.husky.ws.mobile.MobileWebService/" :
-        "http://edi-test.appl.800best.com:1502/gateway/rest/api/com.best.oasis.husky.ws.mobile.MobileWebService/"
+        "http://app-gw.ns.800best.com/gateway/rest/api/com.best.oasis.husky.ws.mobile.MobileWebService/"
     
     private static let headers:Dictionary<String,String> = isDebug ?
         ["X-Route-User":"TEST","X-Route-Token":"TEST"] : //["X-Route-User":"TEST","X-Route-Token":"TEST"]
-        ["X-Route-User":"IAPP","X-Route-Token":"IAPPToken"] //xingng接口的生产环境配置，X-Route-User：IAPP，X-Route-Token：IAPPToken
+        ["X-Route-User":"IAPP2","X-Route-Token":"IAPPToken2"] //xingng接口的生产环境配置，X-Route-User：IAPP，X-Route-Token：IAPPToken
     
     private static let appUrl = "http://itunes.apple.com/"
     private static let appId = "1"//"776882837"//从Appstore更新的应用id

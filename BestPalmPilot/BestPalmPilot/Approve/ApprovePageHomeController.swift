@@ -138,6 +138,8 @@ class ApprovePageHomeController: PageListTableViewController {
                     BestUtils.badgeCount = 0
                 }
                 callback(hasData:hasData,lastUpdateTime:"")
+            }else{
+                callback(hasData:false,lastUpdateTime:"")
             }
         })
     }

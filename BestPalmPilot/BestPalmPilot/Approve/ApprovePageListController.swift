@@ -34,11 +34,15 @@ class ApprovePageListController: PageListTableViewController {
                     for i in 0..<formInfoPageSource.count{
                         self!.dataSource.addObject(formInfoPageSource[i])
                     }
-                    sorttime = fromInfoList.first!.sorttime //更新最新时间
+//                    sorttime = fromInfoList.first!.sorttime //更新最新时间
+                    sorttime = self!.getLastSortTime(fromInfoList)
+//                        fromInfoList.last!.sorttime //更新最新时间
                 }else{
                     hasData = false
                 }
                 callback(hasData:hasData,sorttime:sorttime)
+            }else{
+                callback(hasData:false,sorttime:"")
             }
         }
     }
@@ -66,11 +70,31 @@ class ApprovePageListController: PageListTableViewController {
                 }else{
                     let fromInfoList:[FormInfoVo] = self!.generateFormInfoList(json!.arrayValue)
                     self!.updateFormInfoPageSource(fromInfoList) //直接新增
-                    sorttime = fromInfoList.first!.sorttime //更新最新时间
+//                    sorttime = fromInfoList.first!.sorttime //更新最新时间
+                    sorttime = self!.getLastSortTime(fromInfoList)
+//                        fromInfoList.last!.sorttime //更新最新时间
                 }
                 callback(hasData:hasData,sorttime:sorttime)
+            }else{
+                callback(hasData:false,sorttime:"")
             }
         }
+    }
+    
+    //从列表里面取出最新时间
+    private func getLastSortTime(fromInfoList:[FormInfoVo])->String{
+        let fmt:NSDateFormatter = NSDateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        var lastTime = fromInfoList.first!.sorttime
+        var lastDate:NSDate? = fmt.dateFromString(lastTime)
+        for i in 1..<fromInfoList.count{
+            let date2:NSDate? = fmt.dateFromString(fromInfoList[i].sorttime)
+            if date2?.timeIntervalSince1970 < lastDate?.timeIntervalSince1970{ //取最老的时间
+                lastTime = fromInfoList[i].sorttime
+                lastDate = date2
+            }
+        }
+        return lastTime
     }
     
     private func generateFormInfoList(jsonList:[JSON])->[FormInfoVo]{

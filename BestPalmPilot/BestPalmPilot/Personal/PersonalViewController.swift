@@ -53,7 +53,7 @@ class PersonalViewController: UIViewController {
         return label
     }()
     
-    lazy var logoutButton:UIButton = {
+    private lazy var logoutButton:UIButton = {
         let btn = UIButton(type: UIButtonType.System)
 //        btn.layer.cornerRadius = 5
         let normalColor:UIColor = UIColor.whiteColor()
@@ -72,6 +72,15 @@ class PersonalViewController: UIViewController {
         return btn
     }()
     
+    private lazy var versionLabel:UILabel = {
+        let label = UICreaterUtils.createLabel(16, UICreaterUtils.colorBlack, "版本", true, self.view)
+        label.snp_makeConstraints(closure: {[weak self] (make) -> Void in
+            make.bottom.equalTo(self!.view).offset(-30)
+            make.centerX.equalTo(self!.view)
+        })
+        return label
+    }()
+    
     private lazy var titleView:UIView = UIView()
     private lazy var titleLabel:UILabel = BestUtils.createNavigationTitleLabel(self.titleView)
     
@@ -85,6 +94,8 @@ class PersonalViewController: UIViewController {
         
         accountLabel.text = UserDefaultCache.getUsername()! + "，您好！"
         accountLabel.sizeToFit()
+        
+        versionLabel.text = "版本信息:" + BestRemoteFacade.appVersion
         
         logoutButton.addTarget(self, action: "logoutClick:", forControlEvents: UIControlEvents.TouchUpInside)
     }

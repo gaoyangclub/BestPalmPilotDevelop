@@ -1451,6 +1451,7 @@
 				TargetAttributes = {
 					847ABBC41C47AED1002C037E = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = XZATG76F8M;
 					};
 					847ABBD81C47AED2002C037E = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -1923,10 +1924,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = BestPalmPilot/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				New_Setting = "";
 				New_Setting1 = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.best.oasis.ios.iapp2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.best.oasis.ios.iapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1940,10 +1942,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = BestPalmPilot/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				New_Setting = "";
 				New_Setting1 = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.best.oasis.ios.iapp2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.best.oasis.ios.iapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

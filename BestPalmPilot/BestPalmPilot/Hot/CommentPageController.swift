@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLibrary
 
 class CommentPageController: UIViewController,UITextFieldDelegate,UITextViewDelegate  {
 
@@ -237,8 +238,8 @@ class CommentPageController: UIViewController,UITextFieldDelegate,UITextViewDele
         })
         return label
     }()
-    private lazy var detailTextView:UITextView = {
-        let textView = UITextView()
+    private lazy var detailTextView:KMPlaceholderTextView = {
+        let textView = KMPlaceholderTextView()
         textView.font = UIFont.systemFontOfSize(16)
         textView.scrollEnabled = true
         textView.editable = true
@@ -288,8 +289,10 @@ class CommentPageController: UIViewController,UITextFieldDelegate,UITextViewDele
         
         phoneText.placeholder = "联系电话"
         
-        detailLabel.text = "请留下意见或建议(100字以内):"
+        detailLabel.text = "请留下意见或建议:"
         detailLabel.sizeToFit()
+        
+        detailTextView.placeholder = "100字以内"
         
         detailTextView.hidden = false
     }

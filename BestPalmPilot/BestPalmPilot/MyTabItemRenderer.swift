@@ -8,6 +8,7 @@
 //
 
 import UIKit
+import CoreLibrary
 
 struct TabRendererVo {
     var title:String!

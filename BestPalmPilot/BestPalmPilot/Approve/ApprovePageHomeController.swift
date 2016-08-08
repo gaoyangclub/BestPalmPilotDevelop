@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLibrary
 
 class ApprovePageHomeController: PageListTableViewController {
 
@@ -154,7 +155,7 @@ class ApprovePageHomeController: PageListTableViewController {
     }
 
     private func getApprovePageSource(menuList:[ApproveMenuVo])->NSMutableArray{
-        let svo = SoueceVo(data: [
+        let svo = SourceVo(data: [
             CellVo(cellHeight: ApprovePageHomeHotCell.cellHeight, cellClass: ApprovePageHomeHotCell.self)
             ])
         for avo in menuList{
@@ -189,7 +190,7 @@ class ApprovePageHomeController: PageListTableViewController {
 //        tableView.deselectRowAtIndexPath(indexPath, animated: false)
         
         let section = indexPath.section
-        let source = dataSource[section] as! SoueceVo
+        let source = dataSource[section] as! SourceVo
         let cell:CellVo = source.data![indexPath.row] as! CellVo
         if cell.cellData is ApproveMenuVo{
             //点击hot内容跳转

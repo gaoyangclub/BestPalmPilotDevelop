@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLibrary
 /** 个人中心 */
 class PersonalViewController: UIViewController {
 

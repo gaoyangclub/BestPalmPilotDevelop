@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLibrary
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate,UIAlertViewDelegate {

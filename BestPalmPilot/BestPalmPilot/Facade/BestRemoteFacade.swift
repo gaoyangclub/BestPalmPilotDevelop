@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import CoreLibrary
 
 typealias ResponseCompletionHandler = (json:JSON?,isSuccess:Bool,error:NSError?)->Void
 

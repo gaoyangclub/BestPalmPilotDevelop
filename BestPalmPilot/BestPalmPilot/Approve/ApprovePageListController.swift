@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLibrary
 
 class ApprovePageListController: PageListTableViewController {
 
@@ -108,7 +109,7 @@ class ApprovePageListController: PageListTableViewController {
     }
     
     private func getFormInfoPageSource(infoList:[FormInfoVo])->NSMutableArray{
-        let  svo = SoueceVo(data: []) //添加新的
+        let  svo = SourceVo(data: []) //添加新的
         for avo in infoList{
             svo.data?.addObject(CellVo(cellHeight: FormInfoPageCell.cellHeight, cellClass: FormInfoPageCell.self,cellData:avo))
         }
@@ -123,7 +124,7 @@ class ApprovePageListController: PageListTableViewController {
             print("添加数据但是原始数据居长度然是0！！！")
             return
         }
-        let svo:SoueceVo? = self.dataSource.lastObject as? SoueceVo
+        let svo:SourceVo? = self.dataSource.lastObject as? SourceVo
         for avo in infoList{
             svo?.data?.addObject(CellVo(cellHeight: FormInfoPageCell.cellHeight, cellClass: FormInfoPageCell.self,cellData:avo))
         }
@@ -211,7 +212,7 @@ class ApprovePageListController: PageListTableViewController {
     
     func deleteRowsByFormInfoVo(formInfoVo:FormInfoVo){
         for section in 0..<dataSource.count{
-            let svo = dataSource[section] as! SoueceVo
+            let svo = dataSource[section] as! SourceVo
             for row in 0..<svo.data!.count{
                 let cvo = svo.data![row] as! CellVo
                 if (cvo.cellData as! FormInfoVo) == formInfoVo {
@@ -235,7 +236,7 @@ class ApprovePageListController: PageListTableViewController {
         self.tableView.deselectRowAtIndexPath(indexPath, animated: false) //反选
         
         let section = indexPath.section
-        let source = dataSource[section] as! SoueceVo
+        let source = dataSource[section] as! SourceVo
         let cell:CellVo = source.data![indexPath.row] as! CellVo
         if cell.cellData is FormInfoVo{
             //点击hot内容跳转

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLibrary
 
 class HelpListViewController: PageListTableViewController {
 
@@ -77,7 +78,7 @@ class HelpListViewController: PageListTableViewController {
     }
     
     private func getHelpInfoPageSource(infoList:[HelpInfoVo])->NSMutableArray{
-        let  svo = SoueceVo(data: []) //添加新的
+        let  svo = SourceVo(data: []) //添加新的
         for avo in infoList{
             svo.data?.addObject(CellVo(cellHeight: HelpInfoPageCell.cellHeight, cellClass: HelpInfoPageCell.self,cellData:avo))
         }
@@ -103,7 +104,7 @@ class HelpListViewController: PageListTableViewController {
         self.tableView.deselectRowAtIndexPath(indexPath, animated: false) //反选
         
         let section = indexPath.section
-        let source = dataSource[section] as! SoueceVo
+        let source = dataSource[section] as! SourceVo
         let cell:CellVo = source.data![indexPath.row] as! CellVo
         if cell.cellData is HelpInfoVo{
             //点击hot内容跳转

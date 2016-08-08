@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLibrary
 
 //账号设置侧边栏
 public class AccountSideHomeController: UIViewController {

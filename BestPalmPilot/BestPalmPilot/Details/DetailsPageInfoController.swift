@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLibrary
 
 class DetailsPageInfoController: PageListTableViewController {
 
@@ -38,7 +39,7 @@ class DetailsPageInfoController: PageListTableViewController {
     func getFormDetailPageSource(dataList:[FormDetailVo])->NSMutableArray{
         let sourceList:NSMutableArray = []
         for dvo in dataList{
-            let svo = SoueceVo(data: [], headerHeight: FormDetailHeader.headerHeight, headerClass: FormDetailHeader.self, headerData: dvo.title)//添加新的
+            let svo = SourceVo(data: [], headerHeight: FormDetailHeader.headerHeight, headerClass: FormDetailHeader.self, headerData: dvo.title)//添加新的
             sourceList.addObject(svo)
             
             for cvo in dvo.content {

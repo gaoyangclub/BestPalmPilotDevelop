@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "AEDEBAD9077C1C3AEE8297D055BD144619038C82",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "67F0CDA656D1DA9DB1359C0BC68A3B40713AF387" : 0,
+    "AEDEBAD9077C1C3AEE8297D055BD144619038C82" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "A2CBF9A1-03CA-4A6F-9E96-154D4C93AD12",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "67F0CDA656D1DA9DB1359C0BC68A3B40713AF387" : "CoreLibraryDevelop\/",
+    "AEDEBAD9077C1C3AEE8297D055BD144619038C82" : "BestPalmPilotDevelop\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "BestPalmPilot",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "BestPalmPilot\/BestPalmPilot.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/gaoyangclub\/CoreLibraryDevelop.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "67F0CDA656D1DA9DB1359C0BC68A3B40713AF387"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/gaoyangclub\/BestPalmPilotDevelop.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "AEDEBAD9077C1C3AEE8297D055BD144619038C82"
+    }
+  ]
+}

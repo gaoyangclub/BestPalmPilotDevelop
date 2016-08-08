@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLibrary
 
 class RightSideHomeController: PageListTableViewController {
 
@@ -17,7 +18,7 @@ class RightSideHomeController: PageListTableViewController {
     
     //创建纯内容列表 无拖动刷新功能
     override func pureTable() -> Bool {
-        let svo = SoueceVo(data: [])
+        let svo = SourceVo(data: [])
         for avo in sideInfoList{
             svo.data?.addObject(CellVo(cellHeight: SideHomeInfoCell.cellHeight, cellClass: SideHomeInfoCell.self,cellData:avo))
             if avo.action != nil{
@@ -39,7 +40,7 @@ class RightSideHomeController: PageListTableViewController {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let section = indexPath.section
-        let source = dataSource[section] as! SoueceVo
+        let source = dataSource[section] as! SourceVo
         let cell:CellVo = source.data![indexPath.row] as! CellVo
         if cell.cellData is SideInfoVo{
             //点击hot内容跳转

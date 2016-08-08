@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLibrary
 
 @objc public protocol DetailsPageDelegate {
     // MARK: - Delegate functions

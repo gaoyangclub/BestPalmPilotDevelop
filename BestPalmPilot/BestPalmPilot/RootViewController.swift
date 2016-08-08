@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLibrary
 
 class RootViewController: TabViewController,LoginViewDelegate,EAIntroDelegate {
 
